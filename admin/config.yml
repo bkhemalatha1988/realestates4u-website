@@ -1,0 +1,103 @@
+# =============================================================================
+# realestates4u — Admin panel configuration (Decap CMS)
+# =============================================================================
+# IMPORTANT — before this works, edit the two lines below:
+#   1. "repo" must be your GitHub username/repository, e.g. mallesh/realestates4u-website
+#   2. "branch" is usually "main" (change if your repo uses a different default branch)
+# =============================================================================
+
+backend:
+  name: github
+  repo: YOUR-GITHUB-USERNAME/YOUR-REPO-NAME
+  branch: main
+
+# Where uploaded photos/brochures go, and how the site links to them.
+media_folder: "images"
+public_folder: "/images"
+
+publish_mode: simple
+
+collections:
+  - name: "site"
+    label: "Site content"
+    files:
+      - name: "content"
+        label: "Ventures, resale plots & pages"
+        file: "data.json"
+        fields:
+          - { label: "Site name", name: "siteName", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Contact phone", name: "contactPhone", widget: "string" }
+          - { label: "WhatsApp number (digits only, with country code)", name: "contactWhatsapp", widget: "string" }
+          - { label: "Contact email", name: "contactEmail", widget: "string", required: false }
+          - { label: "Homepage highlight video (YouTube ID)", name: "highlightVideo", widget: "string", required: false }
+          - { label: "Homepage highlight video title", name: "highlightVideoTitle", widget: "string", required: false }
+
+          - label: "Project categories"
+            name: "categories"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Category ID (no spaces, e.g. sagar-highway)", name: "id", widget: "string" }
+              - { label: "Route label (e.g. NH 565)", name: "routeLabel", widget: "string" }
+              - { label: "Category name", name: "name", widget: "string" }
+              - { label: "Blurb", name: "blurb", widget: "text", required: false }
+              - label: "Ventures in this category"
+                name: "ventures"
+                widget: "list"
+                summary: "{{fields.name}}"
+                fields:
+                  - { label: "Venture name", name: "name", widget: "string" }
+                  - { label: "RERA No.", name: "rera", widget: "string", required: false }
+                  - { label: "LP No.", name: "lp", widget: "string", required: false }
+                  - { label: "Total acres", name: "totalAcres", widget: "string", required: false }
+                  - { label: "Total plots", name: "totalPlots", widget: "string", required: false }
+                  - { label: "Available plots", name: "availablePlots", widget: "string", required: false }
+                  - { label: "Market price / sq. yd", name: "marketPricePerSqYd", widget: "string", required: false }
+                  - { label: "Govt. price / sq. yd", name: "govtPricePerSqYd", widget: "string", required: false }
+                  - { label: "Location", name: "location", widget: "string", required: false }
+                  - { label: "Google Maps link", name: "mapLink", widget: "string", required: false }
+                  - { label: "Brochure (PDF)", name: "brochure", widget: "file", required: false }
+                  - { label: "Description", name: "description", widget: "text", required: false }
+                  - { label: "Photos", name: "photos", widget: "list", field: { label: "Photo", name: "photo", widget: "image" }, required: false }
+                  - { label: "YouTube video IDs", name: "youtube", widget: "list", field: { label: "Video ID", name: "id", widget: "string" }, required: false }
+                  - { label: "Uploaded videos", name: "localVideos", widget: "list", field: { label: "Video file", name: "video", widget: "file" }, required: false }
+
+          - label: "Resale plots section"
+            name: "resale"
+            widget: "object"
+            fields:
+              - { label: "Section ID", name: "id", widget: "string" }
+              - { label: "Route label (e.g. Resale)", name: "routeLabel", widget: "string" }
+              - { label: "Section name", name: "name", widget: "string" }
+              - { label: "Blurb", name: "blurb", widget: "text", required: false }
+              - label: "Resale listings"
+                name: "listings"
+                widget: "list"
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: "Title (venture name + plot/site no.)", name: "title", widget: "string" }
+                  - { label: "Size (e.g. 200 sq. yds)", name: "size", widget: "string", required: false }
+                  - { label: "Dimensions (e.g. 30ft x 60ft)", name: "dimensions", widget: "string", required: false }
+                  - { label: "Price", name: "price", widget: "string", required: false }
+                  - { label: "Facing", name: "facing", widget: "string", required: false }
+                  - { label: "Location", name: "location", widget: "string", required: false }
+                  - { label: "Google Maps link", name: "mapLink", widget: "string", required: false }
+                  - { label: "Description", name: "description", widget: "text", required: false }
+                  - { label: "Photos", name: "photos", widget: "list", field: { label: "Photo", name: "photo", widget: "image" }, required: false }
+                  - { label: "YouTube video IDs", name: "youtube", widget: "list", field: { label: "Video ID", name: "id", widget: "string" }, required: false }
+                  - { label: "Uploaded videos", name: "localVideos", widget: "list", field: { label: "Video file", name: "video", widget: "file" }, required: false }
+
+          - label: "Privacy Policy page"
+            name: "privacyPolicy"
+            widget: "object"
+            fields:
+              - { label: "Last updated", name: "lastUpdated", widget: "string" }
+              - { label: "Intro paragraph", name: "intro", widget: "text" }
+              - label: "Sections"
+                name: "sections"
+                widget: "list"
+                summary: "{{fields.heading}}"
+                fields:
+                  - { label: "Heading", name: "heading", widget: "string" }
+                  - { label: "Body", name: "body", widget: "text" }

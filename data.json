@@ -1,0 +1,187 @@
+{
+  "siteName": "realestates4u",
+  "tagline": "Open plots along Hyderabad's growth corridors",
+  "contactPhone": "+91-XXXXXXXXXX",
+  "contactWhatsapp": "91XXXXXXXXXX",
+  "contactEmail": "add-your-email@realestates4u.in",
+  "highlightVideo": "",
+  "highlightVideoTitle": "See our projects in action",
+  "categories": [
+    {
+      "id": "sagar-highway",
+      "routeLabel": "NH 565",
+      "name": "Sagar Highway Ventures",
+      "blurb": "Open plot projects along the Nagarjuna Sagar highway corridor.",
+      "ventures": [
+        {
+          "name": "Sagar Highway Venture",
+          "rera": "Add RERA No.",
+          "lp": "Add LP No.",
+          "totalAcres": "—",
+          "totalPlots": "—",
+          "availablePlots": "—",
+          "marketPricePerSqYd": "—",
+          "govtPricePerSqYd": "—",
+          "location": "Add location / distance from ORR",
+          "mapLink": "",
+          "brochure": "",
+          "description": "Add a short description of this venture — connectivity, nearby landmarks, why it's a good investment.",
+          "photos": [],
+          "youtube": [],
+          "localVideos": []
+        }
+      ]
+    },
+    {
+      "id": "vijayawada-highway",
+      "routeLabel": "NH 65",
+      "name": "Vijayawada Highway Ventures",
+      "blurb": "Open plot projects along the Hyderabad–Vijayawada highway corridor.",
+      "ventures": [
+        {
+          "name": "Vijayawada Highway Venture",
+          "rera": "Add RERA No.",
+          "lp": "Add LP No.",
+          "totalAcres": "—",
+          "totalPlots": "—",
+          "availablePlots": "—",
+          "marketPricePerSqYd": "—",
+          "govtPricePerSqYd": "—",
+          "location": "Add location / distance from ORR",
+          "mapLink": "",
+          "brochure": "",
+          "description": "Add a short description of this venture.",
+          "photos": [],
+          "youtube": [],
+          "localVideos": []
+        }
+      ]
+    },
+    {
+      "id": "srisailam-highway",
+      "routeLabel": "NH 765",
+      "name": "Srisailam Highway Ventures",
+      "blurb": "Open plot projects along the Srisailam highway corridor.",
+      "ventures": [
+        {
+          "name": "Srisailam Highway Venture",
+          "rera": "Add RERA No.",
+          "lp": "Add LP No.",
+          "totalAcres": "—",
+          "totalPlots": "—",
+          "availablePlots": "—",
+          "marketPricePerSqYd": "—",
+          "govtPricePerSqYd": "—",
+          "location": "Add location / distance from ORR",
+          "mapLink": "",
+          "brochure": "",
+          "description": "Add a short description of this venture.",
+          "photos": [],
+          "youtube": [],
+          "localVideos": []
+        }
+      ]
+    },
+    {
+      "id": "warangal-highway",
+      "routeLabel": "NH 163",
+      "name": "Warangal Highway Ventures",
+      "blurb": "Open plot projects along the Hyderabad–Warangal highway corridor.",
+      "ventures": [
+        {
+          "name": "Warangal Highway Venture",
+          "rera": "Add RERA No.",
+          "lp": "Add LP No.",
+          "totalAcres": "—",
+          "totalPlots": "—",
+          "availablePlots": "—",
+          "marketPricePerSqYd": "—",
+          "govtPricePerSqYd": "—",
+          "location": "Add location / distance from ORR",
+          "mapLink": "",
+          "brochure": "",
+          "description": "Add a short description of this venture.",
+          "photos": [],
+          "youtube": [],
+          "localVideos": []
+        }
+      ]
+    },
+    {
+      "id": "future-city",
+      "routeLabel": "Growth Zone",
+      "name": "Future City Ventures",
+      "blurb": "Projects near the upcoming Future City development belt.",
+      "ventures": [
+        {
+          "name": "Seven Hills Future City",
+          "rera": "Add RERA No.",
+          "lp": "Add LP No.",
+          "totalAcres": "—",
+          "totalPlots": "—",
+          "availablePlots": "—",
+          "marketPricePerSqYd": "—",
+          "govtPricePerSqYd": "—",
+          "location": "Near the Life Sciences Hub of Bharat Future City",
+          "mapLink": "",
+          "brochure": "",
+          "description": "Add a short description — phase pricing, landmark distances, etc.",
+          "photos": [],
+          "youtube": [],
+          "localVideos": []
+        }
+      ]
+    }
+  ],
+  "resale": {
+    "id": "resale-plots",
+    "routeLabel": "Resale",
+    "name": "Resale Plots",
+    "blurb": "Individual open plots available for immediate resale, with verified size, dimensions and price.",
+    "listings": [
+      {
+        "title": "Add plot title (venture name + plot/site no.)",
+        "size": "Add plot size, e.g. 200 sq. yds",
+        "dimensions": "Add dimensions, e.g. 30ft x 60ft",
+        "price": "Add price, e.g. ₹42,000 / sq. yd",
+        "facing": "Add facing (optional), e.g. East facing",
+        "location": "Add location / landmark",
+        "mapLink": "",
+        "description": "Add a short description — why this plot, ownership/title status, any notes for buyers.",
+        "photos": [],
+        "youtube": [],
+        "localVideos": []
+      }
+    ]
+  },
+  "privacyPolicy": {
+    "lastUpdated": "September 2026",
+    "intro": "This Privacy Policy explains how realestates4u collects, uses and protects the information you share with us when you visit this website or contact us about a venture or resale plot.",
+    "sections": [
+      {
+        "heading": "Information we collect",
+        "body": "When you enquire about a venture through the Call button, WhatsApp, or any contact form on this site, we collect the information you choose to share — typically your name, phone number, and the details of your enquiry. We do not require you to create an account or share any information simply to browse the site."
+      },
+      {
+        "heading": "How we use your information",
+        "body": "Enquiry details are used only to respond to you about the venture or plot you asked about — for example, to call you back, share a brochure, or arrange a site visit. We do not sell, rent, or trade your personal information to third parties."
+      },
+      {
+        "heading": "WhatsApp and phone enquiries",
+        "body": "When you use the WhatsApp or Call buttons on this site, you are taken to WhatsApp or your phone's dialer directly; those conversations are subject to WhatsApp's own privacy policy, not this one."
+      },
+      {
+        "heading": "Cookies and analytics",
+        "body": "This site does not use tracking cookies or third-party advertising scripts. If basic visit analytics are added in future (to understand which pages are useful), this policy will be updated accordingly."
+      },
+      {
+        "heading": "Data retention",
+        "body": "Enquiry details are kept only as long as needed to follow up with you about the venture or plot you asked about, and are not used for any other purpose."
+      },
+      {
+        "heading": "Contact us",
+        "body": "If you have questions about this policy or want any information you've shared removed, contact us using the phone number or WhatsApp link in the site header, or by email if one is listed there."
+      }
+    ]
+  }
+}
