@@ -7,7 +7,7 @@
 # =============================================================================
 
 backend:
-  name: github
+  name: git-gateway
   repo: YOUR-GITHUB-USERNAME/YOUR-REPO-NAME
   branch: main
 
