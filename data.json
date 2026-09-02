@@ -29,6 +29,24 @@
           "photos": [],
           "youtube": [],
           "localVideos": []
+       }
+        "ventures": [
+        {
+          "name": "Sagar Highway Venture",
+          "rera": "Add RERA No.",
+          "lp": "Add LP No.",
+          "totalAcres": "—",
+          "totalPlots": "—",
+          "availablePlots": "—",
+          "marketPricePerSqYd": "—",
+          "govtPricePerSqYd": "—",
+          "location": "Add location / distance from ORR",
+          "mapLink": "",
+          "brochure": "",
+          "description": "Add a short description of this venture — connectivity, nearby landmarks, why it's a good investment.",
+          "photos": [],
+          "youtube": [],
+          "localVideos": []
         }
       ]
     },
