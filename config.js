@@ -19,7 +19,7 @@ var ENQUIRY_VENTURE_FIELD = ""; // e.g. "entry.123456789"
 // EASIEST OPTION: just drop an image file into the images/ folder (e.g.
 // images/greeting.jpg) and put its filename below. Change the picture
 // whenever you like by uploading a new file with the same name.
-var GREETING_IMAGE_URL = "images/greeting.jpg";
+var GREETING_IMAGE_URL = "images/greeting.jpeg";
 var GREETING_CAPTION = ""; // optional short line under the image, e.g. "Happy Ganesh Chaturthi!"
 
 // ADVANCED (optional): instead of the static image above, you can drive this
