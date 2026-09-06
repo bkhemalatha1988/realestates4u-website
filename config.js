@@ -7,7 +7,7 @@ var SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8S_XqBbDv
 // The public "Enquiry" Google Form, embed version.
 // Open the Enquiry form > Send > embed (<>) icon > copy the src URL from the
 // <iframe> code it gives you (ends in .../viewform?embedded=true).
-var ENQUIRY_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfqsowmSnI0w11xc0bbZRW8bcd9fikHNj25PZqos4YBZ-8LEw/viewform?embedded=true";
+var ENQUIRY_FORM_URL = "enquiry.html";
 
 // Optional: to pre-fill the venture name field when "Enquire now" is clicked
 // from a venture page, get the field's entry ID (Form > ... > Get pre-filled
