@@ -84,8 +84,28 @@ src="https://www.facebook.com/tr?id=1452487213303598&ev=Lead&noscript=1"/>
   </div>
   <h1>Thank You!</h1>
   <p>Your enquiry has been received. Our team will get in touch with you shortly.</p>
-  <a href="index.html" class="btn">Back to Home</a>
+  <button id="closeBtn" class="btn" style="border:none; cursor:pointer; font-family:inherit;">Close</button>
 </div>
+
+<script>
+document.getElementById('closeBtn').addEventListener('click', function () {
+  if (window.self !== window.top) {
+    // Loaded inside the popup on the main site — just close the popup
+    try {
+      var parentModal = window.parent.document.getElementById('enquiry-modal');
+      var parentFrame = window.parent.document.getElementById('enquiry-frame');
+      if (parentModal) parentModal.classList.remove('open');
+      if (parentFrame) parentFrame.src = '';
+    } catch (e) {
+      window.location.href = 'index.html';
+    }
+  } else {
+    // Opened directly as a standalone page — go to homepage normally
+    window.location.href = 'index.html';
+  }
+});
+</script>
 
 </body>
 </html>
+
