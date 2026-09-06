@@ -221,7 +221,7 @@ function ventureRow(p) {
         '<h3>' + p.name + '</h3>' +
         '<div class="venture-meta">' +
           (p.acres ? '<span><b>' + p.acres + '</b> acres</span>' : '') +
-          (p.plots ? '<span><b>' + p.plots + '</b> plots</span>' : '') +
+         (p.availablePlots ? '<span><b>' + p.availablePlots + '</b> plots available</span>' : '') +
           (p.rera ? '<span>RERA <b>' + p.rera + '</b></span>' : '') +
         '</div>' +
         (p.price ? '<div class="venture-price">Rs ' + p.price + ' / sq yd</div>' : '') +
@@ -345,7 +345,7 @@ function renderVenture(slug) {
 
   var specRows = [
     ["RERA no.", p.rera], ["LP no.", p.lp], ["Total acres", p.acres],
-    ["Available plots", p.plots], ["Market price", p.price ? "Rs " + p.price + " / sq yd" : ""],
+   ["Total plots", p.plots], ["Available plots", p.availablePlots], ["Market price", p.price ? "Rs " + p.price + " / sq yd" : ""],
     ["Govt price", p.govtPrice ? "Rs " + p.govtPrice + " / sq yd" : ""]
   ].filter(function (r) { return r[1]; })
    .map(function (r) { return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>'; }).join("");
