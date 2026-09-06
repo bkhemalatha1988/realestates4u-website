@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enquiry - Realestates4u</title>
+
+<!-- ============================================================
+     META PIXEL BASE CODE
+     Replace 1452487213303598 with your actual Pixel ID
+     (Find it in Events Manager -> Realestates4u Event Data -> Settings)
+============================================================ -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1452487213303598');
+fbq('track', 'PageView');
+</script>
+<!-- End Meta Pixel Code -->
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 36px 32px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  h1 {
+    color: #1a3c5e;
+    font-size: 26px;
+    margin-bottom: 6px;
+  }
+  p.sub {
+    color: #666;
+    margin-bottom: 24px;
+    font-size: 14px;
+  }
+  label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    margin-top: 16px;
+    font-size: 14px;
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #2c5364;
+  }
+  textarea { resize: vertical; min-height: 80px; }
+  button {
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px;
+    background: #1a3c5e;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  button:hover { background: #2c5364; }
+  button:disabled { background: #999; cursor: not-allowed; }
+  .error {
+    color: #c0392b;
+    font-size: 13px;
+    margin-top: 10px;
+    display: none;
+  }
+  .required { color: #c0392b; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Enquiry</h1>
+  <p class="sub">Fill in your details and we'll get in touch with you.</p>
+
+  <form id="enquiryForm">
+    <label>Name <span class="required">*</span></label>
+    <input type="text" id="name" name="name" required>
+
+    <label>Phone number <span class="required">*</span></label>
+    <input type="tel" id="phone" name="phone" required>
+
+    <label>Venture / Category of interest <span class="required">*</span></label>
+    <select id="venture" name="venture" required>
+      <option value="" disabled selected>Choose</option>
+      <option value="Sagar Highway">Sagar Highway</option>
+      <option value="Vijayawada Highway">Vijayawada Highway</option>
+      <option value="Srisailam Highway">Srisailam Highway</option>
+      <option value="Warangal Highway">Warangal Highway</option>
+      <option value="Future City">Future City ventures</option>
+    </select>
+
+    <label>Email <span class="required">*</span></label>
+    <input type="email" id="email" name="email" required>
+
+    <label>Message</label>
+    <textarea id="message" name="message"></textarea>
+
+    <div id="errorMsg" class="error"></div>
+
+    <button type="submit" id="submitBtn">Submit Enquiry</button>
+  </form>
+</div>
+
+<script>
+// ============================================================
+// Replace this with your deployed Apps Script Web App URL
+// (You'll get this in Step 2 of SETUP-INSTRUCTIONS.md)
+// ============================================================
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4kbfDlcDuQRu54iYQ0p9CP32UMm0IAyA6sAg18YjrNbTFUYyI0d8AeczA9Xl7qNy9/exec";
+
+const form = document.getElementById('enquiryForm');
+const submitBtn = document.getElementById('submitBtn');
+const errorMsg = document.getElementById('errorMsg');
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  errorMsg.style.display = 'none';
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting...';
+
+  const data = {
+    name: document.getElementById('name').value,
+    phone: document.getElementById('phone').value,
+    venture: document.getElementById('venture').value,
+    email: document.getElementById('email').value,
+    message: document.getElementById('message').value,
+    timestamp: new Date().toISOString()
+  };
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+  })
+  .then(res => res.json())
+  .then(result => {
+    if (result.result === 'success') {
+      // Fire Meta Pixel Lead event before redirecting
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead');
+      }
+      window.location.href = 'thank-you.html';
+    } else {
+      throw new Error(result.error || 'Submission failed');
+    }
+  })
+  .catch(err => {
+    errorMsg.textContent = 'Something went wrong. Please try again or call us directly.';
+    errorMsg.style.display = 'block';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit Enquiry';
+    console.error(err);
+  });
+});
+</script>
+
+</body>
+</html>

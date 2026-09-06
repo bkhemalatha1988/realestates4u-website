@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You - Realestates4u</title>
+
+<!-- ============================================================
+     META PIXEL BASE CODE
+     Replace 1452487213303598 with your actual Pixel ID
+============================================================ -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1452487213303598');
+fbq('track', 'PageView');
+fbq('track', 'Lead');   // <-- This fires the Lead conversion event
+</script>
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1452487213303598&ev=Lead&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 48px 36px;
+    max-width: 460px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .check {
+    width: 64px;
+    height: 64px;
+    background: #27ae60;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .check svg { width: 32px; height: 32px; }
+  h1 { color: #1a3c5e; font-size: 24px; margin-bottom: 10px; }
+  p { color: #666; font-size: 15px; line-height: 1.5; margin-bottom: 24px; }
+  a.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    background: #1a3c5e;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  a.btn:hover { background: #2c5364; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="check">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <h1>Thank You!</h1>
+  <p>Your enquiry has been received. Our team will get in touch with you shortly.</p>
+  <a href="index.html" class="btn">Back to Home</a>
+</div>
+
+</body>
+</html>
