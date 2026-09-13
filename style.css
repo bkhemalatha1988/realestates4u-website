@@ -57,6 +57,30 @@ img { max-width: 100%; display: block; }
 .logo span { color: var(--brass-light); }
 
 .main-nav { display: flex; align-items: center; gap: 34px; flex: 1; margin-left: 40px; }
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 34px;
+  height: 34px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+.nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text-cream);
+  border-radius: 2px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 .nav-item { font-size: 18px; font-weight: 600; letter-spacing: 0.2px; color: var(--text-cream-dim); position: relative; cursor: pointer; }
 .nav-item:hover { color: var(--text-cream); }
 .has-dropdown .dropdown {
@@ -401,7 +425,36 @@ img { max-width: 100%; display: block; }
   .hero-right { flex-direction: column; align-items: stretch; gap: 16px; min-height: 0; }
   .hero-stats { border-left: none; border-top: 1px solid var(--line-dark); padding-left: 0; padding-top: 20px; flex-direction: row; flex-wrap: wrap; width: 100%; }
   .hero-greeting-card { min-height: 220px; }
-  .main-nav { display: none; }
+
+  .nav-toggle { display: flex; order: 2; }
+  .header-inner { flex-wrap: wrap; }
+  .logo { order: 1; }
+  .header-actions { order: 3; }
+
+  .main-nav {
+    display: none;
+    order: 10;
+    flex-basis: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin: 14px 0 0;
+    border-top: 1px solid var(--line-dark);
+  }
+  .main-nav.open { display: flex; }
+  .main-nav .nav-item { padding: 14px 4px; border-bottom: 1px solid var(--line-dark); }
+  .has-dropdown { position: relative; }
+  .has-dropdown .dropdown {
+    position: static;
+    display: none;
+    border: none;
+    padding: 0 0 10px 14px;
+    min-width: 0;
+  }
+  .has-dropdown.open .dropdown { display: flex; }
+  .has-dropdown:hover .dropdown { display: none; } /* disable hover-open on touch widths */
+  .has-dropdown.open:hover .dropdown { display: flex; }
+  .dropdown a { padding: 10px 8px; }
 }
 
 /* Venture detail */
