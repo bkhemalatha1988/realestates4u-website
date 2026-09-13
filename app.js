@@ -461,6 +461,42 @@ function openEnquiry(ventureName) {
   modal.classList.add("open");
 }
 document.getElementById("header-enquire").addEventListener("click", function (e) { e.preventDefault(); openEnquiry(""); });
+
+// ---------- mobile nav toggle ----------
+(function () {
+  var toggle = document.getElementById("nav-toggle");
+  var nav = document.getElementById("main-nav");
+  if (!toggle || !nav) return;
+
+  toggle.addEventListener("click", function () {
+    var isOpen = nav.classList.toggle("open");
+    toggle.classList.toggle("open", isOpen);
+    toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  });
+
+  // Tapping "Projects" on mobile opens/closes its dropdown instead of
+  // relying on :hover, which doesn't work reliably on touch screens.
+  var dropdownParent = nav.querySelector(".has-dropdown");
+  if (dropdownParent) {
+    var label = dropdownParent.querySelector("span");
+    label.addEventListener("click", function (e) {
+      if (window.innerWidth > 640) return; // desktop keeps hover behaviour
+      e.stopPropagation();
+      dropdownParent.classList.toggle("open");
+    });
+  }
+
+  // Close the mobile menu after any nav link is tapped, and whenever the
+  // route changes (covers links inside the dropdown too).
+  nav.addEventListener("click", function (e) {
+    if (e.target.tagName === "A") {
+      nav.classList.remove("open");
+      toggle.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+      if (dropdownParent) dropdownParent.classList.remove("open");
+    }
+  });
+})();
 document.getElementById("modal-close").addEventListener("click", function () { modal.classList.remove("open"); frame.src = ""; });
 modal.addEventListener("click", function (e) { if (e.target === modal) { modal.classList.remove("open"); frame.src = ""; } });
 
