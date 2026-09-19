@@ -549,3 +549,41 @@ img { max-width: 100%; display: block; }
   .whatsapp-float { right: 16px; bottom: 16px; width: 50px; height: 50px; }
   .whatsapp-float svg { width: 26px; height: 26px; }
 }
+/* ================================================================
+   BOLD + BRIGHT COLORS FOR VENTURE CARDS
+   Paste this at the very END of your style.css file
+   ================================================================ */
+
+/* PRICE text (e.g. "Rs 14000 / sq yd") */
+[class*="price"] {
+  color: #C9302C !important;      /* strong red - change hex to any color you like */
+  font-weight: 700 !important;
+  font-size: 1.15em !important;
+}
+
+/* HIGHWAY / CATEGORY label (e.g. "Vijayawada highway", "Warangal Highway") */
+[class*="highway"],
+[class*="category"],
+[class*="corridor"],
+[class*="location"] {
+  color: #1877F2 !important;      /* strong blue - change hex to any color you like */
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Other card details (acres, plots available, RERA number) */
+[class*="meta"],
+[class*="detail"],
+[class*="acres"],
+[class*="rera"] {
+  color: #333333 !important;      /* dark gray/black - much more readable than dim gray */
+  font-weight: 600 !important;
+}
+
+/* Venture/project title (e.g. "JB INFRA nature valley") - make it pop too */
+[class*="venture-title"],
+[class*="project-title"] {
+  color: #1a1a2e !important;
+  font-weight: 700 !important;
+}
