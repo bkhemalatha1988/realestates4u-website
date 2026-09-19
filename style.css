@@ -587,3 +587,21 @@ img { max-width: 100%; display: block; }
   color: #1a1a2e !important;
   font-weight: 700 !important;
 }
+/* ================================================================
+   EXACT CLASS TARGETING - paste at the END of style.css
+   Overrides .venture-cat and .venture-price specifically
+   ================================================================ */
+
+.venture-cat {
+  color: #2E7D32 !important;      /* bright green */
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.venture-price {
+  color: #C9302C !important;      /* bright red - change if you want another color */
+  font-weight: 700 !important;
+  font-size: 17px !important;
+}
