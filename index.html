@@ -264,5 +264,165 @@ function fabSubmitBrochure() {
   fabCloseBrochure();
 }
 </script>
+<!-- ================================================================
+  BOOK SITE VISIT BUTTON (auto-added to every project page)
+  Paste this whole block just before </body> in index.html
+
+  This watches for the side-panel (Enquire / Download brochure box)
+  and automatically adds a 3rd "Book Site Visit" button under it,
+  on every project page, without editing app.js.
+
+  REPLACE 91XXXXXXXXXX with your WhatsApp number (2 places)
+  ================================================================ -->
+
+<!-- Site Visit popup form -->
+<div id="siteVisitModal" class="sv-modal" style="display:none;">
+  <div class="sv-modal-box">
+    <span class="sv-modal-close" onclick="svCloseModal()">&times;</span>
+    <h3 id="svModalTitle">Book Site Visit</h3>
+    <p>Fill your details, we'll confirm your visit slot on WhatsApp.</p>
+    <input type="text" id="svName" placeholder="Your Name">
+    <input type="tel" id="svPhone" placeholder="Phone Number">
+    <input type="email" id="svEmail" placeholder="Email Address">
+    <input type="date" id="svDate">
+    <button onclick="svSubmit()">Confirm Site Visit Request</button>
+  </div>
+</div>
+
+<style>
+.side-btn.sv-btn {
+  background: #E67E22 !important;   /* orange, distinct from the other 2 buttons */
+  color: #fff !important;
+  border: none !important;
+  cursor: pointer;
+  display: block;
+  text-align: center;
+}
+
+.sv-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100000;
+}
+
+.sv-modal-box {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 340px;
+  width: 90%;
+  position: relative;
+  text-align: center;
+  color: #222;
+}
+
+.sv-modal-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.sv-modal-box button {
+  background: #E67E22;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.sv-modal-close {
+  position: absolute;
+  top: 8px;
+  right: 14px;
+  cursor: pointer;
+  font-size: 22px;
+  color: #999;
+}
+</style>
+
+<script>
+var svCurrentProject = "";
+
+function svOpenModal(projectName) {
+  svCurrentProject = projectName;
+  document.getElementById('svModalTitle').textContent = "Book Site Visit — " + projectName;
+  document.getElementById('siteVisitModal').style.display = 'flex';
+}
+function svCloseModal() {
+  document.getElementById('siteVisitModal').style.display = 'none';
+}
+function svSubmit() {
+  var name = document.getElementById('svName').value.trim();
+  var phone = document.getElementById('svPhone').value.trim();
+  var email = document.getElementById('svEmail').value.trim();
+  var date = document.getElementById('svDate').value;
+
+  if (!name || !phone || phone.length < 10 || !date) {
+    alert('Please fill your name, a valid phone number, and preferred date.');
+    return;
+  }
+
+  if (typeof fbq !== 'undefined') {
+    fbq('trackCustom', 'SiteVisitRequest', {
+      project: svCurrentProject,
+      phone: phone,
+      email: email,
+      visit_date: date
+    });
+  }
+
+  var yourWhatsAppNumber = "919949610063"; // your number, no + or spaces
+  var msg = "Site Visit Request\n" +
+            "Project: " + svCurrentProject + "\n" +
+            "Name: " + name + "\n" +
+            "Phone: " + phone + "\n" +
+            "Email: " + (email || "-") + "\n" +
+            "Preferred Date: " + date;
+  var url = "https://wa.me/" + yourWhatsAppNumber + "?text=" + encodeURIComponent(msg);
+  window.open(url, '_blank');
+
+  svCloseModal();
+}
+
+// ---- Auto-insert the button into every project's side-panel ----
+function svInsertButton() {
+  var panels = document.querySelectorAll('.side-panel');
+  panels.forEach(function (panel) {
+    if (panel.querySelector('.sv-btn')) return; // already added
+
+    var titleEl = panel.querySelector('h3');
+    var projectName = titleEl ? titleEl.textContent.replace('Interested in ', '').replace('?', '') : 'this project';
+
+    var btn = document.createElement('a');
+    btn.href = '#';
+    btn.className = 'side-btn sv-btn';
+    btn.textContent = 'Book Site Visit';
+    btn.onclick = function (e) {
+      e.preventDefault();
+      svOpenModal(projectName);
+    };
+
+    panel.appendChild(btn);
+  });
+}
+
+// Run on page load and whenever the page content changes (since this is a single-page app)
+document.addEventListener('DOMContentLoaded', svInsertButton);
+var svObserver = new MutationObserver(svInsertButton);
+svObserver.observe(document.getElementById('app') || document.body, { childList: true, subtree: true });
+</script>
+
 </body>
 </html>
