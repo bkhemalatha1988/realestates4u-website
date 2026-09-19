@@ -87,5 +87,167 @@ src="https://www.facebook.com/tr?id=1452487213303598&ev=PageView&noscript=1"
 
 <script src="config.js"></script>
 <script src="app.js"></script>
+<!-- ================================================================
+  FLOATING CALL + BROCHURE BUTTONS
+  Add this block just before </body> in your index.html
+  ================================================================ -->
+
+<div class="floating-actions">
+  <!-- CALL BUTTON -->
+  <a href="tel:+919949610063"
+     class="float-btn call-btn"
+     onclick="trackCallClick()">
+    📞 <span>Call Now</span>
+  </a>
+
+  <!-- BROCHURE BUTTON -->
+  <a href="#" class="float-btn brochure-btn" onclick="openBrochureForm(); return false;">
+    📄 <span>Get Brochure</span>
+  </a>
+</div>
+
+<!-- Simple popup form for brochure lead capture -->
+<div id="brochureModal" class="brochure-modal" style="display:none;">
+  <div class="brochure-modal-content">
+    <span class="close-modal" onclick="closeBrochureForm()">&times;</span>
+    <h3>Get Project Brochure</h3>
+    <p>Enter your number, we'll send the brochure link on WhatsApp instantly.</p>
+    <input type="tel" id="brochurePhone" placeholder="Your WhatsApp Number" required>
+    <button onclick="submitBrochureRequest()">Send Me the Brochure</button>
+  </div>
+</div>
+
+<style>
+.floating-actions {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 9999;
+}
+
+.float-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease;
+}
+
+.float-btn:hover {
+  transform: scale(1.05);
+}
+
+.call-btn {
+  background: #25D366; /* green like WhatsApp/call */
+}
+
+.brochure-btn {
+  background: #1877F2; /* facebook blue, matches your brand */
+}
+
+/* Modal styles */
+.brochure-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.brochure-modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 320px;
+  width: 90%;
+  position: relative;
+  text-align: center;
+}
+
+.brochure-modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.brochure-modal-content button {
+  background: #1877F2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 100%;
+}
+
+.close-modal {
+  position: absolute;
+  top: 8px;
+  right: 14px;
+  cursor: pointer;
+  font-size: 22px;
+  color: #999;
+}
+
+/* Mobile: buttons slightly smaller, text hidden to save space */
+@media (max-width: 480px) {
+  .float-btn span { display: none; }
+  .float-btn { padding: 14px; border-radius: 50%; }
+}
+</style>
+
+<script>
+// ---- CALL BUTTON: fires a Facebook custom event when tapped ----
+function trackCallClick() {
+  if (typeof fbq !== 'undefined') {
+    fbq('trackCustom', 'CallButtonClick');
+  }
+}
+
+// ---- BROCHURE MODAL open/close ----
+function openBrochureForm() {
+  document.getElementById('brochureModal').style.display = 'flex';
+}
+function closeBrochureForm() {
+  document.getElementById('brochureModal').style.display = 'none';
+}
+
+// ---- BROCHURE SUBMIT: sends number to WhatsApp + fires pixel event ----
+function submitBrochureRequest() {
+  const phone = document.getElementById('brochurePhone').value.trim();
+  if (!phone || phone.length < 10) {
+    alert('Please enter a valid number');
+    return;
+  }
+
+  // Fire Facebook custom event so you can see it in Events Manager
+  if (typeof fbq !== 'undefined') {
+    fbq('trackCustom', 'BrochureRequest', { phone: phone });
+  }
+
+  // Option A: redirect to WhatsApp so they message you directly,
+  // and you reply with the brochure link manually or via auto-reply.
+  const yourWhatsAppNumber = "919949610063"; // your number, country code no + or spaces
+  const message = encodeURIComponent("Hi, please send me the project brochure. My number: " + phone);
+  window.open(`https://wa.me/${yourWhatsAppNumber}?text=${message}`, '_blank');
+
+  closeBrochureForm();
+}
+</script>
 </body>
 </html>
