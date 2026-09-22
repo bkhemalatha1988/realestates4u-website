@@ -186,8 +186,23 @@ form.addEventListener('submit', function(e) {
 
   db.collection("leads").add(leadData)
     .then(() => {
-      // Fire Meta Pixel Lead event before redirecting
+      // Fire Meta Pixel Lead event before redirecting, with
+      // Advanced Matching so Meta can match this lead to a real
+      // profile (raises Event Match Quality). Meta hashes these
+      // values automatically — do not hash them yourself.
       if (typeof fbq === 'function') {
+        var fullName = document.getElementById('name').value.trim();
+        var nameParts = fullName.split(' ');
+        var firstName = nameParts[0] || '';
+        var lastName = nameParts.slice(1).join(' ') || '';
+
+        fbq('set', 'userData', {
+          em: document.getElementById('email').value.trim().toLowerCase(),
+          ph: document.getElementById('phone').value.replace(/[^0-9]/g, ''),
+          fn: firstName.toLowerCase(),
+          ln: lastName.toLowerCase()
+        });
+
         fbq('track', 'Lead');
       }
       window.location.href = 'thank-you.html';
