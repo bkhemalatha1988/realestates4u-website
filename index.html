@@ -78,6 +78,35 @@ src="https://www.facebook.com/tr?id=1452487213303598&ev=PageView&noscript=1"
   </div>
 </div>
 
+<div class="img-lightbox" id="img-lightbox" onclick="closeImageLightbox()">
+  <span class="img-lightbox-close">&times;</span>
+  <img id="img-lightbox-img" src="" alt="">
+</div>
+
+<style>
+.img-lightbox {
+  display:none;
+  position:fixed; inset:0; background:rgba(0,0,0,0.9);
+  z-index:100000; align-items:center; justify-content:center;
+  padding:20px; cursor:zoom-out;
+}
+.img-lightbox.open{ display:flex; }
+.img-lightbox img{ max-width:100%; max-height:100%; border-radius:8px; }
+.img-lightbox-close{
+  position:absolute; top:16px; right:20px; color:#fff; font-size:32px; cursor:pointer;
+}
+</style>
+
+<script>
+function openImageLightbox(src){
+  document.getElementById('img-lightbox-img').src = src;
+  document.getElementById('img-lightbox').classList.add('open');
+}
+function closeImageLightbox(){
+  document.getElementById('img-lightbox').classList.remove('open');
+}
+</script>
+
 <script src="config.js"></script>
 <script src="app.js"></script>
 <div class="fab-stack">
