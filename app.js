@@ -358,6 +358,11 @@ function renderVenture(slug) {
       '<a href="#/category/' + p.category + '" class="back-link" style="color:var(--brass-light)">&larr; ' + catLabel(p.category) + '</a>' +
       '<div class="venture-cat">' + (p.categoryLabel || catLabel(p.category)) + '</div>' +
       '<h1>' + p.name + '</h1>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;">' +
+        (p.price ? '<span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:100px;font-weight:700;font-size:0.9rem;">Rs ' + p.price + '/sq.yd</span>' : '') +
+        (p.rera ? '<span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:100px;font-weight:700;font-size:0.9rem;">RERA ' + p.rera + '</span>' : '') +
+        (p.acres ? '<span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:100px;font-weight:700;font-size:0.9rem;">' + p.acres + ' acres</span>' : '') +
+      '</div>' +
     '</div></section>' +
     '<section class="section">' +
       galleryHtml +
