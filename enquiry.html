@@ -23,7 +23,7 @@ fbq('track', 'PageView');
 <!-- End Meta Pixel Code -->
 
 <!-- ============================================================
-FIREBASE SDK (script-tag / compat version, no build tools needed)
+FIREBASE SDK
 ============================================================ -->
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
@@ -31,115 +31,115 @@ FIREBASE SDK (script-tag / compat version, no build tools needed)
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-font-family: 'Segoe UI', Arial, sans-serif;
-background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-min-height: 100vh;
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 20px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 .card {
-background: #fff;
-border-radius: 16px;
-padding: 36px 32px;
-max-width: 480px;
-width: 100%;
-box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  background: #fff;
+  border-radius: 16px;
+  padding: 36px 32px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 h1 {
-color: #1a3c5e;
-font-size: 26px;
-margin-bottom: 6px;
+  color: #1a3c5e;
+  font-size: 26px;
+  margin-bottom: 6px;
 }
 p.sub {
-color: #666;
-margin-bottom: 24px;
-font-size: 14px;
+  color: #666;
+  margin-bottom: 24px;
+  font-size: 14px;
 }
 label {
-display: block;
-font-weight: 600;
-color: #333;
-margin-bottom: 6px;
-margin-top: 16px;
-font-size: 14px;
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+  margin-top: 16px;
+  font-size: 14px;
 }
 input, select, textarea {
-width: 100%;
-padding: 12px 14px;
-border: 1.5px solid #ddd;
-border-radius: 8px;
-font-size: 15px;
-font-family: inherit;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
 }
 input:focus, select:focus, textarea:focus {
-outline: none;
-border-color: #2c5364;
+  outline: none;
+  border-color: #2c5364;
 }
 textarea { resize: vertical; min-height: 80px; }
 button {
-width: 100%;
-margin-top: 24px;
-padding: 14px;
-background: #1a3c5e;
-color: #fff;
-border: none;
-border-radius: 8px;
-font-size: 16px;
-font-weight: 600;
-cursor: pointer;
-transition: background 0.2s;
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px;
+  background: #1a3c5e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 button:hover { background: #2c5364; }
 button:disabled { background: #999; cursor: not-allowed; }
 .error {
-color: #c0392b;
-font-size: 13px;
-margin-top: 10px;
-display: none;
+  color: #c0392b;
+  font-size: 13px;
+  margin-top: 10px;
+  display: none;
 }
 .required { color: #c0392b; }
 </style>
 </head>
 <body>
 <div class="card">
-<h1>Enquiry</h1>
-<p class="sub">Fill in your details and we'll get in touch with you.</p>
+  <h1>Enquiry</h1>
+  <p class="sub">Fill in your details and we'll get in touch with you.</p>
 
-<form id="enquiryForm">
-<label>Name <span class="required">*</span></label>
-<input type="text" id="name" name="name" required>
+  <form id="enquiryForm">
+    <label>Name <span class="required">*</span></label>
+    <input type="text" id="name" name="name" required>
 
-<label>Phone number <span class="required">*</span></label>
-<input type="tel" id="phone" name="phone" required>
+    <label>Phone number <span class="required">*</span></label>
+    <input type="tel" id="phone" name="phone" required>
 
-<label>Venture / Category of interest <span class="required">*</span></label>
-<select id="venture" name="venture" required>
-<option value="" disabled selected>Choose</option>
-<option value="Sagar Highway">Sagar Highway</option>
-<option value="Vijayawada Highway">Vijayawada Highway</option>
-<option value="Srisailam Highway">Srisailam Highway</option>
-<option value="Warangal Highway">Warangal Highway</option>
-<option value="West Hyderabad">West Hyderabad</option>
-<option value="Future City">Future City ventures</option>
-</select>
+    <label>Venture / Category of interest <span class="required">*</span></label>
+    <select id="venture" name="venture" required>
+      <option value="" disabled selected>Choose</option>
+      <option value="Sagar Highway">Sagar Highway</option>
+      <option value="Vijayawada Highway">Vijayawada Highway</option>
+      <option value="Srisailam Highway">Srisailam Highway</option>
+      <option value="Warangal Highway">Warangal Highway</option>
+      <option value="West Hyderabad">West Hyderabad</option>
+      <option value="Future City">Future City ventures</option>
+    </select>
 
-<label>Email (optional)</label>
-<input type="email" id="email" name="email">
+    <label>Email (optional)</label>
+    <input type="email" id="email" name="email">
 
-<label>Message</label>
-<textarea id="message" name="message"></textarea>
+    <label>Message</label>
+    <textarea id="message" name="message"></textarea>
 
-<div id="errorMsg" class="error"></div>
+    <div id="errorMsg" class="error"></div>
 
-<button type="submit" id="submitBtn">Submit Enquiry</button>
-</form>
+    <button type="submit" id="submitBtn">Submit Enquiry</button>
+  </form>
 </div>
 
 <script>
 // ============================================================
-// Firebase configuration for project "realestates4u"
+// Firebase configuration
 // ============================================================
 const firebaseConfig = {
   apiKey: "AIzaSyAXACpHXlI8sygPD3w--gi-B5CSEwnBH0A",
@@ -163,9 +163,6 @@ form.addEventListener('submit', function(e) {
   submitBtn.disabled = true;
   submitBtn.textContent = 'Submitting...';
 
-  // Field mapping agreed for the CRM: website fields map into the
-  // CRM's lead structure, with CRM-only fields auto-filled with
-  // sensible defaults (Stage: New, Source: Website, Budget: blank).
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
 
@@ -186,25 +183,35 @@ form.addEventListener('submit', function(e) {
 
   db.collection("leads").add(leadData)
     .then(() => {
-      // Fire Meta Pixel Lead event before redirecting, with
-      // Advanced Matching so Meta can match this lead to a real
-      // profile (raises Event Match Quality). Meta hashes these
-      // values automatically — do not hash them yourself.
+      // ========== IMPROVED META PIXEL LEAD EVENT ==========
       if (typeof fbq === 'function') {
         var fullName = document.getElementById('name').value.trim();
         var nameParts = fullName.split(' ');
         var firstName = nameParts[0] || '';
         var lastName = nameParts.slice(1).join(' ') || '';
+        var email = document.getElementById('email').value.trim().toLowerCase();
+        var phone = document.getElementById('phone').value.replace(/[^0-9]/g, '');
 
-        fbq('set', 'userData', {
-          em: document.getElementById('email').value.trim().toLowerCase(),
-          ph: document.getElementById('phone').value.replace(/[^0-9]/g, ''),
+        // Clean phone number (remove leading 0 or 91)
+        if (phone.startsWith('0')) phone = phone.substring(1);
+        if (phone.startsWith('91') && phone.length > 10) phone = phone.substring(2);
+
+        var userData = {
+          ph: phone,
           fn: firstName.toLowerCase(),
           ln: lastName.toLowerCase()
-        });
+        };
 
+        // Email unte matrame pampu (empty unte skip)
+        if (email) {
+          userData.em = email;
+        }
+
+        fbq('set', 'userData', userData);
         fbq('track', 'Lead');
       }
+      // ====================================================
+
       window.location.href = 'thank-you.html';
     })
     .catch((err) => {
