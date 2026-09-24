@@ -1,516 +1,170 @@
-// ---------- category setup ----------
-var CATEGORIES = [
-  { slug: "sagar", label: "Sagar Highway" },
-  { slug: "vijayawada", label: "Vijayawada Highway" },
-  { slug: "srisailam", label: "Srisailam Highway" },
-  { slug: "warangal", label: "Warangal Highway" },
-  { slug: "futurecity", label: "Future City" },
-  { slug: "westhyderabad", label: "West Hyderabad" }
-];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>realestates4u — Open plot ventures across Hyderabad highways</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1452487213303598');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1452487213303598&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
 
-function catLabel(slug) {
-  for (var i = 0; i < CATEGORIES.length; i++) if (CATEGORIES[i].slug === slug) return CATEGORIES[i].label;
-  return slug;
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#/" class="logo">realestates<span>4u</span></a>
+    <nav class="main-nav" id="main-nav">
+      <div class="nav-item has-dropdown">
+        <span>Projects</span>
+        <div class="dropdown">
+          <a href="#/category/sagar" data-cat="sagar">Sagar Highway</a>
+          <a href="#/category/vijayawada" data-cat="vijayawada">Vijayawada Highway</a>
+          <a href="#/category/srisailam" data-cat="srisailam">Srisailam Highway</a>
+          <a href="#/category/warangal" data-cat="warangal">Warangal Highway</a>
+          <a href="#/category/futurecity" data-cat="futurecity">Future City</a>
+          <a href="#/category/westhyderabad" data-cat="westhyderabad">West Hyderabad</a>
+        </div>
+      </div>
+      <a href="#/" class="nav-item">Home</a>
+      <a href="#/about" class="nav-item">About Us</a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="header-actions">
+      <a href="#" class="whatsapp-btn" id="header-whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <svg viewBox="0 0 32 32" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.397.7 4.63 1.912 6.51L4 29l7.694-1.87A11.93 11.93 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3zm0 21.6c-1.98 0-3.83-.55-5.41-1.5l-.386-.23-4.566 1.11 1.14-4.44-.25-.4A9.55 9.55 0 0 1 5.4 15c0-5.85 4.76-10.6 10.604-10.6S26.6 9.15 26.6 15 21.847 24.6 16.004 24.6zm5.83-7.94c-.32-.16-1.9-.94-2.19-1.05-.294-.107-.508-.16-.722.16-.213.32-.828 1.05-1.016 1.267-.187.213-.373.24-.694.08-.32-.16-1.352-.498-2.575-1.588-.952-.85-1.594-1.9-1.782-2.22-.187-.32-.02-.494.14-.653.144-.144.32-.373.48-.56.16-.187.213-.32.32-.534.107-.213.053-.4-.027-.56-.08-.16-.722-1.74-.99-2.38-.26-.626-.526-.54-.722-.55l-.614-.01c-.213 0-.56.08-.854.4-.293.32-1.12 1.094-1.12 2.667 0 1.573 1.147 3.093 1.307 3.307.16.213 2.253 3.44 5.463 4.82.763.33 1.36.527 1.825.674.767.244 1.465.21 2.017.127.615-.092 1.9-.777 2.167-1.527.267-.75.267-1.393.187-1.527-.08-.133-.293-.213-.613-.373z"/></svg>
+        <span>WhatsApp</span>
+      </a>
+      <a href="#" class="enquire-btn" id="header-enquire">Enquire About Projects</a>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">realestates<span>4u</span></div>
+    <p>Open plot ventures along Hyderabad's growth corridors.</p>
+    <a href="#/privacy" class="footer-link">Privacy Policy</a>
+    <p class="footer-meta">&copy; <span id="year"></span> realestates4u.in</p>
+  </div>
+</footer>
+<div class="enquiry-modal" id="enquiry-modal">
+  <div class="enquiry-modal-inner">
+    <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+    <h3>Enquire about a venture</h3>
+    <p class="modal-sub">Share your details, our team will reach out.</p>
+    <iframe id="enquiry-frame" src="" title="Enquiry form"></iframe>
+  </div>
+</div>
+
+<div class="img-lightbox" id="img-lightbox" onclick="closeImageLightbox()">
+  <span class="img-lightbox-close">&times;</span>
+  <img id="img-lightbox-img" src="" alt="">
+</div>
+
+<style>
+.img-lightbox {
+  display:none;
+  position:fixed; inset:0; background:rgba(0,0,0,0.9);
+  z-index:100000; align-items:center; justify-content:center;
+  padding:20px; cursor:zoom-out;
 }
-function catSlugFromLabel(label) {
-  var norm = (label || "").toLowerCase();
-  for (var i = 0; i < CATEGORIES.length; i++) {
-    if (norm.indexOf(CATEGORIES[i].label.toLowerCase().split(" ")[0]) !== -1) return CATEGORIES[i].slug;
-  }
-  return "";
+.img-lightbox.open{ display:flex; }
+.img-lightbox img{ max-width:100%; max-height:100%; border-radius:8px; }
+.img-lightbox-close{
+  position:absolute; top:16px; right:20px; color:#fff; font-size:32px; cursor:pointer;
 }
-function slugify(s) {
-  return (s || "").toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+</style>
+
+<script>
+function openImageLightbox(src){
+  document.getElementById('img-lightbox-img').src = src;
+  document.getElementById('img-lightbox').classList.add('open');
 }
-
-// ---------- CSV parsing (handles quoted fields with commas) ----------
-function parseCSV(text) {
-  var rows = [];
-  var row = [];
-  var field = "";
-  var inQuotes = false;
-  for (var i = 0; i < text.length; i++) {
-    var c = text[i];
-    if (inQuotes) {
-      if (c === '"') {
-        if (text[i + 1] === '"') { field += '"'; i++; }
-        else inQuotes = false;
-      } else field += c;
-    } else {
-      if (c === '"') inQuotes = true;
-      else if (c === ",") { row.push(field); field = ""; }
-      else if (c === "\n" || c === "\r") {
-        if (c === "\r" && text[i + 1] === "\n") i++;
-        row.push(field); field = "";
-        if (row.length > 1 || row[0] !== "") rows.push(row);
-        row = [];
-      } else field += c;
-    }
-  }
-  if (field !== "" || row.length) { row.push(field); rows.push(row); }
-  return rows;
+function closeImageLightbox(){
+  document.getElementById('img-lightbox').classList.remove('open');
 }
+</script>
 
-function rowsToObjects(rows) {
-  if (!rows.length) return [];
-  var headers = rows[0].map(function (h) { return h.trim(); });
-  return rows.slice(1).filter(function (r) { return r.some(function (v) { return v.trim() !== ""; }); })
-    .map(function (r) {
-      var obj = {};
-      headers.forEach(function (h, i) { obj[h] = (r[i] || "").trim(); });
-      return obj;
-    });
+<script src="config.js"></script>
+<script src="app.js"></script>
+<div class="fab-stack">
+  <!-- WHATSAPP -->
+  <a href="https://wa.me/919949610063?text=Hi%2C%20I%27m%20interested%20in%20your%20projects"
+     class="fab-item fab-whatsapp"
+     target="_blank"
+     rel="noopener"
+     aria-label="Chat on WhatsApp"
+     onclick="fabTrackWhatsApp()">
+    <svg viewBox="0 0 32 32" width="24" height="24" fill="#ffffff" aria-hidden="true">
+      <path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.397.7 4.63 1.912 6.51L4 29l7.694-1.87A11.93 11.93 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3zm0 21.6c-1.98 0-3.83-.55-5.41-1.51l-.386-.23-4.566 1.11 1.14-4.45-.252-.41A9.55 9.55 0 0 1 6.4 15c0-5.29 4.31-9.6 9.604-9.6 5.29 0 9.596 4.31 9.596 9.6 0 5.29-4.306 9.6-9.596 9.6zm5.27-7.19c-.29-.145-1.71-.843-1.975-.94-.265-.096-.458-.144-.65.145-.193.29-.747.94-.916 1.133-.169.193-.338.217-.627.072-.29-.145-1.223-.45-2.33-1.437-.86-.767-1.442-1.715-1.611-2.004-.169-.29-.018-.446.127-.59.13-.13.29-.338.434-.507.145-.169.193-.29.29-.483.096-.193.048-.362-.024-.507-.072-.145-.65-1.568-.891-2.147-.235-.563-.473-.487-.65-.496l-.554-.01c-.193 0-.506.072-.771.362-.265.29-1.012.989-1.012 2.412s1.036 2.798 1.18 2.991c.145.193 2.04 3.115 4.94 4.368.69.298 1.228.476 1.648.609.692.22 1.322.189 1.82.115.555-.083 1.71-.699 1.951-1.374.241-.675.241-1.253.169-1.374-.072-.12-.265-.193-.554-.338z"/>
+    </svg>
+    <span class="fab-label">WhatsApp</span>
+  </a>
+</div>
+
+<style>
+.fab-stack {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  z-index: 99999 !important;
+  align-items: flex-end !important;
 }
-
-function findField(obj, partial) {
-  var keys = Object.keys(obj);
-  for (var i = 0; i < keys.length; i++) {
-    if (keys[i].toLowerCase().indexOf(partial.toLowerCase()) !== -1) return obj[keys[i]];
-  }
-  return "";
+.fab-stack .fab-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 12px 18px !important;
+  border-radius: 30px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  text-decoration: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25) !important;
+  transition: transform 0.2s ease !important;
+  white-space: nowrap !important;
+  border: none !important;
 }
-
-function youtubeId(url) {
-  if (!url) return "";
-  var m = url.match(/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{11})/);
-  return m ? m[1] : "";
+.fab-stack .fab-item:hover { transform: scale(1.05) !important; }
+.fab-stack .fab-item svg { flex-shrink: 0 !important; display: block !important; }
+.fab-stack .fab-whatsapp { background: #25D366 !important; }
+@media (max-width: 480px) {
+  .fab-stack .fab-label { display: none !important; }
+  .fab-stack .fab-item { padding: 14px !important; border-radius: 50% !important; }
 }
+</style>
 
-// ---------- data ----------
-var PROJECTS = [];
-var GALLERY = []; // { url, ventureName }, aggregated from all ventures' photos, max 50
-var GREETING = null; // { imageUrl, caption, link } or null when there's nothing active to show
-var carouselTimer = null;
-var carouselIndex = 0;
-
-function buildGallery() {
-  var items = [];
-  PROJECTS.forEach(function (p) {
-    p.photos.forEach(function (url) {
-      if (items.length < 50) items.push({ url: url, ventureName: p.name });
-    });
-  });
-  GALLERY = items;
+<script>
+function fabTrackWhatsApp() {
+  if (typeof fbq !== 'undefined') { fbq('trackCustom', 'WhatsAppButtonClick'); }
 }
+</script>
 
-// Converts Google Drive share links (or any comma-separated list of them)
-// into direct-view image URLs so <img> tags can actually display them.
-function convertDriveLinks(rawLinks) {
-  if (!rawLinks) return "";
-
-  // Handles multiple files separated by commas
-  var links = rawLinks.split(",");
-  var converted = [];
-
-  for (var i = 0; i < links.length; i++) {
-    var link = links[i].trim();
-    if (!link) continue;
-
-    // Extract the file ID from any Drive link format
-    var match = link.match(/[-\w]{25,}/); // Drive file IDs are long alphanumeric strings
-    if (match) {
-      var fileId = match[0];
-      // Google disabled the old "uc?export=view" embed format (it now
-      // returns 403 Forbidden for most accounts). The "thumbnail" endpoint
-      // is the current working way to hotlink a Drive image in an <img> tag.
-      converted.push("https://drive.google.com/thumbnail?id=" + fileId + "&sz=w1000");
-    } else {
-      converted.push(link); // fallback: keep original if pattern not found
-    }
-  }
-
-  return converted.join(",");
-}
-
-function loadProjects(cb) {
-  if (!SHEET_CSV_URL || SHEET_CSV_URL.indexOf("PASTE_") === 0) {
-    PROJECTS = [];
-    cb();
-    return;
-  }
-  fetch(SHEET_CSV_URL)
-    .then(function (r) { return r.text(); })
-    .then(function (text) {
-      var objs = rowsToObjects(parseCSV(text));
-      PROJECTS = objs.map(function (o) {
-        var name = findField(o, "project name") || findField(o, "name");
-        var catLbl = findField(o, "category");
-        var photos = convertDriveLinks(findField(o, "photo")).split(",").map(function (s) { return s.trim(); }).filter(Boolean);
-        return {
-          name: name,
-          slug: slugify(name),
-          category: catSlugFromLabel(catLbl) || slugify(catLbl),
-          categoryLabel: catLbl,
-          rera: findField(o, "rera"),
-          lp: findField(o, "lp no"),
-          acres: findField(o, "acres"),
-          plots: findField(o, "total plots"),
-availablePlots: findField(o, "available plots"),
-          price: findField(o, "market price"),
-          govtPrice: findField(o, "govt price"),
-          location: findField(o, "location") || findField(o, "maps"),
-          photos: photos,
-          video: findField(o, "video"),
-          brochure: findField(o, "brochure")
-        };
-      });
-      buildGallery();
-      cb();
-    })
-    .catch(function () { PROJECTS = []; cb(); });
-}
-
-// Loads the home page greeting/quote banner from its own published Sheet
-// tab. Picks the first row marked Active (yes/blank counts as active, "no"
-// hides it) that has an image URL. Any other row is simply ignored — no
-// need to delete old rows, just flip Active to "no" or leave it blank.
-function loadGreeting(cb) {
-  if (!GREETING_CSV_URL || GREETING_CSV_URL.indexOf("PASTE_") === 0) {
-    GREETING = (typeof GREETING_IMAGE_URL !== "undefined" && GREETING_IMAGE_URL)
-      ? { imageUrl: GREETING_IMAGE_URL, caption: (typeof GREETING_CAPTION !== "undefined" ? GREETING_CAPTION : ""), link: "" }
-      : null;
-    cb();
-    return;
-  }
-  fetch(GREETING_CSV_URL)
-    .then(function (r) { return r.text(); })
-    .then(function (text) {
-      var objs = rowsToObjects(parseCSV(text));
-      var picked = null;
-      for (var i = 0; i < objs.length; i++) {
-        var o = objs[i];
-        var active = (findField(o, "active") || "yes").toLowerCase();
-        var img = convertDriveLinks(findField(o, "image")).split(",")[0];
-        if (active !== "no" && active !== "false" && img) {
-          picked = {
-            imageUrl: img,
-            caption: findField(o, "caption") || findField(o, "message"),
-            link: findField(o, "link")
-          };
-          break;
-        }
-      }
-      GREETING = picked;
-      cb();
-    })
-    .catch(function () { GREETING = null; cb(); });
-}
-
-// ---------- rendering ----------
-var app = document.getElementById("app");
-
-function greetingHtml() {
-  if (!GREETING) return "";
-  var img = '<img src="' + GREETING.imageUrl + '" alt="' + (GREETING.caption || "Greetings") + '" onerror="this.closest(\'.hero-greeting-card\').style.display=\'none\'">';
-  var captionHtml = GREETING.caption ? '<div class="hero-greeting-caption">' + GREETING.caption + '</div>' : "";
-  var content = img + captionHtml;
-  return GREETING.link
-    ? '<a href="' + GREETING.link + '" target="_blank" rel="noopener" class="hero-greeting-card">' + content + '</a>'
-    : '<div class="hero-greeting-card">' + content + '</div>';
-}
-
-function ventureRow(p) {
-  var img = p.photos[0]
-    ? '<img class="venture-photo" src="' + p.photos[0] + '" alt="' + p.name + '">'
-    : '<div class="venture-photo-ph">Photo coming soon</div>';
-  return '' +
-    '<div class="venture-row" data-slug="' + p.slug + '">' +
-      img +
-      '<div class="venture-info">' +
-        '<div class="venture-cat">' + (p.categoryLabel || catLabel(p.category)) + '</div>' +
-        '<h3>' + p.name + '</h3>' +
-        '<div class="venture-meta">' +
-          (p.acres ? '<span><b>' + p.acres + '</b> acres</span>' : '') +
-         (p.availablePlots ? '<span><b>' + p.availablePlots + '</b> plots available</span>' : '') +
-          (p.rera ? '<span>RERA <b>' + p.rera + '</b></span>' : '') +
-        '</div>' +
-        (p.price ? '<div class="venture-price">Rs ' + p.price + ' / sq yd</div>' : '') +
-      '</div>' +
-    '</div>';
-}
-
-function carouselHtml() {
-  if (!GALLERY.length) return "";
-  var slides = GALLERY.map(function (g, i) {
-    return '<div class="carousel-slide' + (i === 0 ? ' active' : '') + '" data-i="' + i + '">' +
-      '<div class="carousel-bg" style="background-image:url(\'' + g.url + '\')"></div>' +
-      '<img src="' + g.url + '" alt="' + g.ventureName + '">' +
-      '<div class="carousel-caption">' + g.ventureName + '</div>' +
-    '</div>';
-  }).join("");
-  var dotsHtml = "";
-  if (GALLERY.length <= 12) {
-    var dots = GALLERY.map(function (g, i) {
-      return '<span' + (i === 0 ? ' class="active"' : '') + '></span>';
-    }).join("");
-    dotsHtml = '<div class="carousel-dots">' + dots + '</div>';
-  }
-  return '<div class="carousel" id="home-carousel">' + slides + dotsHtml + '</div>';
-}
-
-function stopCarousel() {
-  if (carouselTimer) { clearInterval(carouselTimer); carouselTimer = null; }
-}
-
-function startCarousel() {
-  stopCarousel();
-  carouselIndex = 0;
-  if (GALLERY.length < 2) return;
-  carouselTimer = setInterval(function () {
-    var el = document.getElementById("home-carousel");
-    if (!el) { stopCarousel(); return; }
-    var slides = el.querySelectorAll(".carousel-slide");
-    var dots = el.querySelectorAll(".carousel-dots span");
-    slides[carouselIndex].classList.remove("active");
-    if (dots[carouselIndex]) dots[carouselIndex].classList.remove("active");
-    carouselIndex = (carouselIndex + 1) % GALLERY.length;
-    slides[carouselIndex].classList.add("active");
-    if (dots[carouselIndex]) dots[carouselIndex].classList.add("active");
-  }, 3500); // slides every 3.5s
-}
-
-function renderHome() {
-  var statsHtml = '' +
-    '<div class="hero-stat"><div class="num">' + CATEGORIES.length + '</div><div class="label">Highway corridors</div></div>' +
-    '<div class="hero-stat"><div class="num">' + PROJECTS.length + '</div><div class="label">Active ventures</div></div>' +
-    '<div class="hero-stat"><div class="num">RERA</div><div class="label">Approved layouts</div></div>';
-
-  var shieldIcon = '<svg class="hwy-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z"/></svg>';
-  var routeHtml = CATEGORIES.map(function (c) {
-    return '<div class="route-stop"><a href="#/category/' + c.slug + '">' + shieldIcon + ' ' + c.label + '</a></div>';
-  }).join("");
-
-  var featured = PROJECTS.slice(0, 5);
-  var featuredHtml = featured.length
-    ? featured.map(ventureRow).join("")
-    : '<div class="empty-state">Ventures will appear here once the Projects sheet has entries.</div>';
-
-  app.innerHTML = '' +
-    '<section class="hero">' +
-      '<div class="hero-inner">' +
-        '<div class="hero-copy">' +
-          '<h1>Own land on the road to Hyderabad\'s next <span class="accent">boomtowns</span></h1>' +
-          '<p class="lede">RERA-approved open plots planted directly along national highway growth corridors — where connectivity arrives first, and land value follows.</p>' +
-        '</div>' +
-        '<div class="hero-right">' +
-          '<div class="hero-stats">' + statsHtml + '</div>' +
-          greetingHtml() +
-        '</div>' +
-      '</div>' +
-    '</section>' +
-    carouselHtml() +
-    '<div class="route-nav">' + '<div class="route-inner">' + routeHtml + '</div></div>' +
-    '<section class="highway-strip"><div class="highway-strip-inner">' +
-      '<div class="hwy-point"><span class="hwy-num">01</span><h4>Highway-first connectivity</h4><p>Every venture sits directly on a national/state highway corridor — no last-mile guesswork.</p></div>' +
-      '<div class="hwy-point"><span class="hwy-num">02</span><h4>Appreciation follows infrastructure</h4><p>Land along growth corridors historically outpaces interior plots as roads, industry and townships expand.</p></div>' +
-      '<div class="hwy-point"><span class="hwy-num">03</span><h4>Clean title, RERA approved</h4><p>Every layout carries full approvals — the same legal clarity we stand behind on every venture.</p></div>' +
-    '</div></section>' +
-    '<section class="section">' +
-      '<div class="section-head"><h2>Featured ventures</h2><p>A look across our current corridors</p></div>' +
-      featuredHtml +
-    '</section>';
-
-  bindVentureClicks();
-  startCarousel();
-}
-
-function renderCategory(slug) {
-  var list = PROJECTS.filter(function (p) { return p.category === slug; });
-  var html = list.length
-    ? list.map(ventureRow).join("")
-    : '<div class="empty-state">No ventures listed in ' + catLabel(slug) + ' yet.</div>';
-
-  app.innerHTML = '' +
-    '<section class="section">' +
-      '<a href="#/" class="back-link">&larr; All corridors</a>' +
-      '<div class="section-head"><h2>' + catLabel(slug) + '</h2><p>' + list.length + ' venture(s)</p></div>' +
-      html +
-    '</section>';
-
-  bindVentureClicks();
-}
-
-function renderVenture(slug) {
-  var p = PROJECTS.filter(function (x) { return x.slug === slug; })[0];
-  if (!p) { app.innerHTML = '<div class="empty-state">Venture not found.</div>'; return; }
-
-  var galleryHtml = p.photos.length
-    ? '<div class="gallery">' + p.photos.map(function (u) { return '<img src="' + u + '" alt="' + p.name + '" onclick="openImageLightbox(\'' + u + '\')" style="cursor:zoom-in">'; }).join("") + '</div>'
-    : "";
-
-  var yid = youtubeId(p.video);
-  var videoHtml = yid
-    ? '<div class="video-embed"><iframe src="https://www.youtube.com/embed/' + yid + '" title="' + p.name + ' video" allowfullscreen></iframe></div>'
-    : "";
-
-  var specRows = [
-    ["RERA no.", p.rera], ["LP no.", p.lp], ["Total acres", p.acres],
-   ["Total plots", p.plots], ["Available plots", p.availablePlots], ["Market price", p.price ? "Rs " + p.price + " / sq yd" : ""],
-    ["Govt price", p.govtPrice ? "Rs " + p.govtPrice + " / sq yd" : ""]
-  ].filter(function (r) { return r[1]; })
-   .map(function (r) { return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>'; }).join("");
-
-  var mapsBtn = p.location ? '<a class="side-btn outline" target="_blank" href="' + p.location + '">View location</a>' : "";
-  var brochureBtn = p.brochure ? '<a class="side-btn outline" target="_blank" href="' + p.brochure + '">Download brochure</a>' : "";
-
-  app.innerHTML = '' +
-    '<section class="detail-hero"><div class="detail-hero-inner">' +
-      '<a href="#/category/' + p.category + '" class="back-link" style="color:var(--brass-light)">&larr; ' + catLabel(p.category) + '</a>' +
-      '<div class="venture-cat">' + (p.categoryLabel || catLabel(p.category)) + '</div>' +
-      '<h1>' + p.name + '</h1>' +
-      '<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;">' +
-        (p.price ? '<span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:100px;font-weight:700;font-size:0.9rem;">Rs ' + p.price + '/sq.yd</span>' : '') +
-        (p.rera ? '<span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:100px;font-weight:700;font-size:0.9rem;">RERA ' + p.rera + '</span>' : '') +
-        (p.acres ? '<span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:100px;font-weight:700;font-size:0.9rem;">' + p.acres + ' acres</span>' : '') +
-      '</div>' +
-    '</div></section>' +
-    '<section class="section">' +
-      galleryHtml +
-      '<div class="detail-grid">' +
-        '<div>' +
-          videoHtml +
-          '<div class="detail-block"><h3>Venture details</h3><table class="spec-table">' + specRows + '</table></div>' +
-        '</div>' +
-        '<div class="side-panel">' +
-          '<h3>Interested in ' + p.name + '?</h3>' +
-          '<a class="side-btn" href="#" id="detail-enquire">Enquire About This Project</a>' +
-          mapsBtn + brochureBtn +
-        '</div>' +
-      '</div>' +
-    '</section>';
-
-  var eb = document.getElementById("detail-enquire");
-  if (eb) eb.addEventListener("click", function (e) { e.preventDefault(); openEnquiry(p.name); });
-
-  updateWhatsappButton("Hi, I'm interested in " + p.name + ". Could you share more details?");
-}
-
-function bindVentureClicks() {
-  document.querySelectorAll(".venture-row").forEach(function (el) {
-    el.addEventListener("click", function () {
-      location.hash = "#/venture/" + el.getAttribute("data-slug");
-    });
-  });
-}
-
-function renderAbout() {
-  app.innerHTML = '' +
-    '<section class="section">' +
-      '<div class="static-page">' +
-        '<h1>About Us</h1>' +
-        '<p>realestate4u is a marketing and service oriented company. We undertake and promote projects that carry all required approvals, with no legal issues attached to the land — so our customers can invest with confidence.</p>' +
-        '<p>We work across five growth corridors around Hyderabad, connecting buyers with RERA-approved open plot ventures, and staying with them through the entire process — from site visits to registration.</p>' +
-        '<h2>What we stand for</h2>' +
-        '<p>Transparency in documentation, clear pricing, and long-term support even after the sale — because for us, every plot sold is the start of a relationship, not the end of one.</p>' +
-      '</div>' +
-    '</section>';
-}
-
-function renderPrivacy() {
-  app.innerHTML = '' +
-    '<section class="section">' +
-      '<div class="static-page">' +
-        '<h1>Privacy Policy</h1>' +
-        '<p>This policy explains how realestate4u collects and uses the information you share with us through this website.</p>' +
-        '<h2>Information we collect</h2>' +
-        '<p>When you submit an enquiry, we collect your name, phone number, email (if provided), and the venture you are interested in, so our team can respond to you.</p>' +
-        '<h2>How we use it</h2>' +
-        '<p>Your details are used only to contact you about the venture(s) you enquire about. We do not sell or share your information with unrelated third parties.</p>' +
-        '<h2>Contact</h2>' +
-        '<p>For any questions about your data, or to request it be removed, please reach out to us using the contact details shared on this site.</p>' +
-      '</div>' +
-    '</section>';
-}
-
-// ---------- router ----------
-function route() {
-  var hash = location.hash || "#/";
-  var parts = hash.replace("#/", "").split("/").filter(Boolean);
-  window.scrollTo(0, 0);
-  stopCarousel();
-  if (parts[0] === "category" && parts[1]) { renderCategory(parts[1]); updateWhatsappButton(); }
-  else if (parts[0] === "venture" && parts[1]) renderVenture(parts[1]); // sets its own message
-  else if (parts[0] === "about") { renderAbout(); updateWhatsappButton(); }
-  else if (parts[0] === "privacy") { renderPrivacy(); updateWhatsappButton(); }
-  else { renderHome(); updateWhatsappButton(); }
-}
-window.addEventListener("hashchange", route);
-
-// ---------- WhatsApp floating button ----------
-function updateWhatsappButton(message) {
-  var msgText = message || "Hi, I'd like to know more about your open plot projects.";
-  var href = WHATSAPP_NUMBER ? ("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msgText)) : "#";
-  var headerBtn = document.getElementById("header-whatsapp");
-  if (headerBtn && WHATSAPP_NUMBER) headerBtn.href = href;
-
-  var el = document.getElementById("whatsapp-float");
-  if (!el || !WHATSAPP_NUMBER) return;
-  var msg = message || "Hi, I'm interested in your open plot projects. Could you share more details?";
-  el.href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg);
-}
-
-// ---------- enquiry modal ----------
-var modal = document.getElementById("enquiry-modal");
-var frame = document.getElementById("enquiry-frame");
-
-function openEnquiry(ventureName) {
-  if (!ENQUIRY_FORM_URL || ENQUIRY_FORM_URL.indexOf("PASTE_") === 0) {
-    alert("Enquiry form link not configured yet.");
-    return;
-  }
-  var url = ENQUIRY_FORM_URL;
-  if (ventureName && ENQUIRY_VENTURE_FIELD) {
-    url += (url.indexOf("?") === -1 ? "?" : "&") + ENQUIRY_VENTURE_FIELD + "=" + encodeURIComponent(ventureName);
-  }
-  frame.src = url;
-  modal.classList.add("open");
-}
-document.getElementById("header-enquire").addEventListener("click", function (e) { e.preventDefault(); openEnquiry(""); });
-
-// ---------- mobile nav toggle ----------
-(function () {
-  var toggle = document.getElementById("nav-toggle");
-  var nav = document.getElementById("main-nav");
-  if (!toggle || !nav) return;
-
-  toggle.addEventListener("click", function () {
-    var isOpen = nav.classList.toggle("open");
-    toggle.classList.toggle("open", isOpen);
-    toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-  });
-
-  // Tapping "Projects" on mobile opens/closes its dropdown instead of
-  // relying on :hover, which doesn't work reliably on touch screens.
-  var dropdownParent = nav.querySelector(".has-dropdown");
-  if (dropdownParent) {
-    var label = dropdownParent.querySelector("span");
-    label.addEventListener("click", function (e) {
-      if (window.innerWidth > 640) return; // desktop keeps hover behaviour
-      e.stopPropagation();
-      dropdownParent.classList.toggle("open");
-    });
-  }
-
-  // Close the mobile menu after any nav link is tapped, and whenever the
-  // route changes (covers links inside the dropdown too).
-  nav.addEventListener("click", function (e) {
-    if (e.target.tagName === "A") {
-      nav.classList.remove("open");
-      toggle.classList.remove("open");
-      toggle.setAttribute("aria-expanded", "false");
-      if (dropdownParent) dropdownParent.classList.remove("open");
-    }
-  });
-})();
-document.getElementById("modal-close").addEventListener("click", function () { modal.classList.remove("open"); frame.src = ""; });
-modal.addEventListener("click", function (e) { if (e.target === modal) { modal.classList.remove("open"); frame.src = ""; } });
-
-// ---------- init ----------
-document.getElementById("year").textContent = new Date().getFullYear();
-var pendingLoads = 2;
-function afterInitialLoad() {
-  pendingLoads--;
-  if (pendingLoads === 0) route();
-}
-loadProjects(afterInitialLoad);
-loadGreeting(afterInitialLoad);
+</body>
+</html>
