@@ -335,7 +335,7 @@ function renderVenture(slug) {
   if (!p) { app.innerHTML = '<div class="empty-state">Venture not found.</div>'; return; }
 
   var galleryHtml = p.photos.length
-    ? '<div class="gallery">' + p.photos.map(function (u) { return '<img src="' + u + '" alt="' + p.name + '">'; }).join("") + '</div>'
+    ? '<div class="gallery">' + p.photos.map(function (u) { return '<img src="' + u + '" alt="' + p.name + '" onclick="openImageLightbox(\'' + u + '\')" style="cursor:zoom-in">'; }).join("") + '</div>'
     : "";
 
   var yid = youtubeId(p.video);
