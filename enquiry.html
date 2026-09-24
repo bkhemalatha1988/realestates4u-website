@@ -145,7 +145,7 @@ form.addEventListener('submit', function (e) {
     budget: "",
     source: "Website",
     stage: "New",
-    nextFollowUp: firebase.firestore.Timestamp.fromDate(nextFollowUp),
+    nextFollowUp: nextFollowUp.toISOString().split('T')[0], // "YYYY-MM-DD" string, matching CRM's expected format
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   };
 
