@@ -6,8 +6,8 @@
 <title>Enquiry - Realestates4u</title>
 
 <!-- ============================================================
-META PIXEL BASE CODE
-============================================================ -->
+     META PIXEL BASE CODE
+     ============================================================ -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -23,8 +23,8 @@ fbq('track', 'PageView');
 <!-- End Meta Pixel Code -->
 
 <!-- ============================================================
-FIREBASE SDK
-============================================================ -->
+     FIREBASE SDK (compat build — simplest for plain script tags)
+     ============================================================ -->
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
 
@@ -47,58 +47,23 @@ body {
   width: 100%;
   box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
-h1 {
-  color: #1a3c5e;
-  font-size: 26px;
-  margin-bottom: 6px;
-}
-p.sub {
-  color: #666;
-  margin-bottom: 24px;
-  font-size: 14px;
-}
-label {
-  display: block;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 6px;
-  margin-top: 16px;
-  font-size: 14px;
-}
+h1 { color: #1a3c5e; font-size: 26px; margin-bottom: 6px; }
+p.sub { color: #666; margin-bottom: 24px; font-size: 14px; }
+label { display: block; font-weight: 600; color: #333; margin-bottom: 6px; margin-top: 16px; font-size: 14px; }
 input, select, textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1.5px solid #ddd;
-  border-radius: 8px;
-  font-size: 15px;
-  font-family: inherit;
+  width: 100%; padding: 12px 14px; border: 1.5px solid #ddd;
+  border-radius: 8px; font-size: 15px; font-family: inherit;
 }
-input:focus, select:focus, textarea:focus {
-  outline: none;
-  border-color: #2c5364;
-}
+input:focus, select:focus, textarea:focus { outline: none; border-color: #2c5364; }
 textarea { resize: vertical; min-height: 80px; }
 button {
-  width: 100%;
-  margin-top: 24px;
-  padding: 14px;
-  background: #1a3c5e;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
+  width: 100%; margin-top: 24px; padding: 14px;
+  background: #1a3c5e; color: #fff; border: none; border-radius: 8px;
+  font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.2s;
 }
 button:hover { background: #2c5364; }
 button:disabled { background: #999; cursor: not-allowed; }
-.error {
-  color: #c0392b;
-  font-size: 13px;
-  margin-top: 10px;
-  display: none;
-}
+.error { color: #c0392b; font-size: 13px; margin-top: 10px; display: none; }
 .required { color: #c0392b; }
 </style>
 </head>
@@ -125,8 +90,8 @@ button:disabled { background: #999; cursor: not-allowed; }
       <option value="Future City">Future City ventures</option>
     </select>
 
-    <label>Email (optional)</label>
-    <input type="email" id="email" name="email">
+    <label>Email <span class="required">*</span></label>
+    <input type="email" id="email" name="email" required>
 
     <label>Message</label>
     <textarea id="message" name="message"></textarea>
@@ -139,7 +104,8 @@ button:disabled { background: #999; cursor: not-allowed; }
 
 <script>
 // ============================================================
-// Firebase configuration
+// FIREBASE CONFIG — replace with your real values from
+// Firebase Console -> Project Settings -> your web app (realestates4u-web)
 // ============================================================
 const firebaseConfig = {
   apiKey: "AIzaSyAXACpHXlI8sygPD3w--gi-B5CSEwnBH0A",
@@ -157,64 +123,41 @@ const form = document.getElementById('enquiryForm');
 const submitBtn = document.getElementById('submitBtn');
 const errorMsg = document.getElementById('errorMsg');
 
-form.addEventListener('submit', function(e) {
+form.addEventListener('submit', function (e) {
   e.preventDefault();
   errorMsg.style.display = 'none';
   submitBtn.disabled = true;
   submitBtn.textContent = 'Submitting...';
 
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
+  const venture = document.getElementById('venture').value;
+
+  // Next follow-up = tomorrow
+  const nextFollowUp = new Date();
+  nextFollowUp.setDate(nextFollowUp.getDate() + 1);
 
   const leadData = {
     name: document.getElementById('name').value,
     phone: document.getElementById('phone').value,
     email: document.getElementById('email').value,
-    campaign: document.getElementById('venture').value,
-    projectsToPitch: [document.getElementById('venture').value],
     requirement: document.getElementById('message').value,
+    campaign: venture,               // adjust field name here if your CRM uses a different key
+    projectsToPitch: [venture],       // adjust field name here if your CRM uses a different key
+    budget: "",
     source: "Website",
     stage: "New",
-    budget: "",
-    nextFollowUp: tomorrow.toISOString().split('T')[0],
-    notes: "",
+    nextFollowUp: firebase.firestore.Timestamp.fromDate(nextFollowUp),
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   };
 
-  db.collection("leads").add(leadData)
-    .then(() => {
-      // ========== IMPROVED META PIXEL LEAD EVENT ==========
+  db.collection('leads').add(leadData)
+    .then(function () {
+      // Fire Meta Pixel Lead event ONLY after a confirmed Firestore write
       if (typeof fbq === 'function') {
-        var fullName = document.getElementById('name').value.trim();
-        var nameParts = fullName.split(' ');
-        var firstName = nameParts[0] || '';
-        var lastName = nameParts.slice(1).join(' ') || '';
-        var email = document.getElementById('email').value.trim().toLowerCase();
-        var phone = document.getElementById('phone').value.replace(/[^0-9]/g, '');
-
-        // Clean phone number (remove leading 0 or 91)
-        if (phone.startsWith('0')) phone = phone.substring(1);
-        if (phone.startsWith('91') && phone.length > 10) phone = phone.substring(2);
-
-        var userData = {
-          ph: phone,
-          fn: firstName.toLowerCase(),
-          ln: lastName.toLowerCase()
-        };
-
-        // Email unte matrame pampu (empty unte skip)
-        if (email) {
-          userData.em = email;
-        }
-
-        fbq('set', 'userData', userData);
         fbq('track', 'Lead');
       }
-      // ====================================================
-
       window.location.href = 'thank-you.html';
     })
-    .catch((err) => {
+    .catch(function (err) {
       errorMsg.textContent = 'Something went wrong. Please try again or call us directly.';
       errorMsg.style.display = 'block';
       submitBtn.disabled = false;
