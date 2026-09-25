@@ -33,3 +33,15 @@ var GREETING_CSV_URL = "";
 // WhatsApp number for the floating chat button, with country code and no
 // "+", spaces, or leading zero — e.g. 919949610063 for +91 99496 10063.
 var WHATSAPP_NUMBER = "919949610063";
+
+// Firebase config (used to read live project data from Firestore's
+// "projects" collection, added 2026-09-24 to replace the slow live
+// Google Sheet fetch above). Same project as the CRM app and enquiry form.
+var firebaseConfig = {
+  apiKey: "AIzaSyAXACpHXlI8sygPD3w--gi-B5CSEwnBH0A",
+  authDomain: "realestates4u-e5d9d.firebaseapp.com",
+  projectId: "realestates4u-e5d9d",
+  storageBucket: "realestates4u-e5d9d.firebasestorage.app",
+  messagingSenderId: "922328218711",
+  appId: "1:922328218711:web:9ceec18a8ce8561a00f712"
+};
