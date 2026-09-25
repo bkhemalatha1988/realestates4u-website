@@ -122,43 +122,28 @@ function convertDriveLinks(rawLinks) {
   return converted.join(",");
 }
 
+// Project data now lives in Firestore's "projects" collection (migrated
+// from the old Google Sheet on 2026-09-24 — the live Sheet fetch on every
+// page load was the main cause of slow loading). onSnapshot keeps the page
+// instantly up to date whenever a project is added/edited in Firestore.
 function loadProjects(cb) {
-  if (!SHEET_CSV_URL || SHEET_CSV_URL.indexOf("PASTE_") === 0) {
+  if (typeof firebase === "undefined" || !firebaseConfig) {
     PROJECTS = [];
     cb();
     return;
   }
-  fetch(SHEET_CSV_URL)
-    .then(function (r) { return r.text(); })
-    .then(function (text) {
-      var objs = rowsToObjects(parseCSV(text));
-      PROJECTS = objs.map(function (o) {
-        var name = findField(o, "project name") || findField(o, "name");
-        var catLbl = findField(o, "category");
-        var photos = convertDriveLinks(findField(o, "photo")).split(",").map(function (s) { return s.trim(); }).filter(Boolean);
-        return {
-          name: name,
-          slug: slugify(name),
-          category: catSlugFromLabel(catLbl) || slugify(catLbl),
-          categoryLabel: catLbl,
-          rera: findField(o, "rera"),
-          lp: findField(o, "lp no"),
-          acres: findField(o, "acres"),
-          plots: findField(o, "total plots"),
-availablePlots: findField(o, "available plots"),
-          price: findField(o, "market price"),
-          govtPrice: findField(o, "govt price"),
-          description: findField(o, "description"),
-          location: findField(o, "location") || findField(o, "maps"),
-          photos: photos,
-          video: findField(o, "video"),
-          brochure: findField(o, "brochure")
-        };
-      });
-      buildGallery();
-      cb();
-    })
-    .catch(function () { PROJECTS = []; cb(); });
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  var db = firebase.firestore();
+  var firstLoad = true;
+  db.collection("projects").onSnapshot(function (snap) {
+    PROJECTS = snap.docs.map(function (d) { return d.data(); });
+    buildGallery();
+    if (firstLoad) { firstLoad = false; cb(); }
+    else { route(); } // re-render current page if data changes after initial load
+  }, function () {
+    PROJECTS = [];
+    if (firstLoad) { firstLoad = false; cb(); }
+  });
 }
 
 // Loads the home page greeting/quote banner from its own published Sheet
