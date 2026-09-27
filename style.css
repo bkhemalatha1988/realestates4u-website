@@ -423,7 +423,10 @@ img { max-width: 100%; display: block; }
   .venture-photo, .venture-photo-ph { width: 100%; }
   .hero-inner { grid-template-columns: 1fr; }
   .hero-right { flex-direction: column; align-items: stretch; gap: 16px; min-height: 0; }
-  .hero-stats { border-left: none; border-top: 1px solid var(--line-dark); padding-left: 0; padding-top: 20px; flex-direction: row; flex-wrap: wrap; width: 100%; }
+  .hero-stats { border-left: none; border-top: none; padding-left: 0; padding-top: 4px; flex-direction: row; flex-wrap: wrap; gap: 10px; width: 100%; }
+  .hero-stat { flex: 1 1 auto; min-width: 96px; background: rgba(243,239,228,0.08); border: 1px solid var(--line-dark); border-radius: 12px; padding: 12px 10px; text-align: center; }
+  .hero-stat .num { font-size: 26px; line-height: 1.1; }
+  .hero-stat .label { font-size: 12px; line-height: 1.3; color: var(--text-cream); font-weight: 600; }
   .hero-greeting-card { min-height: 220px; }
 
   .nav-toggle { display: flex; order: 2; }
