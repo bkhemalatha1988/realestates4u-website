@@ -445,6 +445,9 @@ function openEnquiry(ventureName) {
     alert("Enquiry form link not configured yet.");
     return;
   }
+  if (typeof fbq === "function") {
+    fbq("track", "Lead", ventureName ? { content_name: ventureName } : {});
+  }
   var url = ENQUIRY_FORM_URL;
   if (ventureName && ENQUIRY_VENTURE_FIELD) {
     url += (url.indexOf("?") === -1 ? "?" : "&") + ENQUIRY_VENTURE_FIELD + "=" + encodeURIComponent(ventureName);
