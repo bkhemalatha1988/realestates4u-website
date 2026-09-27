@@ -263,7 +263,7 @@ function renderHome() {
 
   var shieldIcon = '<svg class="hwy-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z"/></svg>';
   var routeHtml = CATEGORIES.map(function (c) {
-    return '<div class="route-stop"><a href="#/category/' + c.slug + '">' + shieldIcon + ' ' + c.label + '</a></div>';
+    return '<div class="route-stop"><a href="#/category/' + c.slug + '" data-cat="' + c.slug + '">' + shieldIcon + ' ' + c.label + '</a></div>';
   }).join("");
 
   var featured = PROJECTS.slice(0, 5);
