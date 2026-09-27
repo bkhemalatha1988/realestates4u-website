@@ -121,15 +121,16 @@ img { max-width: 100%; display: block; }
 .header-actions { display: flex; align-items: center; gap: 10px; }
 
 .enquire-btn {
-  border: 1px solid var(--brass);
-  color: var(--brass-light);
+  border: 1px solid #FFC107;
+  background: #FFC107;
+  color: #111111;
   padding: 9px 20px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   white-space: nowrap;
   border-radius: 4px;
 }
-.enquire-btn:hover { background: var(--brass); color: var(--bg-dark); }
+.enquire-btn:hover { background: #e6ac00; border-color: #e6ac00; color: #111111; }
 
 .whatsapp-btn {
   display: flex;
@@ -550,12 +551,14 @@ img { max-width: 100%; display: block; }
   text-align: center;
   padding: 13px;
   margin-bottom: 12px;
-  border: 1px solid var(--brass);
-  color: var(--brass-light);
+  border: 1px solid #FFC107;
+  background: #FFC107;
+  color: #111111;
+  font-weight: 700;
   font-size: 14.5px;
 }
-.side-btn:hover { background: var(--brass); color: var(--bg-dark); }
-.side-btn.outline { border-color: var(--line-dark); color: var(--text-cream-dim); }
+.side-btn:hover { background: #e6ac00; border-color: #e6ac00; color: #111111; }
+.side-btn.outline { background: transparent; font-weight: 500; border-color: var(--line-dark); color: var(--text-cream-dim); }
 .side-btn.outline:hover { border-color: var(--text-cream-dim); background: transparent; color: var(--text-cream); }
 
 .back-link { display: inline-block; margin-bottom: 20px; font-size: 13.5px; color: var(--terracotta); }
