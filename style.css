@@ -100,8 +100,23 @@ img { max-width: 100%; display: block; }
 }
 .has-dropdown:hover .dropdown,
 .has-dropdown .dropdown:hover { display: flex; }
-.dropdown a { padding: 12px 18px; font-size: 15.5px; font-weight: 500; color: var(--text-cream-dim); border-left: 2px solid transparent; }
-.dropdown a:hover { color: var(--text-cream); border-left-color: var(--brass); background: rgba(185,134,62,0.08); }
+.dropdown a {
+  padding: 12px 18px;
+  font-size: 15.5px;
+  font-weight: 500;
+  color: var(--text-cream-dim);
+  border-left: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, padding-left 0.2s ease;
+}
+.dropdown a:hover { color: var(--text-cream); border-left-color: var(--brass); background: rgba(185,134,62,0.08); padding-left: 22px; }
+
+/* Each highway gets its own hover colour so the dropdown feels alive */
+.dropdown a[data-cat="sagar"]:hover        { border-left-color: #b9863e; background: rgba(185,134,62,0.14); }
+.dropdown a[data-cat="vijayawada"]:hover   { border-left-color: #9a4b2c; background: rgba(154,75,44,0.14); }
+.dropdown a[data-cat="srisailam"]:hover    { border-left-color: #2f8f7a; background: rgba(47,143,122,0.14); }
+.dropdown a[data-cat="warangal"]:hover     { border-left-color: #b3466b; background: rgba(179,70,107,0.14); }
+.dropdown a[data-cat="futurecity"]:hover   { border-left-color: #4a6fa5; background: rgba(74,111,165,0.14); }
+.dropdown a[data-cat="westhyderabad"]:hover{ border-left-color: #c99a2e; background: rgba(201,154,46,0.14); }
 
 .header-actions { display: flex; align-items: center; gap: 10px; }
 
