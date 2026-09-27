@@ -204,25 +204,26 @@ img { max-width: 100%; display: block; }
 }
 
 .hero-stat {
-  background: rgba(243,239,228,0.10);
-  border: 1px solid var(--line-dark);
-  border-radius: 12px;
-  padding: 14px 12px;
+  background: #f1ece1;                    /* solid soft cream – matches site palette */
+  border: 1px solid rgba(185, 134, 62, 0.35);
+  border-radius: 14px;
+  padding: 16px 14px;
   text-align: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
 .hero-stat .num {
   font-family: var(--font-display);
   font-size: 28px;
-  color: var(--brass-light);
+  color: #b9863e;                         /* brass gold */
   line-height: 1.1;
 }
 
 .hero-stat .label {
   font-size: 12.5px;
-  color: var(--text-cream-dim);
-  margin-top: 4px;
-  font-weight: 500;
+  color: #1e2a22;                         /* dark text for good contrast */
+  margin-top: 5px;
+  font-weight: 600;
 }
 
 /* Hero greeting card — festival wishes / daily quote image, sits in the
@@ -461,8 +462,6 @@ img { max-width: 100%; display: block; }
   }
   .hero-stat .label {
     font-size: 12px;
-    color: var(--text-cream);
-    font-weight: 600;
   }
 
   .hero-greeting-card { min-height: 220px; }
