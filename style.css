@@ -333,6 +333,15 @@ img { max-width: 100%; display: block; }
   color: var(--cream);
   transform: translateY(-8px) scale(1.06);
 }
+
+/* Each highway pill gets its own hover colour */
+.route-stop a[data-cat="sagar"]:hover         { background: #b9863e; border-color: #b9863e; color: #fff; }
+.route-stop a[data-cat="vijayawada"]:hover    { background: #9a4b2c; border-color: #9a4b2c; color: #fff; }
+.route-stop a[data-cat="srisailam"]:hover     { background: #2f8f7a; border-color: #2f8f7a; color: #fff; }
+.route-stop a[data-cat="warangal"]:hover      { background: #b3466b; border-color: #b3466b; color: #fff; }
+.route-stop a[data-cat="futurecity"]:hover    { background: #4a6fa5; border-color: #4a6fa5; color: #fff; }
+.route-stop a[data-cat="westhyderabad"]:hover { background: #c99a2e; border-color: #c99a2e; color: #fff; }
+.route-stop a[data-cat]:hover .hwy-icon { color: #fff; }
 @keyframes bubble-float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-7px); }
