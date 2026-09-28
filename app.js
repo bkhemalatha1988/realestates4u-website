@@ -449,7 +449,7 @@ function openEnquiry(ventureName) {
     return;
   }
   if (typeof fbq === "function") {
-    fbq("track", "Lead", ventureName ? { content_name: ventureName } : {});
+    fbq("trackCustom", "EnquireButtonClick", ventureName ? { content_name: ventureName } : {});
   }
   var url = ENQUIRY_FORM_URL;
   if (ventureName && ENQUIRY_VENTURE_FIELD) {
