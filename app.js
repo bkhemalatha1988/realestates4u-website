@@ -285,7 +285,10 @@ function renderHome() {
       '</div>' +
     '</section>' +
     carouselHtml() +
-    '<div class="route-nav">' + '<div class="route-inner">' + routeHtml + '</div></div>' +
+    '<div class="route-nav"><div class="route-flex">' +
+      '<div class="route-heading"><h2>Browse by corridor</h2><p>Pick a highway, see what&rsquo;s live there right now.</p></div>' +
+      '<div class="route-inner">' + routeHtml + '</div>' +
+    '</div></div>' +
     '<section class="highway-strip"><div class="highway-strip-inner">' +
       '<div class="hwy-point"><span class="hwy-num">01</span><h4>Highway-first connectivity</h4><p>Every venture sits directly on a national/state highway corridor — no last-mile guesswork.</p></div>' +
       '<div class="hwy-point"><span class="hwy-num">02</span><h4>Appreciation follows infrastructure</h4><p>Land along growth corridors historically outpaces interior plots as roads, industry and townships expand.</p></div>' +
