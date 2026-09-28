@@ -98,7 +98,8 @@ img { max-width: 100%; display: block; }
   .logo { order: 1; }
   .header-actions { order: 2; margin-left: auto; }
   .main-nav { order: 3; flex-basis: 100%; margin-left: 0; gap: 10px; }
-  .main-nav .nav-item { flex: 1; text-align: center; padding: 10px 8px; }
+  .main-nav { justify-content: flex-start; }
+  .main-nav .nav-item { flex: 0 0 auto; text-align: center; padding: 10px 26px; }
 }
 
 /* Each nav button gets its own colour */
