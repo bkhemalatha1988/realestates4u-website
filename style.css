@@ -56,7 +56,7 @@ img { max-width: 100%; display: block; }
 }
 .logo span { color: var(--brass-light); }
 
-.main-nav { display: flex; align-items: center; gap: 34px; flex: 1; margin-left: 40px; }
+.main-nav { display: flex; align-items: center; gap: 14px; flex: 1; margin-left: 40px; }
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -84,13 +84,22 @@ img { max-width: 100%; display: block; }
 .nav-item {
   font-size: 16px; font-weight: 600; letter-spacing: 0.2px;
   color: var(--text-cream); position: relative; cursor: pointer;
-  padding: 9px 18px; border-radius: 999px;
+  padding: 9px 18px; border-radius: 999px; white-space: nowrap; line-height: 1.2;
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.22);
   transition: background 0.2s ease, border-color 0.2s ease;
 }
 .nav-item:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.45); color: #fff; }
 .has-dropdown > span::after { content: " \25BE"; font-size: 12px; }
+
+/* Tablet / phone in desktop-site mode: two tidy rows, three equal-width nav buttons */
+@media (min-width: 641px) and (max-width: 1000px) {
+  .header-inner { flex-wrap: wrap; row-gap: 12px; padding: 14px 18px; }
+  .logo { order: 1; }
+  .header-actions { order: 2; margin-left: auto; }
+  .main-nav { order: 3; flex-basis: 100%; margin-left: 0; gap: 10px; }
+  .main-nav .nav-item { flex: 1; text-align: center; padding: 10px 8px; }
+}
 
 /* Each nav button gets its own colour */
 .nav-item.has-dropdown        { background: #4a6fa5; border-color: #4a6fa5; color: #fff; }
