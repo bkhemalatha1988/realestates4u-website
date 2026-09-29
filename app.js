@@ -455,6 +455,12 @@ function openEnquiry(ventureName) {
   if (ventureName && ENQUIRY_VENTURE_FIELD) {
     url += (url.indexOf("?") === -1 ? "?" : "&") + ENQUIRY_VENTURE_FIELD + "=" + encodeURIComponent(ventureName);
   }
+  // Carry ?devtest=1 through to the enquiry form when testing, so
+  // clicking the real header/sidebar buttons during a test session
+  // never creates a real CRM lead or a real Meta Lead event.
+  if (new URLSearchParams(window.location.search).get("devtest") === "1") {
+    url += (url.indexOf("?") === -1 ? "?" : "&") + "devtest=1";
+  }
   frame.src = url;
   modal.classList.add("open");
 }
