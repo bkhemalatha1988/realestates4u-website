@@ -124,11 +124,24 @@ const form = document.getElementById('enquiryForm');
 const submitBtn = document.getElementById('submitBtn');
 const errorMsg = document.getElementById('errorMsg');
 
+// Dev/testing mode: open the site as
+//   https://realestates4u.in/?devtest=1
+// while testing. Submissions in this mode do NOT save to Firestore
+// (your CRM) and do NOT fire the Meta Lead event, so testing never
+// inflates your lead count or your ad campaign numbers again.
+const isDevTest = new URLSearchParams(window.location.search).get('devtest') === '1';
+
 form.addEventListener('submit', function (e) {
   e.preventDefault();
   errorMsg.style.display = 'none';
   submitBtn.disabled = true;
   submitBtn.textContent = 'Submitting...';
+
+  if (isDevTest) {
+    // Skip Firestore write and Meta Lead event entirely.
+    window.location.href = 'thank-you.html?devtest=1';
+    return;
+  }
 
   const venture = document.getElementById('venture').value;
 
