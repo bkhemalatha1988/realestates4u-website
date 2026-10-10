@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>realestates4u – Admin</title>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:#F6F1E4;color:#1C1B18}
+  .bar{background:#1f4d36;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .bar b{font-size:17px}
+  .wrap{max-width:760px;margin:0 auto;padding:16px}
+  .card{background:#FFFDF8;border:1px solid #E4DCC4;border-radius:12px;padding:16px;margin-bottom:14px}
+  label{display:block;font-size:12.5px;font-weight:600;color:#5C5A50;margin:12px 0 4px}
+  input,select,textarea{width:100%;border:1px solid #D8D0BA;border-radius:8px;padding:10px;font-size:15px;font-family:inherit;background:#fff}
+  textarea{min-height:90px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  button{border:none;border-radius:8px;padding:11px 16px;font-size:14.5px;font-weight:700;cursor:pointer}
+  .gold{background:#FFC107;color:#1C1B18}
+  .green{background:#1f4d36;color:#fff}
+  .ghost{background:#eee7d2;color:#1C1B18}
+  .red{background:#A63D2F;color:#fff}
+  .list-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #eee7d2}
+  .list-item:last-child{border:none}
+  .list-item img{width:54px;height:54px;object-fit:cover;border-radius:8px;background:#ddd}
+  .list-item .t{flex:1;min-width:0}
+  .list-item .t div:first-child{font-weight:700}
+  .list-item .t div:last-child{font-size:12.5px;color:#8A8570}
+  .msg{font-size:13.5px;margin-top:10px}
+  .err{color:#A63D2F}.ok{color:#1f6b3a}
+  .previews{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .previews img{width:64px;height:64px;object-fit:cover;border-radius:6px}
+  .hint{font-size:12px;color:#8A8570;margin-top:3px}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginView" class="wrap hidden" style="max-width:380px;margin-top:40px">
+  <div class="card">
+    <h2 style="margin:0 0 4px">Admin login</h2>
+    <div class="hint">Use the same email and password as your CRM app.</div>
+    <label>Email</label><input id="email" type="email" autocapitalize="none">
+    <label>Password</label><input id="password" type="password">
+    <div id="loginMsg" class="msg err"></div>
+    <button class="gold" style="width:100%;margin-top:14px" onclick="login()">Login</button>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashView" class="hidden">
+  <div class="bar"><b>realestates4u – Admin</b><button class="ghost" onclick="logout()">Logout</button></div>
+  <div class="wrap">
+
+    <div id="listCard" class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+        <b id="countTxt">Projects</b>
+        <button class="gold" onclick="newProject()">+ Add project</button>
+      </div>
+      <div id="list" style="margin-top:8px"></div>
+    </div>
+
+    <div id="formCard" class="card hidden">
+      <h3 id="formTitle" style="margin:0">Add project</h3>
+
+      <label>Project name *</label>
+      <input id="f_name" placeholder="e.g. Brundavan Homes">
+      <div id="slugHint" class="hint"></div>
+
+      <label>Highway / Category *</label>
+      <select id="f_category">
+        <option value="">Select…</option>
+        <option value="sagar">Sagar Highway</option>
+        <option value="vijayawada">Vijayawada Highway</option>
+        <option value="srisailam">Srisailam Highway</option>
+        <option value="warangal">Warangal Highway</option>
+        <option value="futurecity">Future City</option>
+        <option value="westhyderabad">West Hyderabad</option>
+      </select>
+
+      <label>Location</label>
+      <input id="f_location" placeholder="e.g. Alair, Warangal Highway">
+
+      <label>Description</label>
+      <textarea id="f_description"></textarea>
+
+      <div class="row">
+        <div><label>Total acres</label><input id="f_acres"></div>
+        <div><label>Total plots</label><input id="f_plots"></div>
+      </div>
+      <div class="row">
+        <div><label>Available plots</label><input id="f_availablePlots"></div>
+        <div><label>RERA No.</label><input id="f_rera"></div>
+      </div>
+      <div class="row">
+        <div><label>Market price / sq. yd</label><input id="f_price"></div>
+        <div><label>Govt. price / sq. yd</label><input id="f_govtPrice"></div>
+      </div>
+      <div class="row">
+        <div><label>LP No.</label><input id="f_lp"></div>
+        <div><label>YouTube video link</label><input id="f_video" placeholder="https://youtu.be/..."></div>
+      </div>
+
+      <label>Brochure link (PDF)</label>
+      <input id="f_brochure" placeholder="https://...">
+
+      <label>Photos – one link per line</label>
+      <textarea id="f_photos" placeholder="Paste Google Drive share links or image links, one per line"></textarea>
+      <div class="hint">Google Drive links are converted automatically. Make sure each Drive file is shared as "Anyone with the link".</div>
+      <div id="previews" class="previews"></div>
+
+      <div id="formMsg" class="msg"></div>
+      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+        <button class="green" id="saveBtn" onclick="saveProject()">Save</button>
+        <button class="ghost" onclick="closeForm()">Cancel</button>
+        <button class="red hidden" id="delBtn" onclick="deleteProject()">Delete</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+var firebaseConfig = {
+  apiKey: "AIzaSyAXACpHXlI8sygPD3w--gi-B5CSEwnBH0A",
+  authDomain: "realestates4u-e5d9d.firebaseapp.com",
+  projectId: "realestates4u-e5d9d",
+  storageBucket: "realestates4u-e5d9d.firebasestorage.app",
+  messagingSenderId: "922328218711",
+  appId: "1:922328218711:web:9ceec18a8ce8561a00f712"
+};
+firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
+var auth = firebase.auth();
+
+var CAT_LABELS = {
+  sagar:"Sagar Highway", vijayawada:"Vijayawada Highway", srisailam:"Srisailam Highway",
+  warangal:"Warangal Highway", futurecity:"Future City", westhyderabad:"West Hyderabad"
+};
+var FIELDS = ["name","location","description","acres","plots","availablePlots","rera","price","govtPrice","lp","video","brochure"];
+var projects = [];
+var editingId = null; // null = adding new
+var unsub = null;
+
+function $(id){ return document.getElementById(id); }
+function slugify(s){ return (s||"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,""); }
+function esc(s){ return String(s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+
+// ---------- auth ----------
+auth.onAuthStateChanged(function(u){
+  if (u) {
+    $("loginView").classList.add("hidden");
+    $("dashView").classList.remove("hidden");
+    startList();
+  } else {
+    $("dashView").classList.add("hidden");
+    $("loginView").classList.remove("hidden");
+    if (unsub) { unsub(); unsub = null; }
+  }
+});
+function login(){
+  $("loginMsg").textContent = "";
+  auth.signInWithEmailAndPassword($("email").value.trim(), $("password").value)
+    .catch(function(e){
+      $("loginMsg").textContent = e.code === "auth/network-request-failed"
+        ? "No internet connection." : "Wrong email or password.";
+    });
+}
+function logout(){ auth.signOut(); }
+$("password").addEventListener("keydown", function(e){ if (e.key === "Enter") login(); });
+
+// ---------- list ----------
+function startList(){
+  if (unsub) unsub();
+  unsub = db.collection("projects").onSnapshot(function(snap){
+    projects = snap.docs.map(function(d){ var o = d.data(); o._id = d.id; return o; });
+    projects.sort(function(a,b){ return (a.name||"").localeCompare(b.name||""); });
+    renderList();
+  }, function(e){
+    $("list").innerHTML = '<div class="msg err">Could not load projects: ' + esc(e.message) + '</div>';
+  });
+}
+function renderList(){
+  $("countTxt").textContent = projects.length + " projects";
+  $("list").innerHTML = projects.map(function(p){
+    var img = (p.photos && p.photos[0]) ? '<img src="' + esc(p.photos[0]) + '">' : '<img>';
+    return '<div class="list-item">' + img +
+      '<div class="t"><div>' + esc(p.name) + '</div><div>' + esc(p.categoryLabel || p.category) + '</div></div>' +
+      '<button class="ghost" onclick="editProject(\'' + esc(p._id) + '\')">Edit</button></div>';
+  }).join("") || '<div class="hint">No projects yet.</div>';
+}
+
+// ---------- form ----------
+function clearForm(){
+  FIELDS.forEach(function(f){ $("f_" + f).value = ""; });
+  $("f_category").value = "";
+  $("f_photos").value = "";
+  $("previews").innerHTML = "";
+  $("formMsg").textContent = "";
+}
+function openForm(){
+  $("formCard").classList.remove("hidden");
+  $("formCard").scrollIntoView({behavior:"smooth"});
+}
+function closeForm(){ $("formCard").classList.add("hidden"); editingId = null; }
+function newProject(){
+  editingId = null; clearForm();
+  $("formTitle").textContent = "Add project";
+  $("delBtn").classList.add("hidden");
+  $("f_name").disabled = false;
+  updateSlugHint();
+  openForm();
+}
+function editProject(id){
+  var p = projects.filter(function(x){ return x._id === id; })[0];
+  if (!p) return;
+  editingId = id; clearForm();
+  $("formTitle").textContent = "Edit project";
+  FIELDS.forEach(function(f){ $("f_" + f).value = p[f] || ""; });
+  $("f_category").value = p.category || "";
+  $("f_photos").value = (p.photos || []).join("\n");
+  $("f_name").disabled = true; // the name decides the page link, so keep it fixed when editing
+  $("slugHint").textContent = "Page link id: " + id + " (project name can't be changed after creation)";
+  $("delBtn").classList.remove("hidden");
+  updatePreviews();
+  openForm();
+}
+function updateSlugHint(){
+  if (editingId) return;
+  var s = slugify($("f_name").value);
+  $("slugHint").textContent = s ? "Page link id: " + s : "";
+}
+$("f_name").addEventListener("input", updateSlugHint);
+
+// Same conversion the website uses for Google Drive links
+function convertLink(link){
+  link = link.trim();
+  if (!link) return "";
+  if (link.indexOf("drive.google.com/thumbnail") !== -1) return link;
+  if (link.indexOf("drive.google.com") !== -1 || link.indexOf("docs.google.com") !== -1) {
+    var m = link.match(/[-\w]{25,}/);
+    if (m) return "https://drive.google.com/thumbnail?id=" + m[0] + "&sz=w1000";
+  }
+  return link;
+}
+function parsePhotos(){
+  return $("f_photos").value.split(/[\n,]+/).map(convertLink).filter(Boolean);
+}
+function updatePreviews(){
+  $("previews").innerHTML = parsePhotos().map(function(u){ return '<img src="' + esc(u) + '">'; }).join("");
+}
+$("f_photos").addEventListener("change", updatePreviews);
+$("f_photos").addEventListener("blur", updatePreviews);
+
+function saveProject(){
+  var name = $("f_name").value.trim();
+  var cat = $("f_category").value;
+  var msg = $("formMsg");
+  msg.className = "msg err";
+  if (!name) { msg.textContent = "Enter the project name."; return; }
+  if (!cat)  { msg.textContent = "Select the highway / category."; return; }
+
+  var id = editingId || slugify(name);
+  if (!id) { msg.textContent = "Project name is not valid."; return; }
+  if (!editingId && projects.some(function(p){ return p._id === id; })) {
+    msg.textContent = "A project with this name already exists. Edit it from the list instead."; return;
+  }
+
+  var doc = { slug: id, category: cat, categoryLabel: CAT_LABELS[cat], photos: parsePhotos() };
+  FIELDS.forEach(function(f){ doc[f] = $("f_" + f).value.trim(); });
+  doc.name = name;
+
+  $("saveBtn").disabled = true;
+  msg.className = "msg"; msg.textContent = "Saving…";
+  db.collection("projects").doc(id).set(doc).then(function(){
+    $("saveBtn").disabled = false;
+    closeForm();
+    window.scrollTo({top:0, behavior:"smooth"});
+  }).catch(function(e){
+    $("saveBtn").disabled = false;
+    msg.className = "msg err";
+    msg.textContent = "Could not save: " + e.message;
+  });
+}
+function deleteProject(){
+  if (!editingId) return;
+  if (!confirm("Delete this project permanently? It will disappear from the website.")) return;
+  db.collection("projects").doc(editingId).delete().then(closeForm).catch(function(e){
+    $("formMsg").className = "msg err";
+    $("formMsg").textContent = "Could not delete: " + e.message;
+  });
+}
+</script>
+</body>
+</html>
