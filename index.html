@@ -26,6 +26,15 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1452487213303598&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+<style id="promo-css">
+/* Scrolling promo bar (Telugu + English) */
+.promo-bar { background:#ffc107; color:#1e2a22; overflow:hidden; white-space:nowrap; font-family:"Noto Sans Telugu","Nirmala UI","Gautami","Work Sans",sans-serif; font-weight:700; font-size:15px; line-height:1; padding:10px 0; }
+.promo-bar .promo-track { display:inline-flex; gap:48px; padding-left:0 !important; animation:promo-scroll 45s linear infinite !important; }
+.promo-bar .promo-track span { white-space:nowrap; }
+.promo-bar .promo-track span::after { content:"\2022"; margin-left:48px; opacity:.55; }
+.promo-bar:hover .promo-track { animation-play-state:paused; }
+@keyframes promo-scroll { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+</style>
 </head>
 <body>
 
