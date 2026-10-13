@@ -257,9 +257,9 @@ function startCarousel() {
 
 function renderHome() {
   var statsHtml = '' +
-    '<div class="hero-stat"><div class="num">' + CATEGORIES.length + '</div><div class="label">Highway corridors</div></div>' +
-    '<div class="hero-stat"><div class="num">' + PROJECTS.length + '</div><div class="label">Active ventures</div></div>' +
-    '<div class="hero-stat"><div class="num">RERA</div><div class="label">Approved layouts</div></div>';
+    '<div class="hero-stat" role="button" tabindex="0" data-goto="route-nav"><div class="num">' + CATEGORIES.length + '</div><div class="label">Highway corridors</div></div>' +
+    '<div class="hero-stat" role="button" tabindex="0" data-goto="route-nav"><div class="num">' + PROJECTS.length + '</div><div class="label">Active ventures</div></div>' +
+    '<div class="hero-stat" role="button" tabindex="0" data-goto="route-nav"><div class="num">RERA</div><div class="label">Approved layouts</div></div>';
 
   var shieldIcon = '<svg class="hwy-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z"/></svg>';
   var routeHtml = CATEGORIES.map(function (c) {
@@ -513,3 +513,22 @@ function afterInitialLoad() {
 }
 loadProjects(afterInitialLoad);
 loadGreeting(afterInitialLoad);
+
+// ---------- hero stat cards: tap to jump to "Browse by corridor" ----------
+function scrollToCorridors() {
+  var target = document.querySelector(".route-nav");
+  if (!target) return;
+  var header = document.querySelector(".site-header");
+  var offset = header ? header.offsetHeight : 0;
+  var top = target.getBoundingClientRect().top + window.pageYOffset - offset - 8;
+  window.scrollTo({ top: top, behavior: "smooth" });
+}
+document.addEventListener("click", function (e) {
+  var card = e.target.closest ? e.target.closest(".hero-stat[data-goto]") : null;
+  if (card) scrollToCorridors();
+});
+document.addEventListener("keydown", function (e) {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  var card = e.target.closest ? e.target.closest(".hero-stat[data-goto]") : null;
+  if (card) { e.preventDefault(); scrollToCorridors(); }
+});
