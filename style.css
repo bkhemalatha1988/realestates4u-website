@@ -149,16 +149,16 @@ img { max-width: 100%; display: block; }
 .header-actions { display: flex; align-items: center; gap: 10px; }
 
 .enquire-btn {
-  border: 1px solid #FFC107;
-  background: #FFC107;
-  color: #111111;
+  border: 1px solid #F57C00;
+  background: #F57C00;
+  color: #ffffff;
   padding: 9px 20px;
   font-size: 14px;
   font-weight: 700;
   white-space: nowrap;
   border-radius: 4px;
 }
-.enquire-btn:hover { background: #e6ac00; border-color: #e6ac00; color: #111111; }
+.enquire-btn:hover { background: #E65100; border-color: #E65100; color: #ffffff; }
 
 .whatsapp-btn {
   display: flex;
@@ -370,9 +370,9 @@ img { max-width: 100%; display: block; }
   text-align: center;
   font-size: 17px;
   font-weight: 700;
-  color: #111111;
-  background: #FFC107;
-  border: 1.5px solid #FFC107;
+  color: #ffffff;
+  background: #234d36;
+  border: 1.5px solid #234d36;
   border-radius: 999px;
   padding: 20px 26px;
   box-shadow: 0 0 0 rgba(0,0,0,0);
