@@ -370,9 +370,9 @@ img { max-width: 100%; display: block; }
   text-align: center;
   font-size: 17px;
   font-weight: 700;
-  color: #ffffff;
-  background: #234d36;
-  border: 1.5px solid #234d36;
+  color: #14301f;
+  background: #9fd39a;
+  border: 1.5px solid #9fd39a;
   border-radius: 999px;
   padding: 20px 26px;
   box-shadow: 0 0 0 rgba(0,0,0,0);
@@ -397,6 +397,7 @@ img { max-width: 100%; display: block; }
 .route-stop a[data-cat="futurecity"]:hover    { background: #4a6fa5; border-color: #4a6fa5; color: #fff; }
 .route-stop a[data-cat="westhyderabad"]:hover { background: #c99a2e; border-color: #c99a2e; color: #fff; }
 .route-stop a[data-cat]:hover .hwy-icon { color: #fff; }
+.route-stop a .hwy-icon { color: #234d36; }
 @keyframes bubble-float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-7px); }
