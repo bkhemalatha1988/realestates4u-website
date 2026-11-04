@@ -49,6 +49,7 @@
     <label>Password</label><input id="password" type="password">
     <div id="loginMsg" class="msg err"></div>
     <button class="gold" style="width:100%;margin-top:14px" onclick="login()">Login</button>
+    <div style="text-align:center;margin-top:14px"><a href="#" onclick="resetPassword();return false" style="font-size:13.5px;font-weight:600;color:#1f4d36">Forgot password?</a></div>
   </div>
 </div>
 
@@ -164,12 +165,29 @@ auth.onAuthStateChanged(function(u){
   }
 });
 function login(){
+  $("loginMsg").className = "msg err";
   $("loginMsg").textContent = "";
   auth.signInWithEmailAndPassword($("email").value.trim(), $("password").value)
     .catch(function(e){
       $("loginMsg").textContent = e.code === "auth/network-request-failed"
         ? "No internet connection." : "Wrong email or password.";
     });
+}
+function resetPassword(){
+  var m = $("loginMsg");
+  var em = $("email").value.trim();
+  m.className = "msg err";
+  m.textContent = "";
+  if (!em) { m.textContent = "Type your email above first, then tap Forgot password."; return; }
+  auth.sendPasswordResetEmail(em).then(function(){
+    m.className = "msg ok";
+    m.textContent = "Password reset link sent to " + em + ". Check your inbox and Spam folder.";
+  }).catch(function(e){
+    if (e.code === "auth/invalid-email") m.textContent = "That email address is not valid.";
+    else if (e.code === "auth/user-not-found") m.textContent = "No account found for this email.";
+    else if (e.code === "auth/network-request-failed") m.textContent = "No internet connection.";
+    else m.textContent = "Could not send reset email: " + e.message;
+  });
 }
 function logout(){ auth.signOut(); }
 $("password").addEventListener("keydown", function(e){ if (e.key === "Enter") login(); });
