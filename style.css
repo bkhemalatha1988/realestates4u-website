@@ -849,3 +849,20 @@ img { max-width: 100%; display: block; }
 @media (prefers-reduced-motion: reduce) {
   .header-actions .enquire-btn, .hero-big-cta { animation: none; }
 }
+
+/* ---- Project page "Book Your Free Site Visit" button (all projects): same pulse animation ---- */
+.side-btn:not(.outline) {
+  font-weight: 800;
+  font-size: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  animation: sideCtaPulse 1.8s ease-in-out infinite;
+}
+.side-btn:not(.outline):hover { animation-play-state: paused; }
+@keyframes sideCtaPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,193,7,0); }
+  50% { transform: scale(1.04); box-shadow: 0 0 0 8px rgba(255,193,7,0.35); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .side-btn:not(.outline) { animation: none; }
+}
