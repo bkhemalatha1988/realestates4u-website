@@ -790,3 +790,20 @@ img { max-width: 100%; display: block; }
   .hero-big-cta { flex: none; width: 100%; padding: 18px 14px; }
   .hero-big-cta .cta-main { font-size: 24px; }
 }
+
+/* ---- Fix: big CTA goes on its own row under photo + stats, so the photo keeps its size ---- */
+.hero-right { flex-wrap: wrap; }
+.hero-greeting-card { min-height: 320px; }
+.hero-big-cta {
+  flex: 1 1 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  padding: 16px 22px;
+}
+.hero-big-cta .cta-main { font-size: 26px; }
+@media (max-width: 640px) {
+  .hero-greeting-card { min-height: 220px; }
+  .hero-big-cta { flex-direction: column; }
+  .hero-big-cta .cta-main { font-size: 24px; }
+}
