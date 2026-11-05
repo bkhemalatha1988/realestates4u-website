@@ -374,7 +374,7 @@ function renderVenture(slug) {
         '</div>' +
         '<div class="side-panel">' +
           '<h3>Interested in ' + p.name + '?</h3>' +
-          '<a class="side-btn" href="#" id="detail-enquire">Enquire About This Project</a>' +
+          '<a class="side-btn" href="#" id="detail-enquire">Book Your Free Site Visit</a>' +
           mapsBtn + brochureBtn +
         '</div>' +
       '</div>' +
