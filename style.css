@@ -828,3 +828,8 @@ img { max-width: 100%; display: block; }
 .dropdown a[data-cat="warangal"]      { background: #a63a5f; }
 .dropdown a[data-cat="futurecity"]    { background: #3d5f94; }
 .dropdown a[data-cat="westhyderabad"] { background: #8a6a12; }
+
+/* ---- Real fix: the "Projects" nav item (not just the dropdown) must sit above the scrolling promo bar ---- */
+.nav-item.has-dropdown { position: relative; z-index: 3000; }
+.promo-bar { z-index: 1; }
+.promo-bar .promo-track { position: relative; z-index: 0; }
