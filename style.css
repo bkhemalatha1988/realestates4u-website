@@ -743,4 +743,50 @@ img { max-width: 100%; display: block; }
   font-weight: 800 !important;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.4) !important;
 }
-```
+
+/* ================================================================
+   Big hero CTA button (beside greeting photo)
+   ================================================================ */
+.hero-big-cta {
+  flex: 0 0 210px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  padding: 22px 16px;
+  background: #F57C00;
+  color: #fff;
+  border: 3px solid #FFC107;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+  animation: ctaPulse 1.8s ease-in-out infinite;
+  transition: background 0.2s ease;
+}
+.hero-big-cta:hover { background: #E65100; }
+.hero-big-cta .cta-small {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: #FFC107;
+  color: #1e2a22;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+.hero-big-cta .cta-main {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+.hero-big-cta .cta-sub { font-size: 13px; font-weight: 600; }
+@keyframes ctaPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+  50% { transform: scale(1.04); box-shadow: 0 0 0 8px rgba(255,193,7,0.35), 0 12px 30px rgba(0,0,0,0.4); }
+}
+@media (max-width: 640px) {
+  .hero-big-cta { flex: none; width: 100%; padding: 18px 14px; }
+  .hero-big-cta .cta-main { font-size: 24px; }
+}
