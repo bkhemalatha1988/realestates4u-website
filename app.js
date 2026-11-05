@@ -210,7 +210,7 @@ function ventureRow(p) {
          (p.availablePlots ? '<span><b>' + p.availablePlots + '</b> plots available</span>' : '') +
           (p.rera ? '<span>RERA <b>' + p.rera + '</b></span>' : '') +
         '</div>' +
-        (p.price ? '<div class="venture-price">Starting from Rs ' + p.price + ' / sq yd</div>' : '') +
+        (p.price ? '<div class="venture-price">Rs ' + p.price + ' / sq yd</div>' : '') +
       '</div>' +
     '</div>';
 }
@@ -281,6 +281,11 @@ function renderHome() {
         '<div class="hero-right">' +
           '<div class="hero-stats">' + statsHtml + '</div>' +
           greetingHtml() +
+          '<a href="#" class="hero-big-cta" id="hero-big-cta">' +
+            '<span class="cta-small">Limited slots</span>' +
+            '<span class="cta-main">Book Your Free Site Visit</span>' +
+            '<span class="cta-sub">&#128222; Tap now, we will call you back</span>' +
+          '</a>' +
         '</div>' +
       '</div>' +
     '</section>' +
@@ -298,6 +303,12 @@ function renderHome() {
       '<div class="section-head"><h2>Featured ventures</h2><p>A look across our current corridors</p></div>' +
       featuredHtml +
     '</section>';
+
+  var bigCta = document.getElementById("hero-big-cta");
+  if (bigCta) bigCta.addEventListener("click", function (e) {
+    e.preventDefault();
+    openEnquiry("");
+  });
 
   bindVentureClicks();
   startCarousel();
@@ -334,7 +345,7 @@ function renderVenture(slug) {
 
   var specRows = [
     ["RERA no.", p.rera], ["LP no.", p.lp], ["Total acres", p.acres],
-   ["Total plots", p.plots], ["Available plots", p.availablePlots], ["Market price", p.price ? "Starting from Rs " + p.price + " / sq yd" : ""],
+   ["Total plots", p.plots], ["Available plots", p.availablePlots], ["Market price", p.price ? "Rs " + p.price + " / sq yd" : ""],
     ["Govt price", p.govtPrice ? "Rs " + p.govtPrice + " / sq yd" : ""]
   ].filter(function (r) { return r[1]; })
    .map(function (r) { return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>'; }).join("");
@@ -349,7 +360,7 @@ function renderVenture(slug) {
       '<h1>' + p.name + '</h1>' +
       (p.description ? '<p style="color:rgba(255,255,255,0.85);max-width:46ch;margin:10px 0 0;font-size:1rem;">' + p.description + '</p>' : '') +
       '<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;">' +
-        (p.price ? '<span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:100px;font-weight:700;font-size:0.9rem;">Starting from Rs ' + p.price + '/sq.yd</span>' : '') +
+        (p.price ? '<span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:100px;font-weight:700;font-size:0.9rem;">Rs ' + p.price + '/sq.yd</span>' : '') +
         (p.rera ? '<span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:100px;font-weight:700;font-size:0.9rem;">RERA ' + p.rera + '</span>' : '') +
         (p.acres ? '<span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:100px;font-weight:700;font-size:0.9rem;">' + p.acres + ' acres</span>' : '') +
       '</div>' +
