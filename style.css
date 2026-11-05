@@ -807,3 +807,24 @@ img { max-width: 100%; display: block; }
   .hero-big-cta { flex-direction: column; }
   .hero-big-cta .cta-main { font-size: 24px; }
 }
+
+/* ---- Fix: Projects dropdown must sit above the scrolling promo bar and be clearly readable ---- */
+.site-header { z-index: 1000; }
+.promo-bar { position: relative; z-index: 1; }
+.has-dropdown .dropdown {
+  z-index: 2000;
+  background: #12301f;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+}
+.dropdown a {
+  color: #ffffff !important;
+  font-weight: 800;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.55);
+}
+/* darker shades so white text is easy to read on every button */
+.dropdown a[data-cat="sagar"]         { background: #8f6320; }
+.dropdown a[data-cat="vijayawada"]    { background: #9a4b2c; }
+.dropdown a[data-cat="srisailam"]     { background: #1f7a66; }
+.dropdown a[data-cat="warangal"]      { background: #a63a5f; }
+.dropdown a[data-cat="futurecity"]    { background: #3d5f94; }
+.dropdown a[data-cat="westhyderabad"] { background: #8a6a12; }
