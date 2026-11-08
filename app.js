@@ -269,7 +269,7 @@ function renderHome() {
 
   var featured = PROJECTS.slice(0, 6);
   var featuredHtml = featured.length
-    ? '<div class="venture-grid">' + featured.map(ventureRow).join("") + '</div>'
+    ? gridWithSides('<div class="venture-grid">' + featured.map(ventureRow).join("") + '</div>')
     : '<div class="empty-state">Ventures will appear here once the Projects sheet has entries.</div>';
 
   var moreList = PROJECTS.slice(6);
@@ -327,6 +327,7 @@ function renderHome() {
   });
 
   bindVentureClicks();
+  bindSideButtons();
   startCarousel();
 
   var sw = document.getElementById("venture-swipe");
@@ -341,7 +342,7 @@ function renderHome() {
 function renderCategory(slug) {
   var list = PROJECTS.filter(function (p) { return p.category === slug; });
   var html = list.length
-    ? '<div class="venture-grid">' + list.map(ventureRow).join("") + '</div>'
+    ? gridWithSides('<div class="venture-grid">' + list.map(ventureRow).join("") + '</div>')
     : '<div class="empty-state">No ventures listed in ' + catLabel(slug) + ' yet.</div>';
 
   app.innerHTML = '' +
@@ -352,6 +353,7 @@ function renderCategory(slug) {
     '</section>';
 
   bindVentureClicks();
+  bindSideButtons();
 }
 
 function renderVenture(slug) {
@@ -409,6 +411,54 @@ function renderVenture(slug) {
 
   updateWhatsappButton("Hi, I'm interested in " + p.name + ". Could you share more details?");
 }
+
+// ---------- side "Book Your Free Site Visit" buttons (beside the card grid) ----------
+var sideRO = null;
+function gridWithSides(gridHtml) {
+  var btn = function (side) {
+    return '<a href="#" class="side-card-btn ' + side + '" aria-label="Book Your Free Site Visit"><span class="sc-text">Book Your Free Site Visit</span></a>';
+  };
+  return '<div class="venture-grid-wrap">' + btn("left") + gridHtml + btn("right") + '</div>';
+}
+function fitSideButtons() {
+  var wraps = document.querySelectorAll(".venture-grid-wrap");
+  var cw = document.documentElement.clientWidth;
+  wraps.forEach(function (wrap) {
+    var card = wrap.querySelector(".venture-row");
+    var btns = wrap.querySelectorAll(".side-card-btn");
+    if (!card || cw < 1360) return;
+    var h = card.offsetHeight;
+    var rect = wrap.getBoundingClientRect();
+    btns.forEach(function (b) {
+      b.style.height = h + "px";
+      var t = b.querySelector(".sc-text");
+      var fs = 24;
+      b.style.fontSize = fs + "px";
+      while (fs > 9 && t.offsetHeight > h - 50) { fs -= 0.5; b.style.fontSize = fs + "px"; }
+      var space = b.classList.contains("left") ? (rect.left - 28) : (cw - rect.right - 28);
+      var w = Math.min(fs * 1.35 + 46, space - 24);
+      if (w < 40) w = 40;
+      b.style.setProperty("--w", w + "px");
+      var off = space / 2 + 28 + w / 2;
+      if (b.classList.contains("left")) b.style.left = (-off) + "px";
+      else b.style.right = (-off) + "px";
+    });
+  });
+}
+function bindSideButtons() {
+  document.querySelectorAll(".side-card-btn").forEach(function (b) {
+    b.addEventListener("click", function (e) { e.preventDefault(); openEnquiry(""); });
+  });
+  if (sideRO) { sideRO.disconnect(); sideRO = null; }
+  var first = document.querySelector(".venture-grid-wrap .venture-row");
+  if (first && window.ResizeObserver) {
+    sideRO = new ResizeObserver(fitSideButtons);
+    sideRO.observe(first);
+  }
+  fitSideButtons();
+}
+window.addEventListener("resize", fitSideButtons);
+window.addEventListener("load", fitSideButtons);
 
 function bindVentureClicks() {
   document.querySelectorAll(".venture-row").forEach(function (el) {
