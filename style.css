@@ -990,53 +990,61 @@ img { max-width: 100%; display: block; }
 }
 
 /* ================================================================
-   SIDE "Book Your Free Site Visit" — vertical pulsing buttons
-   shown in the empty space on both sides (wide screens only)
+   SIDE "Book Your Free Site Visit" — tall signboard buttons that
+   fill the empty space on both sides of the page (wide screens).
+   Letters are stacked upright, top to bottom. The number of text
+   columns (1 / 2 / 3) and the letter size adapt to the free space.
    ================================================================ */
 .side-cta { display: none; }
 @media (min-width: 1360px) {
   .side-cta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+    --cols: 1;
+    --side: calc((100vw - 1200px) / 2);                 /* free space on one side */
+    --fs: min(calc((100vh - 140px) / 28.75), calc((var(--side) - 50px) / (var(--cols) * 1.25)));
+    --w: calc(var(--fs) * var(--cols) * 1.25 + 30px);
+    display: block;
     position: fixed;
-    top: 50%;
-    width: 60px;
-    padding: 22px 0;
+    top: 124px;                                          /* below sticky header */
+    bottom: 16px;
+    width: var(--w);
     writing-mode: vertical-rl;
+    text-orientation: upright;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: var(--fs);
+    font-weight: 900;
+    line-height: 1.25;
+    letter-spacing: 0.05em;
+    padding: 0 10px;
     background: #F57C00;
     color: #ffffff;
-    border: 3px solid #FFC107;
-    border-radius: 14px;
-    font-weight: 800;
-    font-size: 17px;
-    letter-spacing: 1px;
+    border: 4px solid #FFC107;
+    border-radius: 16px;
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
     z-index: 50;
     box-shadow: 0 8px 22px rgba(0,0,0,0.3);
+    animation: sideCtaPulse3 1.8s ease-in-out infinite;
   }
-  .side-cta-left {
-    left: max(12px, calc((100vw - 1180px) / 4 - 30px));
-    transform: translateY(-50%) rotate(180deg);
-    animation: sideCtaLeftPulse 1.8s ease-in-out infinite;
-  }
-  .side-cta-right {
-    right: max(12px, calc((100vw - 1180px) / 4 - 30px));
-    transform: translateY(-50%);
-    animation: sideCtaRightPulse 1.8s ease-in-out infinite;
-  }
+  .side-cta-left  { left:  calc((100vw - 1180px) / 4 - var(--w) / 2); }
+  .side-cta-right { right: calc((100vw - 1180px) / 4 - var(--w) / 2); }
   .side-cta:hover { background: #E65100; animation-play-state: paused; }
+  .side-cta .l1, .side-cta .l2 { display: inline; }
 }
-@keyframes sideCtaLeftPulse {
-  0%, 100% { transform: translateY(-50%) rotate(180deg) scale(1); box-shadow: 0 8px 22px rgba(0,0,0,0.3), 0 0 0 0 rgba(255,193,7,0); }
-  50%      { transform: translateY(-50%) rotate(180deg) scale(1.07); box-shadow: 0 8px 22px rgba(0,0,0,0.3), 0 0 0 10px rgba(255,193,7,0.35); }
+/* 2 text columns: "BOOK YOUR" | "FREE SITE VISIT" */
+@media (min-width: 1460px) {
+  .side-cta { --cols: 2; --fs: min(calc((100vh - 140px) / 18.5), calc((var(--side) - 50px) / (var(--cols) * 1.25))); }
+  .side-cta .l1, .side-cta .l2 { display: block; }
 }
-@keyframes sideCtaRightPulse {
-  0%, 100% { transform: translateY(-50%) scale(1); box-shadow: 0 8px 22px rgba(0,0,0,0.3), 0 0 0 0 rgba(255,193,7,0); }
-  50%      { transform: translateY(-50%) scale(1.07); box-shadow: 0 8px 22px rgba(0,0,0,0.3), 0 0 0 10px rgba(255,193,7,0.35); }
+/* 3 text columns: "BOOK YOUR" | "FREE" | "SITE VISIT" */
+@media (min-width: 1600px) {
+  .side-cta { --cols: 3; --fs: min(calc((100vh - 140px) / 12.5), calc((var(--side) - 50px) / (var(--cols) * 1.25))); }
+  .side-cta .l2 span { display: block; }
+}
+@keyframes sideCtaPulse3 {
+  0%, 100% { transform: scale(1);    box-shadow: 0 8px 22px rgba(0,0,0,0.3), 0 0 0 0 rgba(255,193,7,0); }
+  50%      { transform: scale(1.03); box-shadow: 0 8px 22px rgba(0,0,0,0.3), 0 0 0 10px rgba(255,193,7,0.35); }
 }
 @media (prefers-reduced-motion: reduce) {
   .side-cta-left, .side-cta-right { animation: none; }
