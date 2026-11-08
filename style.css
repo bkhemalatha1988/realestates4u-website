@@ -879,7 +879,7 @@ img { max-width: 100%; display: block; }
 @media (max-width: 1000px) { .venture-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
 @media (max-width: 640px)  { .venture-grid { grid-template-columns: 1fr; gap: 18px; } }
 
-.venture-grid .venture-row {
+.venture-grid .venture-row , .venture-swipe .venture-row {
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -892,22 +892,22 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 6px 18px rgba(30, 42, 34, 0.08);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.venture-grid .venture-row:last-child { border-bottom: 1px solid var(--line-light); }
-.venture-grid .venture-row:hover {
+.venture-grid .venture-row:last-child , .venture-swipe .venture-row:last-child { border-bottom: 1px solid var(--line-light); }
+.venture-grid .venture-row:hover , .venture-swipe .venture-row:hover {
   transform: translateY(-8px);
   box-shadow: 0 16px 34px rgba(30, 42, 34, 0.2);
 }
-.venture-grid .venture-photo,
-.venture-grid .venture-photo-ph {
+.venture-grid .venture-photo, .venture-swipe .venture-photo,
+.venture-grid .venture-photo-ph , .venture-swipe .venture-photo-ph {
   width: 100%;
   height: auto;
   aspect-ratio: 3 / 2;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
-.venture-grid .venture-row:hover .venture-photo { transform: scale(1.05); }
-.venture-grid .venture-row { isolation: isolate; }
-.venture-grid .venture-info {
+.venture-grid .venture-row:hover .venture-photo , .venture-swipe .venture-row:hover .venture-photo { transform: scale(1.05); }
+.venture-grid .venture-row , .venture-swipe .venture-row { isolation: isolate; }
+.venture-grid .venture-info , .venture-swipe .venture-info {
   padding: 18px 20px 20px;
   flex: 1;
   justify-content: flex-start;
@@ -915,7 +915,7 @@ img { max-width: 100%; display: block; }
   position: relative;
   z-index: 1;
 }
-.venture-grid .venture-cat {
+.venture-grid .venture-cat , .venture-swipe .venture-cat {
   display: inline-block;
   align-self: flex-start;
   background: #e8f5e9;
@@ -924,23 +924,23 @@ img { max-width: 100%; display: block; }
   font-size: 12px !important;
   margin-bottom: 10px;
 }
-.venture-grid .venture-info h3 {
+.venture-grid .venture-info h3 , .venture-swipe .venture-info h3 {
   font-size: 20px;
   font-weight: 700;
   text-transform: uppercase;
   margin: 0 0 10px;
 }
-.venture-grid .venture-meta {
+.venture-grid .venture-meta , .venture-swipe .venture-meta {
   gap: 8px;
   margin-bottom: 12px;
 }
-.venture-grid .venture-meta span {
+.venture-grid .venture-meta span , .venture-swipe .venture-meta span {
   background: var(--cream);
   border-radius: 8px;
   padding: 4px 10px;
   font-size: 12.5px;
 }
-.venture-grid .venture-price { margin-bottom: 14px; }
+.venture-grid .venture-price , .venture-swipe .venture-price { margin-bottom: 14px; }
 .venture-cta {
   margin-top: auto;
   display: block;
@@ -953,4 +953,91 @@ img { max-width: 100%; display: block; }
   border-radius: 10px;
   transition: background 0.2s ease;
 }
-.venture-grid .venture-row:hover .venture-cta { background: #F57C00; }
+.venture-grid .venture-row:hover .venture-cta , .venture-swipe .venture-row:hover .venture-cta { background: #F57C00; }
+
+
+/* ================================================================
+   SWIPE ROW — remaining ventures (home page)
+   ================================================================ */
+.more-section { padding-top: 10px; }
+.more-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.swipe-arrows { display: flex; gap: 10px; }
+.swipe-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  border: none; background: var(--bg-dark); color: #fff;
+  font-size: 26px; line-height: 1; cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.swipe-btn:hover { background: #F57C00; transform: scale(1.08); }
+@media (max-width: 640px) { .swipe-arrows { display: none; } }
+
+.venture-swipe {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 4px 24px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--brass) transparent;
+}
+.venture-swipe .venture-row {
+  flex: 0 0 300px;
+  scroll-snap-align: start;
+}
+@media (max-width: 640px) {
+  .venture-swipe .venture-row { flex-basis: 78%; }
+}
+
+/* ================================================================
+   SIDE "Book Your Free Site Visit" — vertical pulsing buttons
+   shown in the empty space on both sides (wide screens only)
+   ================================================================ */
+.side-cta { display: none; }
+@media (min-width: 1360px) {
+  .side-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: fixed;
+    top: 50%;
+    width: 60px;
+    padding: 22px 0;
+    writing-mode: vertical-rl;
+    background: #F57C00;
+    color: #ffffff;
+    border: 3px solid #FFC107;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 17px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    z-index: 50;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.3);
+  }
+  .side-cta-left {
+    left: max(12px, calc((100vw - 1180px) / 4 - 30px));
+    transform: translateY(-50%) rotate(180deg);
+    animation: sideCtaLeftPulse 1.8s ease-in-out infinite;
+  }
+  .side-cta-right {
+    right: max(12px, calc((100vw - 1180px) / 4 - 30px));
+    transform: translateY(-50%);
+    animation: sideCtaRightPulse 1.8s ease-in-out infinite;
+  }
+  .side-cta:hover { background: #E65100; animation-play-state: paused; }
+}
+@keyframes sideCtaLeftPulse {
+  0%, 100% { transform: translateY(-50%) rotate(180deg) scale(1); box-shadow: 0 8px 22px rgba(0,0,0,0.3), 0 0 0 0 rgba(255,193,7,0); }
+  50%      { transform: translateY(-50%) rotate(180deg) scale(1.07); box-shadow: 0 8px 22px rgba(0,0,0,0.3), 0 0 0 10px rgba(255,193,7,0.35); }
+}
+@keyframes sideCtaRightPulse {
+  0%, 100% { transform: translateY(-50%) scale(1); box-shadow: 0 8px 22px rgba(0,0,0,0.3), 0 0 0 0 rgba(255,193,7,0); }
+  50%      { transform: translateY(-50%) scale(1.07); box-shadow: 0 8px 22px rgba(0,0,0,0.3), 0 0 0 10px rgba(255,193,7,0.35); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .side-cta-left, .side-cta-right { animation: none; }
+}
