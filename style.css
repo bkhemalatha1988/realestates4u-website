@@ -990,59 +990,76 @@ img { max-width: 100%; display: block; }
 }
 
 /* ================================================================
-   SIDE "Book Your Free Site Visit" — card-height buttons placed on
-   both sides of the venture grid (scroll with the page, like cards).
-   Size / position are set by fitSideButtons() in app.js.
+   SIDE "Book Your Free Site Visit" — big WhatsApp-green buttons with
+   a car image, placed on both sides of the venture grid (they scroll
+   with the page like cards). Size / position set by fitSideButtons().
    ================================================================ */
 .side-card-btn { display: none; }
 @media (min-width: 1360px) {
   .venture-grid-wrap { position: relative; }
   .side-card-btn {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 14px;
     position: absolute;
     top: 0;
-    width: var(--w, 80px);
-    height: 480px;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    text-transform: uppercase;
-    font-size: 16px;
-    font-weight: 800;
+    width: var(--w, 160px);
+    height: 960px;
+    font-size: 24px;
+    font-weight: 900;
     letter-spacing: 0.1em;
     line-height: 1.2;
+    text-transform: uppercase;
     color: #ffffff;
-    text-shadow: 0 2px 3px rgba(0,0,0,0.35);
-    background: linear-gradient(180deg, #FF9F1C 0%, #F57C00 50%, #E65100 100%);
-    border: 3px solid #FFD54F;
-    border-radius: 18px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    background: linear-gradient(180deg, #3DDC84 0%, #25D366 45%, #128C4A 100%);
+    border: 4px solid #B9F6CA;
+    border-radius: 22px;
     text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
     cursor: pointer;
-    box-shadow: 0 10px 24px rgba(0,0,0,0.25), inset 0 0 0 2px rgba(255,255,255,0.18);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.28), inset 0 0 0 2px rgba(255,255,255,0.22);
     animation: sideCardPulse 2s ease-in-out infinite;
   }
-  .side-card-btn .sc-text { display: inline-block; position: relative; z-index: 1; }
+  .side-card-btn .sc-car { display: block; position: relative; z-index: 1; animation: carBounce 1.1s ease-in-out infinite; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.3)); }
+  .side-card-btn .sc-car-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 8px 6px rgba(0,0,0,0.35));
+  }
+  .side-card-btn .sc-text {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+  }
   .side-card-btn::after {
     content: "";
     position: absolute;
     left: 0; right: 0; top: -45%;
     height: 40%;
-    background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.38), rgba(255,255,255,0));
+    background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.35), rgba(255,255,255,0));
     animation: sideCardShine 3s ease-in-out infinite;
     pointer-events: none;
   }
-  .side-card-btn:hover { background: linear-gradient(180deg, #FF8F00 0%, #E65100 100%); animation-play-state: paused; }
+  .side-card-btn:hover { background: linear-gradient(180deg, #25D366 0%, #0E7A3F 100%); animation-play-state: paused; }
 }
 @keyframes sideCardPulse {
-  0%, 100% { transform: scale(1);    box-shadow: 0 10px 24px rgba(0,0,0,0.25), inset 0 0 0 2px rgba(255,255,255,0.18), 0 0 0 0 rgba(255,193,7,0); }
-  50%      { transform: scale(1.03); box-shadow: 0 10px 24px rgba(0,0,0,0.25), inset 0 0 0 2px rgba(255,255,255,0.18), 0 0 0 9px rgba(255,193,7,0.32); }
+  0%, 100% { transform: scale(1);    box-shadow: 0 12px 28px rgba(0,0,0,0.28), inset 0 0 0 2px rgba(255,255,255,0.22), 0 0 0 0 rgba(37,211,102,0); }
+  50%      { transform: scale(1.02); box-shadow: 0 12px 28px rgba(0,0,0,0.28), inset 0 0 0 2px rgba(255,255,255,0.22), 0 0 0 10px rgba(37,211,102,0.35); }
+}
+@keyframes carBounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-5px) rotate(-1.5deg); }
 }
 @keyframes sideCardShine { 0% { top: -45%; } 60%, 100% { top: 110%; } }
 @media (prefers-reduced-motion: reduce) {
-  .side-card-btn, .side-card-btn::after { animation: none; }
+  .side-card-btn, .side-card-btn::after, .side-card-btn .sc-car { animation: none; }
 }
 
 /* ================================================================
