@@ -211,6 +211,7 @@ function ventureRow(p) {
           (p.rera ? '<span>RERA <b>' + p.rera + '</b></span>' : '') +
         '</div>' +
         (p.price ? '<div class="venture-price">Starting from &#8377;' + p.price + ' / sq yd</div>' : '') +
+        '<span class="venture-cta">View details &rarr;</span>' +
       '</div>' +
     '</div>';
 }
@@ -266,9 +267,9 @@ function renderHome() {
     return '<div class="route-stop"><a href="#/category/' + c.slug + '" data-cat="' + c.slug + '">' + shieldIcon + ' ' + c.label + '</a></div>';
   }).join("");
 
-  var featured = PROJECTS.slice(0, 5);
+  var featured = PROJECTS.slice(0, 6);
   var featuredHtml = featured.length
-    ? featured.map(ventureRow).join("")
+    ? '<div class="venture-grid">' + featured.map(ventureRow).join("") + '</div>'
     : '<div class="empty-state">Ventures will appear here once the Projects sheet has entries.</div>';
 
   app.innerHTML = '' +
@@ -317,7 +318,7 @@ function renderHome() {
 function renderCategory(slug) {
   var list = PROJECTS.filter(function (p) { return p.category === slug; });
   var html = list.length
-    ? list.map(ventureRow).join("")
+    ? '<div class="venture-grid">' + list.map(ventureRow).join("") + '</div>'
     : '<div class="empty-state">No ventures listed in ' + catLabel(slug) + ' yet.</div>';
 
   app.innerHTML = '' +
