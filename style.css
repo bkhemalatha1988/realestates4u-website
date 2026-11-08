@@ -990,65 +990,57 @@ img { max-width: 100%; display: block; }
 }
 
 /* ================================================================
-   SIDE "Book Your Free Site Visit" — slim signboard buttons in the
-   empty space on both sides (wide screens). One line of upright
-   letters, top to bottom, with a soft pulse and a moving shine.
+   SIDE "Book Your Free Site Visit" — card-height buttons placed on
+   both sides of the venture grid (scroll with the page, like cards).
+   Size / position are set by fitSideButtons() in app.js.
    ================================================================ */
-.side-cta { display: none; }
+.side-card-btn { display: none; }
 @media (min-width: 1360px) {
-  .side-cta {
-    --fs: min(21px, calc((100vh - 220px) / 31));
-    --w: calc(var(--fs) * 1.3 + 38px);
-    display: block;
-    position: fixed;
-    top: 50%;
-    width: var(--w);
-    margin-top: 40px;                                   /* keeps it clear of the sticky header */
+  .venture-grid-wrap { position: relative; }
+  .side-card-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    width: var(--w, 80px);
+    height: 480px;
     writing-mode: vertical-rl;
     text-orientation: upright;
     text-transform: uppercase;
-    text-align: center;
-    font-size: var(--fs);
+    font-size: 16px;
     font-weight: 800;
-    line-height: 1.2;
     letter-spacing: 0.1em;
-    padding: 22px 0;
+    line-height: 1.2;
     color: #ffffff;
     text-shadow: 0 2px 3px rgba(0,0,0,0.35);
     background: linear-gradient(180deg, #FF9F1C 0%, #F57C00 50%, #E65100 100%);
     border: 3px solid #FFD54F;
-    border-radius: 999px;
+    border-radius: 18px;
     text-decoration: none;
     white-space: nowrap;
-    cursor: pointer;
     overflow: hidden;
-    z-index: 50;
-    box-shadow: 0 10px 24px rgba(0,0,0,0.28), inset 0 0 0 2px rgba(255,255,255,0.18);
-    transform: translateY(-50%);
-    animation: sideCtaPulse4 2s ease-in-out infinite;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.25), inset 0 0 0 2px rgba(255,255,255,0.18);
+    animation: sideCardPulse 2s ease-in-out infinite;
   }
-  .side-cta-left  { left:  calc((100vw - 1180px) / 4 - var(--w) / 2); }
-  .side-cta-right { right: calc((100vw - 1180px) / 4 - var(--w) / 2); }
-  .side-cta .l1, .side-cta .l2, .side-cta .l2 span { display: inline; }
-  .side-cta::after {
+  .side-card-btn .sc-text { display: inline-block; position: relative; z-index: 1; }
+  .side-card-btn::after {
     content: "";
     position: absolute;
     left: 0; right: 0; top: -45%;
     height: 40%;
-    background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.4), rgba(255,255,255,0));
-    animation: sideCtaShine 3s ease-in-out infinite;
+    background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.38), rgba(255,255,255,0));
+    animation: sideCardShine 3s ease-in-out infinite;
     pointer-events: none;
   }
-  .side-cta:hover { background: linear-gradient(180deg, #FF8F00 0%, #E65100 100%); animation-play-state: paused; }
+  .side-card-btn:hover { background: linear-gradient(180deg, #FF8F00 0%, #E65100 100%); animation-play-state: paused; }
 }
-@keyframes sideCtaPulse4 {
-  0%, 100% { transform: translateY(-50%) scale(1);    box-shadow: 0 10px 24px rgba(0,0,0,0.28), inset 0 0 0 2px rgba(255,255,255,0.18), 0 0 0 0 rgba(255,193,7,0); }
-  50%      { transform: translateY(-50%) scale(1.05); box-shadow: 0 10px 24px rgba(0,0,0,0.28), inset 0 0 0 2px rgba(255,255,255,0.18), 0 0 0 9px rgba(255,193,7,0.32); }
+@keyframes sideCardPulse {
+  0%, 100% { transform: scale(1);    box-shadow: 0 10px 24px rgba(0,0,0,0.25), inset 0 0 0 2px rgba(255,255,255,0.18), 0 0 0 0 rgba(255,193,7,0); }
+  50%      { transform: scale(1.03); box-shadow: 0 10px 24px rgba(0,0,0,0.25), inset 0 0 0 2px rgba(255,255,255,0.18), 0 0 0 9px rgba(255,193,7,0.32); }
 }
-@keyframes sideCtaShine {
-  0%   { top: -45%; }
-  60%, 100% { top: 110%; }
-}
+@keyframes sideCardShine { 0% { top: -45%; } 60%, 100% { top: 110%; } }
 @media (prefers-reduced-motion: reduce) {
-  .side-cta, .side-cta::after { animation: none; }
+  .side-card-btn, .side-card-btn::after { animation: none; }
 }
