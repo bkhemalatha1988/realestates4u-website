@@ -84,6 +84,20 @@ fbq('track', 'PageView');
 </div>
 
 <script>
+// Fire the Meta Pixel "Lead" event here, on the thank-you page, but only
+// when the enquiry form just saved a real lead (flag set by enquiry.html).
+// Test mode (?devtest=1) never sets the flag, so no Lead fires while testing.
+(function () {
+  var pending = false;
+  try {
+    pending = sessionStorage.getItem('r4uLeadPending') === '1';
+    sessionStorage.removeItem('r4uLeadPending');
+  } catch (e) {}
+  if (pending && typeof fbq === 'function') {
+    fbq('track', 'Lead');
+  }
+})();
+
 document.getElementById('closeBtn').addEventListener('click', function () {
   if (window.self !== window.top) {
     // Loaded inside the popup on the main site — just close the popup
