@@ -414,9 +414,13 @@ function renderVenture(slug) {
 
 // ---------- side "Book Your Free Site Visit" buttons (beside the card grid) ----------
 var sideRO = null;
+var CAR_RATIO = 520 / 354; // width / height of images/brezza.png
+var CAR_SVG = '<img class="sc-car-img" src="images/brezza.png" alt="Maruti Brezza" loading="lazy" onload="fitSideButtons()">';
 function gridWithSides(gridHtml) {
   var btn = function (side) {
-    return '<a href="#" class="side-card-btn ' + side + '" aria-label="Book Your Free Site Visit"><span class="sc-text">Book Your Free Site Visit</span></a>';
+    return '<a href="#" class="side-card-btn ' + side + '" aria-label="Book Your Free Site Visit">' +
+      '<span class="sc-car">' + CAR_SVG + '</span>' +
+      '<span class="sc-text">Book Your Free Site Visit</span></a>';
   };
   return '<div class="venture-grid-wrap">' + btn("left") + gridHtml + btn("right") + '</div>';
 }
@@ -428,17 +432,21 @@ function fitSideButtons() {
     var btns = wrap.querySelectorAll(".side-card-btn");
     if (!card || cw < 1360) return;
     var h = card.offsetHeight;
+    var H = Math.min(h * 2 + 28, wrap.offsetHeight); // two card-heights (or the whole grid if shorter)
     var rect = wrap.getBoundingClientRect();
     btns.forEach(function (b) {
-      b.style.height = h + "px";
-      var t = b.querySelector(".sc-text");
-      var fs = 24;
-      b.style.fontSize = fs + "px";
-      while (fs > 9 && t.offsetHeight > h - 50) { fs -= 0.5; b.style.fontSize = fs + "px"; }
+      b.style.height = H + "px";
       var space = b.classList.contains("left") ? (rect.left - 28) : (cw - rect.right - 28);
-      var w = Math.min(fs * 1.35 + 46, space - 24);
-      if (w < 40) w = 40;
+      var w = Math.max(60, Math.min(168, space - 24));
       b.style.setProperty("--w", w + "px");
+      var carW = w - 34;
+      var car = b.querySelector(".sc-car");
+      car.style.width = carW + "px";
+      var carH = carW / CAR_RATIO;
+      var t = b.querySelector(".sc-text");
+      var fs = 34;
+      b.style.fontSize = fs + "px";
+      while (fs > 9 && t.offsetHeight > H - carH - 78) { fs -= 0.5; b.style.fontSize = fs + "px"; }
       var off = space / 2 + 28 + w / 2;
       if (b.classList.contains("left")) b.style.left = (-off) + "px";
       else b.style.right = (-off) + "px";
@@ -454,6 +462,7 @@ function bindSideButtons() {
   if (first && window.ResizeObserver) {
     sideRO = new ResizeObserver(fitSideButtons);
     sideRO.observe(first);
+    sideRO.observe(first.parentNode);
   }
   fitSideButtons();
 }
