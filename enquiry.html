@@ -165,10 +165,11 @@ form.addEventListener('submit', function (e) {
 
   db.collection('leads').add(leadData)
     .then(function () {
-      // Fire Meta Pixel Lead event ONLY after a confirmed Firestore write
-      if (typeof fbq === 'function') {
-        fbq('track', 'Lead');
-      }
+      // Lead is NOT fired here any more. It fires on thank-you.html, only
+      // after this confirmed Firestore write. This flag tells the thank-you
+      // page that a real submission just happened (so a direct visit or a
+      // page refresh will not count as a second lead).
+      try { sessionStorage.setItem('r4uLeadPending', '1'); } catch (e) {}
       window.location.href = 'thank-you.html';
     })
     .catch(function (err) {
