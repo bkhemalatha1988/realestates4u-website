@@ -370,7 +370,7 @@ function renderVenture(slug) {
     : "";
 
   var specRows = [
-    ["RERA no.", p.rera], ["LP no.", p.lp], ["Total acres", p.acres],
+    ["Approval", p.approval || "\u2014"], ["RERA no.", p.rera], ["LP no.", p.lp], ["Total acres", p.acres],
    ["Total plots", p.plots], ["Available plots", p.availablePlots], ["Market price", p.price ? "Starting from \u20B9" + p.price + " / sq yd" : ""],
     ["Govt price", p.govtPrice ? "Rs " + p.govtPrice + " / sq yd" : ""]
   ].filter(function (r) { return r[1]; })
