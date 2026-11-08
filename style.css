@@ -866,3 +866,91 @@ img { max-width: 100%; display: block; }
 @media (prefers-reduced-motion: reduce) {
   .side-btn:not(.outline) { animation: none; }
 }
+
+
+/* ================================================================
+   VENTURE GRID — attractive card layout (home + category pages)
+   ================================================================ */
+.venture-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+@media (max-width: 1000px) { .venture-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
+@media (max-width: 640px)  { .venture-grid { grid-template-columns: 1fr; gap: 18px; } }
+
+.venture-grid .venture-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  background: #ffffff;
+  border: 1px solid var(--line-light);
+  border-top: 4px solid var(--brass);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(30, 42, 34, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.venture-grid .venture-row:last-child { border-bottom: 1px solid var(--line-light); }
+.venture-grid .venture-row:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 34px rgba(30, 42, 34, 0.2);
+}
+.venture-grid .venture-photo,
+.venture-grid .venture-photo-ph {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.venture-grid .venture-row:hover .venture-photo { transform: scale(1.05); }
+.venture-grid .venture-row { isolation: isolate; }
+.venture-grid .venture-info {
+  padding: 18px 20px 20px;
+  flex: 1;
+  justify-content: flex-start;
+  background: #ffffff;
+  position: relative;
+  z-index: 1;
+}
+.venture-grid .venture-cat {
+  display: inline-block;
+  align-self: flex-start;
+  background: #e8f5e9;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px !important;
+  margin-bottom: 10px;
+}
+.venture-grid .venture-info h3 {
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+.venture-grid .venture-meta {
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.venture-grid .venture-meta span {
+  background: var(--cream);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 12.5px;
+}
+.venture-grid .venture-price { margin-bottom: 14px; }
+.venture-cta {
+  margin-top: auto;
+  display: block;
+  text-align: center;
+  background: var(--bg-dark);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 11px;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+.venture-grid .venture-row:hover .venture-cta { background: #F57C00; }
