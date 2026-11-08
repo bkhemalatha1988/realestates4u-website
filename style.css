@@ -990,62 +990,65 @@ img { max-width: 100%; display: block; }
 }
 
 /* ================================================================
-   SIDE "Book Your Free Site Visit" — tall signboard buttons that
-   fill the empty space on both sides of the page (wide screens).
-   Letters are stacked upright, top to bottom. The number of text
-   columns (1 / 2 / 3) and the letter size adapt to the free space.
+   SIDE "Book Your Free Site Visit" — slim signboard buttons in the
+   empty space on both sides (wide screens). One line of upright
+   letters, top to bottom, with a soft pulse and a moving shine.
    ================================================================ */
 .side-cta { display: none; }
 @media (min-width: 1360px) {
   .side-cta {
-    --cols: 1;
-    --side: calc((100vw - 1200px) / 2);                 /* free space on one side */
-    --fs: min(calc((100vh - 140px) / 28.75), calc((var(--side) - 50px) / (var(--cols) * 1.25)));
-    --w: calc(var(--fs) * var(--cols) * 1.25 + 30px);
+    --fs: min(21px, calc((100vh - 220px) / 31));
+    --w: calc(var(--fs) * 1.3 + 38px);
     display: block;
     position: fixed;
-    top: 124px;                                          /* below sticky header */
-    bottom: 16px;
+    top: 50%;
     width: var(--w);
+    margin-top: 40px;                                   /* keeps it clear of the sticky header */
     writing-mode: vertical-rl;
     text-orientation: upright;
     text-transform: uppercase;
     text-align: center;
     font-size: var(--fs);
-    font-weight: 900;
-    line-height: 1.25;
-    letter-spacing: 0.05em;
-    padding: 0 10px;
-    background: #F57C00;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.1em;
+    padding: 22px 0;
     color: #ffffff;
-    border: 4px solid #FFC107;
-    border-radius: 16px;
+    text-shadow: 0 2px 3px rgba(0,0,0,0.35);
+    background: linear-gradient(180deg, #FF9F1C 0%, #F57C00 50%, #E65100 100%);
+    border: 3px solid #FFD54F;
+    border-radius: 999px;
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
+    overflow: hidden;
     z-index: 50;
-    box-shadow: 0 8px 22px rgba(0,0,0,0.3);
-    animation: sideCtaPulse3 1.8s ease-in-out infinite;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.28), inset 0 0 0 2px rgba(255,255,255,0.18);
+    transform: translateY(-50%);
+    animation: sideCtaPulse4 2s ease-in-out infinite;
   }
   .side-cta-left  { left:  calc((100vw - 1180px) / 4 - var(--w) / 2); }
   .side-cta-right { right: calc((100vw - 1180px) / 4 - var(--w) / 2); }
-  .side-cta:hover { background: #E65100; animation-play-state: paused; }
-  .side-cta .l1, .side-cta .l2 { display: inline; }
+  .side-cta .l1, .side-cta .l2, .side-cta .l2 span { display: inline; }
+  .side-cta::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: -45%;
+    height: 40%;
+    background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.4), rgba(255,255,255,0));
+    animation: sideCtaShine 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .side-cta:hover { background: linear-gradient(180deg, #FF8F00 0%, #E65100 100%); animation-play-state: paused; }
 }
-/* 2 text columns: "BOOK YOUR" | "FREE SITE VISIT" */
-@media (min-width: 1460px) {
-  .side-cta { --cols: 2; --fs: min(calc((100vh - 140px) / 18.5), calc((var(--side) - 50px) / (var(--cols) * 1.25))); }
-  .side-cta .l1, .side-cta .l2 { display: block; }
+@keyframes sideCtaPulse4 {
+  0%, 100% { transform: translateY(-50%) scale(1);    box-shadow: 0 10px 24px rgba(0,0,0,0.28), inset 0 0 0 2px rgba(255,255,255,0.18), 0 0 0 0 rgba(255,193,7,0); }
+  50%      { transform: translateY(-50%) scale(1.05); box-shadow: 0 10px 24px rgba(0,0,0,0.28), inset 0 0 0 2px rgba(255,255,255,0.18), 0 0 0 9px rgba(255,193,7,0.32); }
 }
-/* 3 text columns: "BOOK YOUR" | "FREE" | "SITE VISIT" */
-@media (min-width: 1600px) {
-  .side-cta { --cols: 3; --fs: min(calc((100vh - 140px) / 12.5), calc((var(--side) - 50px) / (var(--cols) * 1.25))); }
-  .side-cta .l2 span { display: block; }
-}
-@keyframes sideCtaPulse3 {
-  0%, 100% { transform: scale(1);    box-shadow: 0 8px 22px rgba(0,0,0,0.3), 0 0 0 0 rgba(255,193,7,0); }
-  50%      { transform: scale(1.03); box-shadow: 0 8px 22px rgba(0,0,0,0.3), 0 0 0 10px rgba(255,193,7,0.35); }
+@keyframes sideCtaShine {
+  0%   { top: -45%; }
+  60%, 100% { top: 110%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .side-cta-left, .side-cta-right { animation: none; }
+  .side-cta, .side-cta::after { animation: none; }
 }
