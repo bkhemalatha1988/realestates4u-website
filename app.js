@@ -272,6 +272,20 @@ function renderHome() {
     ? '<div class="venture-grid">' + featured.map(ventureRow).join("") + '</div>'
     : '<div class="empty-state">Ventures will appear here once the Projects sheet has entries.</div>';
 
+  var moreList = PROJECTS.slice(6);
+  var moreHtml = moreList.length
+    ? '<section class="section more-section">' +
+        '<div class="section-head more-head">' +
+          '<div><h2>More ventures</h2><p>Swipe to see all ' + moreList.length + ' more &rarr;</p></div>' +
+          '<div class="swipe-arrows">' +
+            '<button type="button" class="swipe-btn" id="swipe-prev" aria-label="Previous">&#8249;</button>' +
+            '<button type="button" class="swipe-btn" id="swipe-next" aria-label="Next">&#8250;</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="venture-swipe" id="venture-swipe">' + moreList.map(ventureRow).join("") + '</div>' +
+      '</section>'
+    : '';
+
   app.innerHTML = '' +
     '<section class="hero">' +
       '<div class="hero-inner">' +
@@ -303,7 +317,8 @@ function renderHome() {
     '<section class="section">' +
       '<div class="section-head"><h2>Featured ventures</h2><p>A look across our current corridors</p></div>' +
       featuredHtml +
-    '</section>';
+    '</section>' +
+    moreHtml;
 
   var bigCta = document.getElementById("hero-big-cta");
   if (bigCta) bigCta.addEventListener("click", function (e) {
@@ -313,6 +328,14 @@ function renderHome() {
 
   bindVentureClicks();
   startCarousel();
+
+  var sw = document.getElementById("venture-swipe");
+  var prev = document.getElementById("swipe-prev");
+  var next = document.getElementById("swipe-next");
+  if (sw && prev && next) {
+    prev.addEventListener("click", function () { sw.scrollBy({ left: -sw.clientWidth * 0.8, behavior: "smooth" }); });
+    next.addEventListener("click", function () { sw.scrollBy({ left: sw.clientWidth * 0.8, behavior: "smooth" }); });
+  }
 }
 
 function renderCategory(slug) {
