@@ -1044,3 +1044,19 @@ img { max-width: 100%; display: block; }
 @media (prefers-reduced-motion: reduce) {
   .side-card-btn, .side-card-btn::after { animation: none; }
 }
+
+/* ================================================================
+   VENTURE DETAILS TABLE — bright, two-colour (all ventures)
+   Left labels: bright blue  |  Right values: bright green
+   ================================================================ */
+.spec-table td:first-child {
+  color: #1565C0 !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+}
+.spec-table td:last-child {
+  color: #2E7D32 !important;
+  font-weight: 800 !important;
+  font-size: 15.5px !important;
+}
+.spec-table tr { border-bottom: 1px solid rgba(30, 42, 34, 0.18); }
