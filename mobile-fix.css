@@ -1,0 +1,109 @@
+/* ================================================================
+   realestates4u – MOBILE FIX  (upload next to style.css)
+   Loaded LAST in index.html so it overrides everything above it.
+   ================================================================ */
+
+/* 1) Never allow sideways scrolling / zoomed-out page (Instagram browser) */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+/* 2) The old catch-all rules ([class*="highway"], [class*="detail"] ...)
+      were also hitting .highway-strip and .detail-hero, turning the
+      three benefit points into bold CAPITALS. Reset them. */
+.highway-strip,
+.highway-strip-inner {
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  font-weight: 400 !important;
+  color: var(--text-cream-dim) !important;
+}
+.highway-strip .hwy-point h4 {
+  color: var(--text-cream) !important;
+  font-weight: 500 !important;
+  font-size: 18px;
+}
+.highway-strip .hwy-point .hwy-num { color: var(--brass-light) !important; }
+.detail-hero { color: var(--text-cream) !important; font-weight: 400 !important; }
+
+/* ================= PHONE LAYOUT ================= */
+@media (max-width: 640px) {
+
+  /* ---- Header ---- */
+  .header-inner { padding: 12px 16px; row-gap: 10px; }
+  .logo { font-size: 20px; }
+  .header-actions { order: 3; width: 100%; gap: 8px; }
+  .header-actions .enquire-btn {
+    flex: 1; text-align: center; padding: 12px 10px; font-size: 15px;
+  }
+  .whatsapp-btn { padding: 11px 12px; }
+  .promo-bar { font-size: 13px; padding: 8px 0; }
+
+  /* ---- Hero: ONE clean column (this was the main bug:
+         the big orange button was wrapping into a 2nd column
+         off-screen and shrinking the whole page) ---- */
+  .hero { padding: 26px 16px 30px; }
+  .hero-inner { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .hero h1 { font-size: 31px; max-width: none; margin-bottom: 12px; }
+  .hero p.lede { font-size: 15.5px; max-width: none; }
+
+  .hero-right {
+    display: flex; flex-direction: column; flex-wrap: nowrap;
+    align-items: stretch; gap: 14px; min-height: 0; width: 100%;
+  }
+  /* order: Button first (money), photo second, stats last */
+  .hero-big-cta {
+    order: 1; flex: none; width: 100%;
+    flex-direction: column; padding: 16px 14px; gap: 6px;
+    animation: none;
+  }
+  .hero-big-cta .cta-main { font-size: 24px; }
+  .hero-greeting-card { order: 2; flex: none; width: 100%; min-height: 0; }
+  .hero-greeting-card img { height: auto; animation: none; }
+  .hero-stats {
+    order: 3; flex-direction: row; width: 100%;
+    border: 0; padding: 0; gap: 8px;
+  }
+  .hero-stat { flex: 1; width: auto; padding: 12px 6px; border-radius: 12px; }
+  .hero-stat .num { font-size: 20px; }
+  .hero-stat .label { font-size: 11px; line-height: 1.25; }
+
+  /* ---- Photo slider ---- */
+  .carousel { height: 230px; }
+
+  /* ---- Highway buttons: tidy 2-column grid ---- */
+  .route-nav { padding: 28px 16px 30px; }
+  .route-heading h2 { font-size: 24px; }
+  .route-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%;
+  }
+  .route-stop { min-width: 0; }
+  .route-stop a {
+    animation: none; font-size: 14px; padding: 14px 8px;
+    border-radius: 14px; gap: 6px;
+  }
+
+  /* ---- Benefit points ---- */
+  .highway-strip { padding: 10px 16px 26px; }
+  .highway-strip-inner { gap: 20px; }
+  .hwy-point p { font-size: 14px; }
+
+  /* ---- Sections / project list ---- */
+  .section { padding: 30px 16px; }
+  .section-head h2 { font-size: 24px; }
+  .venture-row { gap: 14px; padding: 20px 0; }
+  .venture-photo, .venture-photo-ph { width: 100%; height: auto; max-height: 240px; }
+
+  /* ---- Project detail page ---- */
+  .detail-hero { padding: 26px 16px; }
+  .detail-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .side-panel { position: static; padding: 20px; }
+  .gallery { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .gallery img { height: 130px; }
+
+  /* ---- Enquiry popup ---- */
+  .enquiry-modal { padding: 10px; }
+  .enquiry-modal-inner { padding: 16px; max-height: 96vh; overflow-y: auto; }
+  #enquiry-frame { height: 480px; }
+
+  /* ---- Footer: keep text clear of the green WhatsApp button ---- */
+  .site-footer { padding-bottom: 90px; }
+}
