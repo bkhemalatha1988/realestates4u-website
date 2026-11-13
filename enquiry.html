@@ -19,7 +19,6 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('set', 'autoConfig', 'false', '1452487213303598');
 fbq('init', '1452487213303598');
-fbq('track', 'PageView');
 </script>
 <!-- End Meta Pixel Code -->
 
@@ -165,12 +164,14 @@ form.addEventListener('submit', function (e) {
 
   db.collection('leads').add(leadData)
     .then(function () {
-      // Lead is NOT fired here any more. It fires on thank-you.html, only
-      // after this confirmed Firestore write. This flag tells the thank-you
-      // page that a real submission just happened (so a direct visit or a
-      // page refresh will not count as a second lead).
-      try { sessionStorage.setItem('r4uLeadPending', '1'); } catch (e) {}
-      window.location.href = 'thank-you.html';
+      // Fire Meta Pixel Lead event ONLY after a confirmed Firestore write
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead');
+      }
+      // short delay so the Pixel request finishes before the redirect
+      setTimeout(function () {
+        window.location.href = 'thank-you.html';
+      }, 500);
     })
     .catch(function (err) {
       errorMsg.textContent = 'Something went wrong. Please try again or call us directly.';
