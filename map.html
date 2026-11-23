@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>realestates4u – Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:system-ui,sans-serif}
+#map{position:absolute;inset:0}
+#top{position:absolute;z-index:1000;top:10px;left:10px;right:10px;background:#f5f1e6;border-radius:24px;padding:10px 16px;font-weight:700;color:#1b5e20;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px #0004}
+#top a{color:#1b5e20;font-size:13px;text-decoration:none}
+#card,#sheet{position:absolute;z-index:1000;left:10px;right:10px;background:#0f2e22;color:#fff;border-radius:18px;padding:14px;display:none;box-shadow:0 4px 16px #0006}
+#card{bottom:12px}
+#card h3,#sheet h2{margin:0 0 4px}#card small,#sheet small{color:#9fc4b0}
+.chips{margin:8px 0;display:flex;gap:6px;flex-wrap:wrap}.chips span{background:#1f4a39;border-radius:8px;padding:4px 8px;font-size:12px}
+.btn{display:block;width:100%;text-align:center;background:#fff;color:#0f2e22;border:0;border-radius:20px;padding:10px;font-weight:700;margin-top:8px;text-decoration:none;font-size:14px}
+.btn.g{background:#25d366;color:#fff}
+.x{position:absolute;right:12px;top:10px;background:#ffffff22;border:0;color:#fff;width:28px;height:28px;border-radius:14px;font-size:16px}
+#sheet{top:70px;bottom:12px;overflow:auto}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.grid div{background:#1f4a39;border-radius:12px;padding:10px;text-align:center}.grid b{display:block;font-size:18px}.grid small{font-size:11px}
+.tabs{display:flex;gap:6px;margin:10px 0}.tabs button{flex:1;padding:8px;border:0;border-radius:16px;background:#1f4a39;color:#fff}.tabs button.on{background:#fff;color:#0f2e22;font-weight:700}
+#tabbody{font-size:14px;line-height:1.6}
+#edit{position:absolute;z-index:1100;top:62px;left:10px;right:10px;background:#fffffff0;border-radius:12px;padding:10px;font-size:12px;display:none}
+#edit label{display:block;margin:4px 0}#edit input[type=range]{width:100%}
+#edit .row{display:flex;gap:4px;margin:4px 0}#edit button{flex:1;padding:8px}
+#edit textarea{width:100%;height:60px;font-size:11px}
+.leaflet-container{background:#222}
+</style></head><body>
+<div id="map"></div>
+<div id="top"><span>realestates4u · Map</span><a href="index.html">← Home</a></div>
+<div id="edit">
+ <b id="etitle"></b>
+ <label>Size (meters wide) <input type="range" id="ew" min="150" max="900"></label>
+ <label>Rotation (°) <input type="range" id="er" min="-180" max="180" step="0.5"></label>
+ <label>Layout opacity <input type="range" id="eo" min="0.2" max="1" step="0.05" value="0.85"></label>
+ <div class="row"><button data-d="n">↑</button><button data-d="s">↓</button><button data-d="w">←</button><button data-d="e">→</button><button id="ecopy">Copy values</button></div>
+ <textarea id="eout" readonly></textarea>
+ <div>Tap on map = coordinates: <b id="clk">-</b></div>
+</div>
+<div id="card"><button class="x" onclick="closeAll()">✕</button><h3 id="cn"></h3><small id="cl"></small><div class="chips" id="cc"></div><button class="btn" onclick="openSheet()">View details ↗</button></div>
+<div id="sheet"><button class="x" onclick="closeSheet()">✕</button><h2 id="sn"></h2><small id="sl"></small><div class="chips" id="sc"></div>
+ <div class="grid" id="sg"></div>
+ <div class="tabs"><button class="on" data-t="about">About</button><button data-t="appr">Approvals</button><button data-t="loc">Location</button></div>
+ <div id="tabbody"></div>
+ <a class="btn g" id="wa" target="_blank">WhatsApp</a><a class="btn" href="tel:9949610063">Call 9949610063</a></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-imageoverlay-rotated@0.1.1/Leaflet.ImageOverlay.Rotated.js"></script>
+<script>
+// ===== EDIT THIS DATA (lat/lng are PLACEHOLDERS - replace with real values) =====
+const V=[
+ {id:'seven-hills',name:'Seven Hills Future City',loc:'Thakkellapally, Yacharam · Sagar Highway',lat:16.986845,lng:78.697217,
+  acres:'20.7',plots:273,sizes:'147–484 sq yd',price:13000,dev:'Sri Mahika',img:'images/layout-seven-hills.png',w:475,rot:0,
+  appr:'DTCP approved · T.L.P. 73/2023/H & 82/2023/HRO/H1 · TG RERA P02400007571 · 50% bank loan available',
+  about:'DTCP approved layout with 40\' and 33\' wide roads, 10% open space and parks, near Bharat Future City.'},
+ {id:'gold-space',name:'Gold Space',loc:'Kadthal · Srisailam Highway',lat:16.964813,lng:78.509937,
+  acres:'24.5',plots:'250+',sizes:'176–1171 sq yd',price:19999,dev:'NRI Projects',img:'images/layout-gold-space.png',w:410,rot:0,
+  appr:'DTCP approved · LP No. 211/2023/H · TG RERA · Bank loans available',
+  about:'200 feet Srisailam highway facing project, 40\' and 33\' blacktop roads, park and children\'s play area, avenue plantation, compound wall.'}
+];
+// ================================================================================
+const q=new URLSearchParams(location.search),EDIT=q.has('edit');
+const map=L.map('map',{zoomControl:false,center:[17.0,78.6],zoom:9});
+L.control.zoom({position:'bottomright'}).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxNativeZoom:18,maxZoom:20,attribution:'Esri World Imagery'}).addTo(map);
+const col=p=>{const t=Math.min(1,Math.max(0,(p-8000)/(25000-8000)));return `hsl(${120-120*t},85%,48%)`};
+let cur=null,ov=null,mk={};
+const corners=(v)=>{const k=111320,c=Math.cos(v.lat*Math.PI/180),h=v.w*v.ar,r=v.rot*Math.PI/180,
+ p=(x,y)=>{const X=x*Math.cos(r)+y*Math.sin(r),Y=-x*Math.sin(r)+y*Math.cos(r);return L.latLng(v.lat+Y/k,v.lng+X/(k*c))};
+ return [p(-v.w/2,h/2),p(v.w/2,h/2),p(-v.w/2,-h/2)]};
+V.forEach(v=>{
+ const im=new Image();im.src=v.img;im.onload=()=>{v.ar=im.naturalHeight/im.naturalWidth};v.ar=0.6;
+ mk[v.id]=L.circleMarker([v.lat,v.lng],{radius:10,color:'#fff',weight:2,fillColor:col(v.price),fillOpacity:1}).addTo(map).on('click',()=>pick(v));
+});
+function showOv(v){
+ if(ov)map.removeLayer(ov);
+ const c=corners(v);ov=L.imageOverlay.rotated(v.img,c[0],c[1],c[2],{opacity:+(document.getElementById('eo').value||0.85)}).addTo(map);
+}
+function pick(v){
+ cur=v;closeSheet();
+ map.flyTo([v.lat,v.lng],17,{duration:1.2});
+ setTimeout(()=>showOv(v),600);
+ cn.textContent=v.name;cl.textContent='📍 '+v.loc;
+ cc.innerHTML=`<span>₹${v.price.toLocaleString('en-IN')} / sq yd</span><span>${v.sizes}</span>`;
+ card.style.display='block';
+ if(EDIT){edit.style.display='block';etitle.textContent=v.name;ew.value=v.w;er.value=v.rot;dump()}
+}
+function openSheet(){const v=cur;card.style.display='none';sheet.style.display='block';
+ sn.textContent=v.name;sl.textContent='📍 '+v.loc;sc.innerHTML='<span>DTCP</span><span>Developer: '+v.dev+'</span>';
+ sg.innerHTML=`<div><b>${v.acres}</b><small>acres</small></div><div><b>${v.sizes.replace(' sq yd','')}</b><small>sq yd plots</small></div><div><b>${v.plots}</b><small>plots</small></div>`;
+ tab('about');wa.href='https://wa.me/919949610063?text='+encodeURIComponent('Hi, I am interested in '+v.name)}
+function tab(t){document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
+ tabbody.innerHTML={about:cur.about,appr:cur.appr,loc:cur.loc+'<br><a style="color:#9fc4b0" target="_blank" href="https://www.google.com/maps?q='+cur.lat+','+cur.lng+'">Open in Google Maps</a>'}[t]}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.t));
+function closeSheet(){sheet.style.display='none';if(cur)card.style.display='block'}
+function closeAll(){card.style.display='none';sheet.style.display='none';edit.style.display='none';if(ov){map.removeLayer(ov);ov=null}cur=null;map.flyTo([17.0,78.6],9)}
+// edit tool (open map.html?edit=1)
+function dump(){eout.value=`lat:${cur.lat.toFixed(6)}, lng:${cur.lng.toFixed(6)}, w:${Math.round(cur.w)}, rot:${cur.rot}`}
+ew.oninput=()=>{cur.w=+ew.value;showOv(cur);dump()};er.oninput=()=>{cur.rot=+er.value;showOv(cur);dump()};eo.oninput=()=>ov&&ov.setOpacity(+eo.value);
+document.querySelectorAll('#edit [data-d]').forEach(b=>b.onclick=()=>{const s=0.00004*Math.max(1,cur.w/200),d=b.dataset.d;
+ if(d=='n')cur.lat+=s;if(d=='s')cur.lat-=s;if(d=='e')cur.lng+=s;if(d=='w')cur.lng-=s;mk[cur.id].setLatLng([cur.lat,cur.lng]);showOv(cur);dump()});
+ecopy.onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(eout.value);ecopy.textContent='Copied ✓'};
+map.on('click',e=>{if(EDIT)clk.textContent=e.latlng.lat.toFixed(6)+', '+e.latlng.lng.toFixed(6)});
+</script></body></html>
