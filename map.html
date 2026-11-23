@@ -63,7 +63,10 @@ const V=[
 const q=new URLSearchParams(location.search),EDIT=q.has('edit');
 const map=L.map('map',{zoomControl:false,center:[17.0,78.6],zoom:9});
 L.control.zoom({position:'bottomright'}).addTo(map);
-L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxNativeZoom:18,maxZoom:20,attribution:'Esri World Imagery'}).addTo(map);
+const esri=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxNativeZoom:18,maxZoom:20,attribution:'Esri World Imagery'});
+const clarity=L.tileLayer('https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxNativeZoom:18,maxZoom:20,attribution:'Esri Clarity'});
+const osm=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'OpenStreetMap'});
+esri.addTo(map);L.control.layers({'Satellite (Esri)':esri,'Satellite (Clarity)':clarity,'Street map':osm},null,{position:'bottomleft'}).addTo(map);
 const col=p=>{const t=Math.min(1,Math.max(0,(p-8000)/(25000-8000)));return `hsl(${120-120*t},85%,48%)`};
 let cur=null,ov=null,mk={};
 const corners=(v)=>{const k=111320,c=Math.cos(v.lat*Math.PI/180),h=v.w*v.ar,r=v.rot*Math.PI/180,
@@ -79,7 +82,7 @@ function showOv(v){
 }
 function pick(v){
  cur=v;closeSheet();
- map.flyTo([v.lat,v.lng],17,{duration:1.2});
+ map.flyTo([v.lat,v.lng],16,{duration:1.2});
  setTimeout(()=>showOv(v),600);
  cn.textContent=v.name;cl.textContent='📍 '+v.loc;
  cc.innerHTML=`<span>₹${v.price.toLocaleString('en-IN')} / sq yd</span><span>${v.sizes}</span>`;
