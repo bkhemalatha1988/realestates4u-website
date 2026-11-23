@@ -26,6 +26,8 @@
 #edit .row{display:flex;gap:4px;margin:4px 0}#edit button{flex:1;padding:8px}
 #edit textarea{width:100%;height:60px;font-size:11px}
 .leaflet-container{background:#222}
+.pin{position:absolute;display:flex;align-items:center;white-space:nowrap;cursor:pointer;left:-12px;top:-34px}
+.pin span{margin-left:4px;background:#fff;color:#0f2e22;font:700 12px system-ui,sans-serif;padding:3px 8px;border-radius:10px;box-shadow:0 1px 4px #0006}
 </style></head><body>
 <div id="map"></div>
 <div id="top"><span>realestates4u · Map</span><a href="index.html">← Home</a></div>
@@ -54,8 +56,8 @@ const V=[
   acres:'20.7',plots:273,sizes:'147–484 sq yd',price:13000,dev:'Sri Mahika',img:'images/layout-seven-hills.png',w:475,rot:0,
   appr:'DTCP approved · T.L.P. 73/2023/H & 82/2023/HRO/H1 · TG RERA P02400007571 · 50% bank loan available',
   about:'DTCP approved layout with 40\' and 33\' wide roads, 10% open space and parks, near Bharat Future City.'},
- {id:'gold-space',name:'Gold Space',loc:'Kadthal · Srisailam Highway',lat:16.964813,lng:78.509937,
-  acres:'24.5',plots:'250+',sizes:'176–1171 sq yd',price:19999,dev:'NRI Projects',img:'images/layout-gold-space.png',w:410,rot:0,
+ {id:'gold-space',name:'Gold Space',loc:'Kadthal · Srisailam Highway',lat:16.962926,lng:78.508143,
+  acres:'24.5',plots:'250+',sizes:'176–1171 sq yd',price:19999,dev:'NRI Projects',img:'images/layout-gold-space.png',w:380,rot:0,
   appr:'DTCP approved · LP No. 211/2023/H · TG RERA · Bank loans available',
   about:'200 feet Srisailam highway facing project, 40\' and 33\' blacktop roads, park and children\'s play area, avenue plantation, compound wall.'}
 ];
@@ -74,7 +76,7 @@ const corners=(v)=>{const k=111320,c=Math.cos(v.lat*Math.PI/180),h=v.w*v.ar,r=v.
  return [p(-v.w/2,h/2),p(v.w/2,h/2),p(-v.w/2,-h/2)]};
 V.forEach(v=>{
  const im=new Image();im.src=v.img;im.onload=()=>{v.ar=im.naturalHeight/im.naturalWidth};v.ar=0.6;
- mk[v.id]=L.circleMarker([v.lat,v.lng],{radius:10,color:'#fff',weight:2,fillColor:col(v.price),fillOpacity:1}).addTo(map).on('click',()=>pick(v));
+mk[v.id]=L.marker([v.lat,v.lng],{icon:L.divIcon({className:'',iconSize:[0,0],html:`<div class="pin"><svg width="24" height="34" viewBox="0 0 24 34" style="filter:drop-shadow(0 1px 2px #0008)"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 22 12 22s12-13 12-22C24 5.4 18.6 0 12 0z" fill="${col(v.price)}" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg><span>${v.name}</span></div>`})}).addTo(map).on('click',()=>pick(v));
 });
 function showOv(v){
  if(ov)map.removeLayer(ov);
