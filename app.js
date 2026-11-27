@@ -345,6 +345,13 @@ function renderCategory(slug) {
   bindSideButtons();
 }
 
+var MAP_KEYS = [["seven hills","seven-hills"],["gold space","gold-space"],["artha sagar","artha-sagar"],["brundavan","brundavan-homes"],["temple city","temple-city-grand"]];
+function mapIdFor(name) {
+  var n = (name || "").toLowerCase().replace(/[^a-z]+/g, " ");
+  for (var i = 0; i < MAP_KEYS.length; i++) { if (n.indexOf(MAP_KEYS[i][0]) > -1) return MAP_KEYS[i][1]; }
+  return null;
+}
+
 function renderVenture(slug) {
   var p = PROJECTS.filter(function (x) { return x.slug === slug; })[0];
   if (!p) { app.innerHTML = '<div class="empty-state">Venture not found.</div>'; return; }
@@ -365,6 +372,11 @@ function renderVenture(slug) {
   ].filter(function (r) { return r[1]; })
    .map(function (r) { return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>'; }).join("");
 
+  var mid = mapIdFor(p.name);
+  var mapBtn = mid ? '<a class="side-btn outline" href="map.html?v=' + mid + '">View on map &#8599;</a>' : "";
+  var mapBlock = mid ? '<div class="detail-block"><h3>Location &amp; layout on map</h3>' +
+    '<div class="venture-map"><iframe src="map.html?v=' + mid + '&embed=1" title="' + p.name + ' on map" loading="lazy"></iframe></div>' +
+    '<a class="map-open-link" href="map.html?v=' + mid + '">Open full map &#8599;</a></div>' : "";
   var mapsBtn = p.location ? '<a class="side-btn outline" target="_blank" href="' + p.location + '">View location</a>' : "";
   var brochureBtn = p.brochure ? '<a class="side-btn outline" target="_blank" href="' + p.brochure + '">Download brochure</a>' : "";
 
@@ -385,12 +397,12 @@ function renderVenture(slug) {
       '<div class="detail-grid">' +
         '<div>' +
           videoHtml +
-          '<div class="detail-block"><h3>Venture details</h3><table class="spec-table">' + specRows + '</table></div>' +
+          '<div class="detail-block"><h3>Venture details</h3><table class="spec-table">' + specRows + '</table></div>' + mapBlock +
         '</div>' +
         '<div class="side-panel">' +
           '<h3>Interested in ' + p.name + '?</h3>' +
           '<a class="side-btn" href="#" id="detail-enquire">Book Your Free Site Visit</a>' +
-          mapsBtn + brochureBtn +
+          mapBtn + mapsBtn + brochureBtn +
         '</div>' +
       '</div>' +
     '</section>';
