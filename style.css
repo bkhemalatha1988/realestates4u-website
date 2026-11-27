@@ -1077,3 +1077,10 @@ img { max-width: 100%; display: block; }
   font-size: 15.5px !important;
 }
 .spec-table tr { border-bottom: 1px solid rgba(30, 42, 34, 0.18); }
+
+
+/* Homepage map section (replaces photo carousel) */
+.home-map { position: relative; width: 100%; height: 480px; background: #0f2e22; overflow: hidden; }
+.home-map iframe { width: 100%; height: 100%; border: 0; display: block; }
+.home-map-open { position: absolute; right: 12px; top: 12px; z-index: 5; background: #f5f1e6; color: #1b5e20; font-weight: 700; font-size: 13px; padding: 8px 14px; border-radius: 18px; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,.35); }
+@media (max-width: 700px) { .home-map { height: 440px; } }
