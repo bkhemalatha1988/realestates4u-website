@@ -27,7 +27,7 @@
 #edit textarea{width:100%;height:60px;font-size:11px}
 .leaflet-container{background:#222}
 .pin{position:absolute;display:flex;align-items:center;white-space:nowrap;cursor:pointer;left:-12px;top:-34px}
-.pin span{margin-left:4px;background:#fff;color:#0f2e22;font:700 12px system-ui,sans-serif;padding:3px 8px;border-radius:10px;box-shadow:0 1px 4px #0006}
+.nolab .pin span{display:none}.pin span{margin-left:4px;background:#fff;color:#0f2e22;font:700 12px system-ui,sans-serif;padding:3px 8px;border-radius:10px;box-shadow:0 1px 4px #0006}
 </style></head><body>
 <div id="map"></div>
 <div id="top"><span>realestates4u · Map</span><a href="index.html">← Home</a></div>
@@ -36,7 +36,7 @@
  <label>Size (meters wide) <input type="range" id="ew" min="150" max="900"></label>
  <label>Rotation (°) <input type="range" id="er" min="-180" max="180" step="0.5"></label>
  <label>Layout opacity <input type="range" id="eo" min="0.2" max="1" step="0.05" value="0.85"></label>
- <div class="row"><button data-d="n">↑</button><button data-d="s">↓</button><button data-d="w">←</button><button data-d="e">→</button><button id="ecopy">Copy values</button></div>
+ <div class="row"><button data-d="n">↑</button><button data-d="s">↓</button><button data-d="w">←</button><button data-d="e">→</button><button id="ecopy">Copy values</button><button id="eall">Copy all</button></div>
  <textarea id="eout" readonly></textarea>
  <div>Tap on map = coordinates: <b id="clk">-</b></div>
 </div>
@@ -74,7 +74,10 @@ const V=[
   about:'Near Yadadri temple on the 200 ft Warangal highway, with 60, 40 and 30 ft black top roads, entrance arch with security, overhead water tank, children\'s play area, landscaped park, avenue plantation, STP and underground drainage.'}
 ];
 // ================================================================================
-const q=new URLSearchParams(location.search),EDIT=q.has('edit');
+const q=new URLSearchParams(location.search),EDIT=q.has('edit'),EMBED=q.has('embed');
+let saved={};try{saved=JSON.parse(localStorage.getItem('re4u_edits')||'{}')}catch(e){}
+if(EDIT)V.forEach(v=>{const x=saved[v.id];if(x)Object.assign(v,x)});
+function saveEdit(v){if(!EDIT)return;saved[v.id]={lat:+v.lat.toFixed(6),lng:+v.lng.toFixed(6),w:Math.round(v.w),rot:v.rot};try{localStorage.setItem('re4u_edits',JSON.stringify(saved))}catch(e){}}
 const map=L.map('map',{zoomControl:false,center:[17.0,78.6],zoom:9});
 L.control.zoom({position:'bottomright'}).addTo(map);
 const esri=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxNativeZoom:18,maxZoom:20,attribution:'Esri World Imagery'});
@@ -83,6 +86,8 @@ const osm=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:
 esri.addTo(map);L.control.layers({'Satellite (Esri)':esri,'Satellite (Clarity)':clarity,'Street map':osm},null,{position:'bottomleft'}).addTo(map);
 const col=p=>{if(!p)return '#9e9e9e';const t=Math.min(1,Math.max(0,(p-8000)/(25000-8000)));return `hsl(${120-120*t},85%,48%)`};
 let cur=null,ov=null,mk={};
+function fitAll(){map.fitBounds(L.latLngBounds(V.map(v=>[v.lat,v.lng])),{padding:[40,40],maxZoom:12})}
+function ovBounds(v){const c=corners(v);return L.latLngBounds([c[0],c[1],c[2],L.latLng(c[1].lat+c[2].lat-c[0].lat,c[1].lng+c[2].lng-c[0].lng)])}
 const corners=(v)=>{const k=111320,c=Math.cos(v.lat*Math.PI/180),h=v.w*v.ar,r=v.rot*Math.PI/180,
  p=(x,y)=>{const X=x*Math.cos(r)+y*Math.sin(r),Y=-x*Math.sin(r)+y*Math.cos(r);return L.latLng(v.lat+Y/k,v.lng+X/(k*c))};
  return [p(-v.w/2,h/2),p(v.w/2,h/2),p(-v.w/2,-h/2)]};
@@ -90,14 +95,18 @@ V.forEach(v=>{
  const im=new Image();im.src=v.img;im.onload=()=>{v.ar=im.naturalHeight/im.naturalWidth};v.ar=0.6;
 mk[v.id]=L.marker([v.lat,v.lng],{icon:L.divIcon({className:'',iconSize:[0,0],html:`<div class="pin"><svg width="24" height="34" viewBox="0 0 24 34" style="filter:drop-shadow(0 1px 2px #0008)"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 22 12 22s12-13 12-22C24 5.4 18.6 0 12 0z" fill="${col(v.price)}" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg><span>${v.name}</span></div>`})}).addTo(map).on('click',()=>pick(v));
 });
+fitAll();
+function lab(){document.getElementById('map').classList.toggle('nolab',map.getZoom()<11)}
+map.on('zoomend',lab);lab();
+if(EMBED){document.getElementById('top').style.display='none';document.getElementById('sheet').style.top='12px';if('ontouchstart' in window)map.dragging.disable()}
 function showOv(v){
  if(ov)map.removeLayer(ov);
  const c=corners(v);ov=L.imageOverlay.rotated(v.img,c[0],c[1],c[2],{opacity:+(document.getElementById('eo').value||0.85)}).addTo(map);
 }
 function pick(v){
  cur=v;closeSheet();
- map.flyTo([v.lat,v.lng],16,{duration:1.2});
- setTimeout(()=>showOv(v),600);
+ showOv(v);
+ map.flyToBounds(ovBounds(v),{paddingTopLeft:[8,EDIT?300:EMBED?20:70],paddingBottomRight:[8,EMBED?150:190],maxZoom:19,duration:1});
  cn.textContent=v.name;cl.textContent='📍 '+v.loc;
  cc.innerHTML=`<span>${v.price?'₹'+v.price.toLocaleString('en-IN')+' / sq yd':'Price on request'}</span><span>${v.sizes}</span>`;
  card.style.display='block';
@@ -111,12 +120,13 @@ function tab(t){document.querySelectorAll('.tabs button').forEach(b=>b.classList
  tabbody.innerHTML={about:cur.about,appr:cur.appr,loc:cur.loc+'<br><a style="color:#9fc4b0" target="_blank" href="https://www.google.com/maps?q='+cur.lat+','+cur.lng+'">Open in Google Maps</a>'}[t]}
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.t));
 function closeSheet(){sheet.style.display='none';if(cur)card.style.display='block'}
-function closeAll(){card.style.display='none';sheet.style.display='none';edit.style.display='none';if(ov){map.removeLayer(ov);ov=null}cur=null;map.flyTo([17.0,78.6],9)}
+function closeAll(){card.style.display='none';sheet.style.display='none';edit.style.display='none';if(ov){map.removeLayer(ov);ov=null}cur=null;fitAll()}
 // edit tool (open map.html?edit=1)
-function dump(){eout.value=`lat:${cur.lat.toFixed(6)}, lng:${cur.lng.toFixed(6)}, w:${Math.round(cur.w)}, rot:${cur.rot}`}
+function dump(){saveEdit(cur);eout.value=`lat:${cur.lat.toFixed(6)}, lng:${cur.lng.toFixed(6)}, w:${Math.round(cur.w)}, rot:${cur.rot}`}
 ew.oninput=()=>{cur.w=+ew.value;showOv(cur);dump()};er.oninput=()=>{cur.rot=+er.value;showOv(cur);dump()};eo.oninput=()=>ov&&ov.setOpacity(+eo.value);
 document.querySelectorAll('#edit [data-d]').forEach(b=>b.onclick=()=>{const s=0.00004*Math.max(1,cur.w/200),d=b.dataset.d;
  if(d=='n')cur.lat+=s;if(d=='s')cur.lat-=s;if(d=='e')cur.lng+=s;if(d=='w')cur.lng-=s;mk[cur.id].setLatLng([cur.lat,cur.lng]);showOv(cur);dump()});
+eall.onclick=()=>{const t=V.map(v=>`${v.id}: lat:${v.lat.toFixed(6)}, lng:${v.lng.toFixed(6)}, w:${Math.round(v.w)}, rot:${v.rot}`).join('\n');eout.value=t;navigator.clipboard&&navigator.clipboard.writeText(t);eall.textContent='Copied ✓'};
 ecopy.onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(eout.value);ecopy.textContent='Copied ✓'};
 map.on('click',e=>{if(EDIT)clk.textContent=e.latlng.lat.toFixed(6)+', '+e.latlng.lng.toFixed(6)});
 </script></body></html>
