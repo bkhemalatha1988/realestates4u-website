@@ -27,7 +27,7 @@
 #edit textarea{width:100%;height:60px;font-size:11px}
 .leaflet-container{background:#222}
 .pin{position:absolute;display:flex;align-items:center;white-space:nowrap;cursor:pointer;left:-12px;top:-34px}
-.nolab .pin span{display:none}.pin span{margin-left:4px;background:#fff;color:#0f2e22;font:700 12px system-ui,sans-serif;padding:3px 8px;border-radius:10px;box-shadow:0 1px 4px #0006}
+.pin.l{left:auto;right:-12px;flex-direction:row-reverse}.pin.l span{margin-left:0;margin-right:4px}.pin span{margin-left:4px;background:#fff;color:#0f2e22;font:700 12px system-ui,sans-serif;padding:3px 8px;border-radius:10px;box-shadow:0 1px 4px #0006}
 </style></head><body>
 <div id="map"></div>
 <div id="top"><span>realestates4u · Map</span><a href="index.html">← Home</a></div>
@@ -60,7 +60,7 @@ const V=[
   acres:'24.5',plots:'250+',sizes:'176–1171 sq yd',price:19999,dev:'NRI Projects',img:'images/layout-gold-space.png',w:497,rot:-1,
   appr:'DTCP approved · LP No. 211/2023/H · TG RERA · Bank loans available',
   about:'200 feet Srisailam highway facing project, 40\' and 33\' blacktop roads, park and children\'s play area, avenue plantation, compound wall.'}
-,{id:'artha-sagar',name:'Artha Sagar',loc:'Yacharam · Sagar Highway',lat:16.99695,lng:78.69744,
+,{id:'artha-sagar',lab:'l',name:'Artha Sagar',loc:'Yacharam · Sagar Highway',lat:16.99695,lng:78.69744,
   acres:'11',plots:165,sizes:'150 sq yd',price:null,dev:'NRI Projects',img:'images/layout-artha-sagar.png',w:468,rot:-61.5,
   appr:'DTCP approved · LP No. 26/2021/H',
   about:'200 ft Sagar highway facing villa plots with 40\' and 33\' black top roads, entrance arch, landscaped parks, avenue plantation, underground sewage and compound wall.'}
@@ -93,7 +93,7 @@ const corners=(v)=>{const k=111320,c=Math.cos(v.lat*Math.PI/180),h=v.w*v.ar,r=v.
  return [p(-v.w/2,h/2),p(v.w/2,h/2),p(-v.w/2,-h/2)]};
 V.forEach(v=>{
  const im=new Image();im.src=v.img;im.onload=()=>{v.ar=im.naturalHeight/im.naturalWidth};v.ar=0.6;
-mk[v.id]=L.marker([v.lat,v.lng],{icon:L.divIcon({className:'',iconSize:[0,0],html:`<div class="pin"><svg width="24" height="34" viewBox="0 0 24 34" style="filter:drop-shadow(0 1px 2px #0008)"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 22 12 22s12-13 12-22C24 5.4 18.6 0 12 0z" fill="${col(v.price)}" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg><span>${v.name}</span></div>`})}).addTo(map).on('click',()=>pick(v));
+mk[v.id]=L.marker([v.lat,v.lng],{icon:L.divIcon({className:'',iconSize:[0,0],html:`<div class="pin${v.lab==='l'?' l':''}"><svg width="24" height="34" viewBox="0 0 24 34" style="filter:drop-shadow(0 1px 2px #0008)"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 22 12 22s12-13 12-22C24 5.4 18.6 0 12 0z" fill="${col(v.price)}" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg><span>${v.name}</span></div>`})}).addTo(map).on('click',()=>pick(v));
 });
 fitAll();
 function lab(){document.getElementById('map').classList.toggle('nolab',map.getZoom()<11)}
@@ -129,4 +129,5 @@ document.querySelectorAll('#edit [data-d]').forEach(b=>b.onclick=()=>{const s=0.
 eall.onclick=()=>{const t=V.map(v=>`${v.id}: lat:${v.lat.toFixed(6)}, lng:${v.lng.toFixed(6)}, w:${Math.round(v.w)}, rot:${v.rot}`).join('\n');eout.value=t;navigator.clipboard&&navigator.clipboard.writeText(t);eall.textContent='Copied ✓'};
 ecopy.onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(eout.value);ecopy.textContent='Copied ✓'};
 map.on('click',e=>{if(EDIT)clk.textContent=e.latlng.lat.toFixed(6)+', '+e.latlng.lng.toFixed(6)});
+const dv=q.get('v');if(dv){const t=V.find(x=>x.id===dv);if(t)setTimeout(()=>pick(t),300)}
 </script></body></html>
