@@ -28,9 +28,16 @@
 .leaflet-container{background:#222}
 .pin{position:absolute;display:flex;align-items:center;white-space:nowrap;cursor:pointer;left:-12px;top:-34px}
 .pin.l{left:auto;right:-12px;flex-direction:row-reverse}.pin.l span{margin-left:0;margin-right:4px}.pin span{margin-left:4px;background:#fff;color:#0f2e22;font:700 12px system-ui,sans-serif;padding:3px 8px;border-radius:10px;box-shadow:0 1px 4px #0006}
+#srch{position:absolute;z-index:1100;top:62px;left:10px;width:min(290px,calc(100% - 20px))}
+#sq{width:100%;padding:11px 16px;border:0;border-radius:22px;font-size:15px;background:#fff;box-shadow:0 2px 10px #0005;outline:none}
+#sres{display:none;margin-top:6px;background:#fff;border-radius:14px;box-shadow:0 4px 14px #0005;max-height:260px;overflow:auto}
+.ri{padding:10px 14px;border-bottom:1px solid #eee;cursor:pointer;display:grid;grid-template-columns:14px 1fr;column-gap:8px;align-items:center}
+.ri i{width:12px;height:12px;border-radius:50%;grid-row:span 2}.ri b{font-size:14px;color:#0f2e22}.ri small{color:#666;font-size:12px}
+.ri.none{display:block;color:#777}.ri:hover{background:#f3f7f4}
 </style></head><body>
 <div id="map"></div>
 <div id="top"><span>realestates4u · Map</span><a href="index.html">← Home</a></div>
+<div id="srch"><input id="sq" type="search" placeholder="Search venture name..." autocomplete="off"><div id="sres"></div></div>
 <div id="edit">
  <b id="etitle"></b>
  <label>Size (meters wide) <input type="range" id="ew" min="150" max="900"></label>
@@ -52,19 +59,19 @@
 <script>
 // ===== EDIT THIS DATA (lat/lng are PLACEHOLDERS - replace with real values) =====
 const V=[
- {id:'seven-hills',name:'Seven Hills Future City',loc:'Thakkellapally, Yacharam · Sagar Highway',lat:16.986845,lng:78.697217,
+ {id:'seven-hills',dy:12,name:'Seven Hills Future City',loc:'Thakkellapally, Yacharam · Sagar Highway',lat:16.986845,lng:78.697217,
   acres:'20.7',plots:273,sizes:'147–484 sq yd',price:13000,dev:'Sri Mahika',img:'images/layout-seven-hills.png',w:475,rot:0,
   appr:'DTCP approved · T.L.P. 73/2023/H & 82/2023/HRO/H1 · TG RERA P02400007571 · 50% bank loan available',
   about:'DTCP approved layout with 40\' and 33\' wide roads, 10% open space and parks, near Bharat Future City.'},
- {id:'gold-space',name:'Gold Space',loc:'Kadthal · Srisailam Highway',lat:16.962729,lng:78.507847,
+ {id:'gold-space',lab:'l',name:'Gold Space',loc:'Kadthal · Srisailam Highway',lat:16.962729,lng:78.507847,
   acres:'24.5',plots:'250+',sizes:'176–1171 sq yd',price:19999,dev:'NRI Projects',img:'images/layout-gold-space.png',w:497,rot:-1,
   appr:'DTCP approved · LP No. 211/2023/H · TG RERA · Bank loans available',
   about:'200 feet Srisailam highway facing project, 40\' and 33\' blacktop roads, park and children\'s play area, avenue plantation, compound wall.'}
-,{id:'artha-sagar',lab:'l',name:'Artha Sagar',loc:'Yacharam · Sagar Highway',lat:16.99695,lng:78.69744,
+,{id:'artha-sagar',dy:-14,name:'Artha Sagar',loc:'Yacharam · Sagar Highway',lat:16.99695,lng:78.69744,
   acres:'11',plots:165,sizes:'150 sq yd',price:null,dev:'NRI Projects',img:'images/layout-artha-sagar.png',w:468,rot:-61.5,
   appr:'DTCP approved · LP No. 26/2021/H',
   about:'200 ft Sagar highway facing villa plots with 40\' and 33\' black top roads, entrance arch, landscaped parks, avenue plantation, underground sewage and compound wall.'}
-,{id:'brundavan-homes',name:'NRI Brundavan Homes',loc:'Gungal · Ibrahimpatnam · Sagar Highway',lat:17.116904,lng:78.673148,
+,{id:'brundavan-homes',lab:'l',name:'NRI Brundavan Homes',loc:'Gungal · Ibrahimpatnam · Sagar Highway',lat:17.116904,lng:78.673148,
   acres:'29',plots:'450+',sizes:'146+ sq yd',price:null,dev:'NRI Projects',img:'images/layout-brundavan-homes.png',w:479,rot:19.5,
   appr:'HMDA final approved layout · TG RERA · Bank loans available',
   about:'200 ft Sagar highway facing villa plots, 5 min from Bongloor junction (ORR Exit 12), 40, 33 and 30 ft CC roads, entrance arch, park and children\'s play area, avenue plantation and compound wall.'}
@@ -93,7 +100,7 @@ const corners=(v)=>{const k=111320,c=Math.cos(v.lat*Math.PI/180),h=v.w*v.ar,r=v.
  return [p(-v.w/2,h/2),p(v.w/2,h/2),p(-v.w/2,-h/2)]};
 V.forEach(v=>{
  const im=new Image();im.src=v.img;im.onload=()=>{v.ar=im.naturalHeight/im.naturalWidth};v.ar=0.6;
-mk[v.id]=L.marker([v.lat,v.lng],{icon:L.divIcon({className:'',iconSize:[0,0],html:`<div class="pin${v.lab==='l'?' l':''}"><svg width="24" height="34" viewBox="0 0 24 34" style="filter:drop-shadow(0 1px 2px #0008)"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 22 12 22s12-13 12-22C24 5.4 18.6 0 12 0z" fill="${col(v.price)}" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg><span>${v.name}</span></div>`})}).addTo(map).on('click',()=>pick(v));
+mk[v.id]=L.marker([v.lat,v.lng],{icon:L.divIcon({className:'',iconSize:[0,0],html:`<div class="pin${v.lab==='l'?' l':''}"><svg width="24" height="34" viewBox="0 0 24 34" style="filter:drop-shadow(0 1px 2px #0008)"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 22 12 22s12-13 12-22C24 5.4 18.6 0 12 0z" fill="${col(v.price)}" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg><span style="position:relative;top:${v.dy||0}px">${v.name}</span></div>`})}).addTo(map).on('click',()=>pick(v));
 });
 fitAll();
 function lab(){document.getElementById('map').classList.toggle('nolab',map.getZoom()<11)}
@@ -120,7 +127,7 @@ function tab(t){document.querySelectorAll('.tabs button').forEach(b=>b.classList
  tabbody.innerHTML={about:cur.about,appr:cur.appr,loc:cur.loc+'<br><a style="color:#9fc4b0" target="_blank" href="https://www.google.com/maps?q='+cur.lat+','+cur.lng+'">Open in Google Maps</a>'}[t]}
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.t));
 function closeSheet(){sheet.style.display='none';if(cur)card.style.display='block'}
-function closeAll(){card.style.display='none';sheet.style.display='none';edit.style.display='none';if(ov){map.removeLayer(ov);ov=null}cur=null;fitAll()}
+function closeAll(){card.style.display='none';sheet.style.display='none';edit.style.display='none';if(ov){map.removeLayer(ov);ov=null}cur=null;sq.value='';fitAll()}
 // edit tool (open map.html?edit=1)
 function dump(){saveEdit(cur);eout.value=`lat:${cur.lat.toFixed(6)}, lng:${cur.lng.toFixed(6)}, w:${Math.round(cur.w)}, rot:${cur.rot}`}
 ew.oninput=()=>{cur.w=+ew.value;showOv(cur);dump()};er.oninput=()=>{cur.rot=+er.value;showOv(cur);dump()};eo.oninput=()=>ov&&ov.setOpacity(+eo.value);
@@ -129,5 +136,17 @@ document.querySelectorAll('#edit [data-d]').forEach(b=>b.onclick=()=>{const s=0.
 eall.onclick=()=>{const t=V.map(v=>`${v.id}: lat:${v.lat.toFixed(6)}, lng:${v.lng.toFixed(6)}, w:${Math.round(v.w)}, rot:${v.rot}`).join('\n');eout.value=t;navigator.clipboard&&navigator.clipboard.writeText(t);eall.textContent='Copied ✓'};
 ecopy.onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(eout.value);ecopy.textContent='Copied ✓'};
 map.on('click',e=>{if(EDIT)clk.textContent=e.latlng.lat.toFixed(6)+', '+e.latlng.lng.toFixed(6)});
+const sq=document.getElementById('sq'),sres=document.getElementById('sres'),srch=document.getElementById('srch');
+if(EMBED){srch.style.top='10px';srch.style.width='min(290px,calc(100% - 170px))'}
+if(EDIT)srch.style.display='none';
+L.DomEvent.disableClickPropagation(srch);L.DomEvent.disableScrollPropagation(srch);
+const match=t=>V.filter(v=>!t||(v.name+' '+v.loc).toLowerCase().includes(t));
+function drawRes(){const r=match(sq.value.trim().toLowerCase());
+ sres.innerHTML=r.length?r.map(v=>`<div class="ri" data-id="${v.id}"><i style="background:${col(v.price)}"></i><b>${v.name}</b><small>${v.loc}</small></div>`).join(''):'<div class="ri none">No venture found</div>';sres.style.display='block'}
+function choose(v){sres.style.display='none';sq.blur();sq.value=v.name;pick(v)}
+sq.addEventListener('input',drawRes);sq.addEventListener('focus',drawRes);
+sres.addEventListener('click',e=>{const d=e.target.closest('.ri');if(!d||!d.dataset.id)return;choose(V.find(x=>x.id===d.dataset.id))});
+sq.addEventListener('keydown',e=>{if(e.key==='Enter'){const r=match(sq.value.trim().toLowerCase());if(r[0])choose(r[0])}});
+document.addEventListener('click',e=>{if(!e.target.closest('#srch'))sres.style.display='none'});
 const dv=q.get('v');if(dv){const t=V.find(x=>x.id===dv);if(t)setTimeout(()=>pick(t),300)}
 </script></body></html>
