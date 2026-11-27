@@ -217,22 +217,11 @@ function ventureRow(p) {
 }
 
 function carouselHtml() {
-  if (!GALLERY.length) return "";
-  var slides = GALLERY.map(function (g, i) {
-    return '<div class="carousel-slide' + (i === 0 ? ' active' : '') + '" data-i="' + i + '">' +
-      '<div class="carousel-bg" style="background-image:url(\'' + g.url + '\')"></div>' +
-      '<img src="' + g.url + '" alt="' + g.ventureName + '">' +
-      '<div class="carousel-caption">' + g.ventureName + '</div>' +
-    '</div>';
-  }).join("");
-  var dotsHtml = "";
-  if (GALLERY.length <= 12) {
-    var dots = GALLERY.map(function (g, i) {
-      return '<span' + (i === 0 ? ' class="active"' : '') + '></span>';
-    }).join("");
-    dotsHtml = '<div class="carousel-dots">' + dots + '</div>';
-  }
-  return '<div class="carousel" id="home-carousel">' + slides + dotsHtml + '</div>';
+  // Homepage map: replaces the old photo carousel (shows all ventures as pins)
+  return '<section class="home-map" id="home-map">' +
+    '<iframe src="map.html?embed=1" title="Our ventures map" loading="lazy" allow="geolocation"></iframe>' +
+    '<a class="home-map-open" href="map.html">Open full map &#8599;</a>' +
+  '</section>';
 }
 
 function stopCarousel() {
