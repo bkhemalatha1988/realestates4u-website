@@ -287,7 +287,7 @@ function renderHome() {
           greetingHtml() +
           '<a href="#" class="hero-big-cta" id="hero-big-cta">' +
             '<span class="cta-small">Limited slots</span>' +
-            '<span class="cta-main">Book Your Free Site Visit</span>' +
+            '<span class="cta-main"><img class="btn-car" src="images/brezza.png" alt="" aria-hidden="true">Book Your Free Site Visit</span>' +
             '<span class="cta-sub">&#128222; Tap now, we will call you back</span>' +
           '</a>' +
         '</div>' +
@@ -401,7 +401,7 @@ function renderVenture(slug) {
         '</div>' +
         '<div class="side-panel">' +
           '<h3>Interested in ' + p.name + '?</h3>' +
-          '<a class="side-btn" href="#" id="detail-enquire">Book Your Free Site Visit</a>' +
+          '<a class="side-btn" href="#" id="detail-enquire"><img class="btn-car" src="images/brezza.png" alt="" aria-hidden="true">Book Your Free Site Visit</a>' +
           mapBtn + mapsBtn + brochureBtn +
         '</div>' +
       '</div>' +
